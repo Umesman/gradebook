@@ -6,7 +6,7 @@ import QtQuick.Controls.Styles 1.2
 ApplicationWindow {
     id: rootId
     visible: true
-    width: 1200
+    width: 1240
     height: 536
     title: qsTr("Gradebook demo")
 
@@ -16,7 +16,6 @@ ApplicationWindow {
     property int preferredRectWidth: 100
     property int maximumRectWidth: 300
     property int minimumRectHeight: 50
-    property int delegateFontSize : 12
 
     menuBar: MenuBar{
         Menu {
@@ -82,12 +81,35 @@ ApplicationWindow {
 
                 CheckBox{
                     id: checkBoxId
-                    //anchors.left: comboBoxId.right
-                    //anchors.leftMargin: 20
                     anchors.verticalCenter: parent.verticalCenter
                     text: qsTr("Passed")
-                    //Layout.fillWidth: true
-                    Layout.alignment: Qt.AlignRight
+                    style : CheckBoxStyle {
+                        indicator : Rectangle{
+                            implicitHeight: 16
+                            implicitWidth: 16
+                            radius: 16
+                            border.color: checkBoxId.activeFocus ? "red" : "black"
+                            border.width: 1
+
+                            Rectangle {
+                                visible: checkBoxId.checked
+                                color: "#555"
+                                border.color: "#333"
+                                radius: 16
+                                anchors.margins: 4
+                                anchors.fill: parent
+                            }
+                        }
+
+                        background: Rectangle{
+                            color : checkBoxId.hovered ? "lightsteelblue" : "lightslategrey"
+                            implicitWidth : 100
+                            implicitHeight : 30
+                            border.width: control.activeFocus ? 2 : 1
+                            border.color: "darkslateblue"
+                            radius: 4
+                        }
+                    }
                 }
 
             }
@@ -121,14 +143,14 @@ ApplicationWindow {
                 id : listBoxId
 
                 color : "transparent"
-                width: 840
+                width: 900
                 height: 320
 
                 Rectangle {
                     id : listViewWrapper
-                    color : "teal"
+                    color : "#190033"
                     border.color: "black"
-                    border.width: 1.4
+                    border.width: 2.4
 
                     anchors {
                         fill : parent
@@ -143,38 +165,21 @@ ApplicationWindow {
                             width: parent.width
                             height: 25
                             RowLayout {
-                                spacing : 10
-                                delegateItem {
-                                    textData : name
-                                }
-
-                               /* Rectangle {
-                                    color : "red"
-                                    width : 96
-                                    height: 25
-                                    Text {
-                                        anchors.centerIn: parent
-                                        text : name
-                                        font.pointSize: delegateFontSize }
-                                } */
-                                Text { text : median + " "
-                                    font.pointSize: delegateFontSize}
-                                Text { text : email + " "
-                                    font.pointSize: delegateFontSize}
-                                Text { text : grade1 + " "
-                                    font.pointSize: delegateFontSize}
-                                Text { text : grade2 + " "
-                                    font.pointSize: delegateFontSize}
-                                Text { text : homework + " "
-                                    font.pointSize: delegateFontSize}
-                                Text { text : project
-                                    font.pointSize: delegateFontSize}
+                                spacing : 20
+                                x: 10
+                                DelegateItem { textData : name }
+                                DelegateItem { textData : median.toFixed(2) }
+                                DelegateItem { textData : email }
+                                DelegateItem { textData : grade1.toFixed(2) }
+                                DelegateItem { textData : grade2.toFixed(2) }
+                                DelegateItem { textData : homework.toFixed(2) }
+                                DelegateItem { textData : project.toFixed(2) }
                             }
 
                             states: State {
                                 name: "Current"
                                 when: wrapper.ListView.isCurrentItem
-                                PropertyChanges { target: wrapper; x: 10 }
+                                //PropertyChanges { target: wrapper; x: 10 }
                             }
                             transitions: Transition {
                                 NumberAnimation { properties: "x"; duration: 200 }
@@ -191,7 +196,7 @@ ApplicationWindow {
                         Rectangle {
                             width: parent.width
                             height: 25
-                            color : "#FFFF88"
+                            color : "#FF3333"
                             y : stubListViewId.currentItem.y
                         }
                     }
@@ -201,25 +206,34 @@ ApplicationWindow {
                         Rectangle {
                             id : headerRectId
                             color : "darkturquoise"
+                            border.color: "grey"
                             width : stubListViewId.width
                             height : 30
                             RowLayout{
                                 anchors.verticalCenter: parent.verticalCenter
-                                spacing : 10
+                                spacing : 20
+                                x: 10
                                 Repeater {
                                     model : ["Name", "Median", "  Email  ", "Grade1", "Grade2", "Grade2",
                                         "Homework", "Project"]
-                                    // delegate :
-                                    Rectangle {
-                                        color: "red"
-                                        //opacity: (7 - index) / 7
-                                        //anchors.verticalCenter: parent.verticalCenter
-                                        width : 96
-                                        height: 20
-                                        Text{
-                                            anchors.centerIn: parent
-                                            text: modelData
-                                            font.pointSize: headerFontSize}
+                                    DelegateItem {
+                                        delegateFontSize  : 10
+                                        delegateFontColor : "black"
+                                        textData: modelData
+                                        Button{
+                                            id: delegateButton
+                                            anchors.centerIn : parent
+                                            height : 30
+                                            width : 116
+
+                                            style: ButtonStyle{
+                                                background: Rectangle {
+                                                    color : "transparent"
+                                                    border.color : delegateButton.hovered ? "white" : "transparent"
+                                                    border.width: 1.2
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -243,7 +257,7 @@ ApplicationWindow {
 
             Rectangle{
                 height : 320
-                width: 260
+                width: 300
                 id: statisticsBoxId
                 Label{
                     anchors.centerIn: parent
@@ -262,12 +276,14 @@ ApplicationWindow {
                 text : qsTr("Previous")
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right : nextButton.left
+                anchors.rightMargin : 10
                 style: ButtonStyle{
                     background: Rectangle {
+                        color : prevButton.hovered ? "lightsteelblue" : "lightslategrey"
                         implicitWidth : 100
                         implicitHeight : 30
                         border.width: control.activeFocus ? 2 : 1
-                        border.color: "#888"
+                        border.color: "darkslateblue"
                         radius: 4
                     }
                 }
@@ -280,63 +296,15 @@ ApplicationWindow {
                 anchors.leftMargin : 20 + listBoxId.width / 2
                 style: ButtonStyle{
                     background: Rectangle {
+                        color : nextButton.hovered ? "lightsteelblue" : "lightslategrey"
                         implicitWidth : 100
                         implicitHeight : 30
                         border.width: control.activeFocus ? 2 : 1
-                        border.color: "#888"
+                        border.color: "darkslateblue"
                         radius: 4
                     }
                 }
             }
-            /*Rectangle {
-                id: prevRectId
-                color : "white"
-                Layout.fillWidth: true
-                Layout.minimumWidth: minimumRectWidth
-                Layout.preferredWidth: preferredRectWidth
-                Layout.maximumWidth: maximumRectWidth
-                Layout.minimumHeight: minimumRectHeight
-
-                Button {
-                    text : qsTr("Previous")
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.right : parent.right
-                    style: ButtonStyle{
-                        background: Rectangle {
-                            implicitWidth : 100
-                            implicitHeight : 30
-                            border.width: control.activeFocus ? 2 : 1
-                            border.color: "#888"
-                            radius: 4
-                        }
-                    }
-                }
-            } */
-
-            /*Rectangle {
-                id : nextRectId
-                color : "black"
-                Layout.fillWidth: true
-                Layout.minimumWidth: minimumRectWidth
-                Layout.preferredWidth: preferredRectWidth
-                Layout.maximumWidth: maximumRectWidth
-                Layout.minimumHeight: minimumRectHeight
-
-                Button {
-                    text : qsTr("Next")
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left : parent.left
-                    style: ButtonStyle{
-                        background: Rectangle {
-                            implicitWidth : 100
-                            implicitHeight : 30
-                            border.width: control.activeFocus ? 2 : 1
-                            border.color: "#888"
-                            radius: 4
-                        }
-                    }
-                }
-            } */
         }
     }
 
