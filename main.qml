@@ -4,65 +4,187 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.4
 
 ApplicationWindow {
+    id: rootId
     visible: true
-    width: 640
-    height: 480
+    width: 820
+    height: 560
     title: qsTr("Gradebook demo")
+
+    property date currentDate: new Date()
+    property string dateString
+    property int minimumRectWidth: 50
+    property int preferredRectWidth: 100
+    property int maximumRectWidth: 300
+    property int minimumRectHeight: 50
+
+    menuBar: MenuBar{
+        Menu {
+            title : "File"
+            MenuItem { text : "Open.." }
+            MenuItem { text : "Save As.." }
+            MenuItem { text : "Exit"
+                onTriggered: Qt.quit()}
+        }
+
+        Menu {
+            title: "Tools"
+            MenuItem { text : "Add Entry.." }
+            MenuItem { text : "Edit Entry.." }
+            MenuItem { text : "Remove Entry.." }
+        }
+
+    }
 
     ColumnLayout{
         id: columnId
+        spacing: 50
 
         RowLayout{
             id : firstRowId
-
-            spacing: 30
             anchors {
                 top : parent.top
                 horizontalCenter: parent.horizontalCenter
-                topMargin: 15
+                topMargin: 20
+            }
+            spacing: 50
+
+
+            Rectangle{
+                color : "transparent"
+                Layout.fillWidth: true
+                Layout.minimumWidth: minimumRectWidth
+                Layout.preferredWidth: preferredRectWidth
+                Layout.maximumWidth: maximumRectWidth
+                Layout.minimumHeight: minimumRectHeight
+                ComboBox {
+                    id : comboBoxId
+                    anchors.left: parent.left
+                    anchors.leftMargin: 15
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: 120
+                    height: 40
+                    //Layout.preferredWidth: 125
+                    model: [ "All Groups", "Group A", "Group B", "Group C", "Group D"]
+                    currentIndex : 0
+                }
+
             }
 
-            ComboBox{
-                height: 20
-                Layout.preferredWidth: 125
-                model: [ "All Groups", "Group A", "Group B", "Group C", "Group D"]
-                currentIndex : 0
+            Rectangle {
+                color : "transparent"
+                Layout.fillWidth: true
+                Layout.minimumWidth: minimumRectWidth
+                Layout.preferredWidth: preferredRectWidth
+                Layout.maximumWidth: maximumRectWidth
+                Layout.minimumHeight: minimumRectHeight
+
+
+                CheckBox{
+                    id: checkBoxId
+                    //anchors.left: comboBoxId.right
+                    //anchors.leftMargin: 20
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: qsTr("Passed")
+                    //Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignRight
+                }
+
             }
 
-            CheckBox{
-                text: qsTr("Passed")
-            }
+            Rectangle {
+                color : "transparent"
+                Layout.fillWidth: true
+                Layout.minimumWidth: minimumRectWidth
+                Layout.preferredWidth: preferredRectWidth
+                Layout.maximumWidth: maximumRectWidth
+                Layout.minimumHeight: minimumRectHeight
 
-            Label {
-                id : dateLabelId
-                text: qsTr("currentDate")
+                Text {
+                    //color : "white"
+                    anchors.left: parent.left
+                    anchors.leftMargin: 100
+                    anchors.verticalCenter: parent.verticalCenter
+                    id : dateLabelId
+                    text: dateString
+                }
+
             }
 
         }
 
         RowLayout{
             id: secondRowId
-            anchors.top : firstRowId.bottom
-            anchors.topMargin: 25
 
             Rectangle{
                 id : listBoxId
-                color : "lightgreen"
+
+                color : "transparent"
                 width: 400
                 height: 300
 
-                Component{
-                    id : itemDelegate
-                    Text { text: "I am item number "  + index}
-                }
+                Rectangle {
+                    id : listViewWrapper
+                    color : "teal"
+                    border.color: "black"
+                    border.width: 1.4
 
-                ListView{
-                    id : stubListViewId
-                    anchors.fill: parent
-                    model : 14
-                    delegate: itemDelegate
-                }
+                    anchors {
+                        fill : parent
+                        left : parent
+                        leftMargin : 20  }
 
+                    Component {
+                        id: studentDelegate
+                        Item {
+                            id: wrapper
+                            width: parent.width
+                            height: 55
+                            Row {
+                                Text { text : name + " " }
+                                Text { text : median + " " }
+                                Text { text : email + " " }
+                                Text { text : grade1 + " " }
+                                Text { text : grade2 + " " }
+                                Text { text : homework + " " }
+                                Text { text : project }
+                            }
+
+                            states: State {
+                                name: "Current"
+                                when: wrapper.ListView.isCurrentItem
+                                PropertyChanges { target: wrapper; x: 20 }
+                            }
+                            transitions: Transition {
+                                NumberAnimation { properties: "x"; duration: 200 }
+                            }
+                            MouseArea{
+                                anchors.fill: parent
+                                onClicked: wrapper.ListView.view.currentIndex = index
+                            }
+                        }
+                    }
+
+                    Component {
+                        id: highlightBar
+                        Rectangle {
+                            width: parent.width
+                            height: 55
+                            color : "#FFFF88"
+                            y : stubListViewId.currentItem.y
+                        }
+                    }
+
+                    ListView{
+                        id : stubListViewId
+                        anchors.fill: parent
+                        model : StubModel {}
+                        delegate: studentDelegate
+                        focus: true
+
+                        highlight: highlightBar
+                        highlightFollowsCurrentItem: false
+                    }
+                }
             }
 
             Rectangle{
@@ -75,9 +197,21 @@ ApplicationWindow {
                 }
             }
         }
+
+        RowLayout{
+            id: thirdRowId
+            Button {
+                text : qsTr("Previous")
+            }
+
+            Button {
+                text : qsTr("Next")
+            }
+        }
+    }
+
+    Component.onCompleted: {
+        dateString = currentDate.toLocaleDateString();
     }
 
 }
-
-
-
