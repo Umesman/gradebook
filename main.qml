@@ -1,13 +1,13 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls.Styles 1.2
 
 ApplicationWindow {
     id: rootId
     visible: true
-    width: 820
-    height: 560
+    width: 1200
+    height: 536
     title: qsTr("Gradebook demo")
 
     property date currentDate: new Date()
@@ -16,6 +16,7 @@ ApplicationWindow {
     property int preferredRectWidth: 100
     property int maximumRectWidth: 300
     property int minimumRectHeight: 50
+    property int delegateFontSize : 12
 
     menuBar: MenuBar{
         Menu {
@@ -37,7 +38,7 @@ ApplicationWindow {
 
     ColumnLayout{
         id: columnId
-        spacing: 50
+        spacing: 40
 
         RowLayout{
             id : firstRowId
@@ -115,12 +116,13 @@ ApplicationWindow {
         RowLayout{
             id: secondRowId
 
+            spacing: 20
             Rectangle{
                 id : listBoxId
 
                 color : "transparent"
-                width: 400
-                height: 300
+                width: 840
+                height: 320
 
                 Rectangle {
                     id : listViewWrapper
@@ -130,29 +132,49 @@ ApplicationWindow {
 
                     anchors {
                         fill : parent
-                        left : parent
-                        leftMargin : 20  }
+                        left : parent.left
+                        leftMargin : 20
+                    }
 
                     Component {
                         id: studentDelegate
                         Item {
                             id: wrapper
                             width: parent.width
-                            height: 55
-                            Row {
-                                Text { text : name + " " }
-                                Text { text : median + " " }
-                                Text { text : email + " " }
-                                Text { text : grade1 + " " }
-                                Text { text : grade2 + " " }
-                                Text { text : homework + " " }
-                                Text { text : project }
+                            height: 25
+                            RowLayout {
+                                spacing : 10
+                                delegateItem {
+                                    textData : name
+                                }
+
+                               /* Rectangle {
+                                    color : "red"
+                                    width : 96
+                                    height: 25
+                                    Text {
+                                        anchors.centerIn: parent
+                                        text : name
+                                        font.pointSize: delegateFontSize }
+                                } */
+                                Text { text : median + " "
+                                    font.pointSize: delegateFontSize}
+                                Text { text : email + " "
+                                    font.pointSize: delegateFontSize}
+                                Text { text : grade1 + " "
+                                    font.pointSize: delegateFontSize}
+                                Text { text : grade2 + " "
+                                    font.pointSize: delegateFontSize}
+                                Text { text : homework + " "
+                                    font.pointSize: delegateFontSize}
+                                Text { text : project
+                                    font.pointSize: delegateFontSize}
                             }
 
                             states: State {
                                 name: "Current"
                                 when: wrapper.ListView.isCurrentItem
-                                PropertyChanges { target: wrapper; x: 20 }
+                                PropertyChanges { target: wrapper; x: 10 }
                             }
                             transitions: Transition {
                                 NumberAnimation { properties: "x"; duration: 200 }
@@ -168,19 +190,51 @@ ApplicationWindow {
                         id: highlightBar
                         Rectangle {
                             width: parent.width
-                            height: 55
+                            height: 25
                             color : "#FFFF88"
                             y : stubListViewId.currentItem.y
                         }
                     }
 
+                    Component {
+                        id : headerId
+                        Rectangle {
+                            id : headerRectId
+                            color : "darkturquoise"
+                            width : stubListViewId.width
+                            height : 30
+                            RowLayout{
+                                anchors.verticalCenter: parent.verticalCenter
+                                spacing : 10
+                                Repeater {
+                                    model : ["Name", "Median", "  Email  ", "Grade1", "Grade2", "Grade2",
+                                        "Homework", "Project"]
+                                    // delegate :
+                                    Rectangle {
+                                        color: "red"
+                                        //opacity: (7 - index) / 7
+                                        //anchors.verticalCenter: parent.verticalCenter
+                                        width : 96
+                                        height: 20
+                                        Text{
+                                            anchors.centerIn: parent
+                                            text: modelData
+                                            font.pointSize: headerFontSize}
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     ListView{
                         id : stubListViewId
+                        anchors.bottomMargin: 0
                         anchors.fill: parent
                         model : StubModel {}
                         delegate: studentDelegate
                         focus: true
 
+                        header: headerId
                         highlight: highlightBar
                         highlightFollowsCurrentItem: false
                     }
@@ -188,8 +242,8 @@ ApplicationWindow {
             }
 
             Rectangle{
-                height : 200
-                width: 200
+                height : 320
+                width: 260
                 id: statisticsBoxId
                 Label{
                     anchors.centerIn: parent
@@ -200,13 +254,89 @@ ApplicationWindow {
 
         RowLayout{
             id: thirdRowId
+            spacing : 10
+            anchors.top : secondRowId.bottom
+            anchors.topMargin : 20
             Button {
+                id : prevButton
                 text : qsTr("Previous")
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right : nextButton.left
+                style: ButtonStyle{
+                    background: Rectangle {
+                        implicitWidth : 100
+                        implicitHeight : 30
+                        border.width: control.activeFocus ? 2 : 1
+                        border.color: "#888"
+                        radius: 4
+                    }
+                }
             }
-
             Button {
+                id : nextButton
                 text : qsTr("Next")
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left : parent.left
+                anchors.leftMargin : 20 + listBoxId.width / 2
+                style: ButtonStyle{
+                    background: Rectangle {
+                        implicitWidth : 100
+                        implicitHeight : 30
+                        border.width: control.activeFocus ? 2 : 1
+                        border.color: "#888"
+                        radius: 4
+                    }
+                }
             }
+            /*Rectangle {
+                id: prevRectId
+                color : "white"
+                Layout.fillWidth: true
+                Layout.minimumWidth: minimumRectWidth
+                Layout.preferredWidth: preferredRectWidth
+                Layout.maximumWidth: maximumRectWidth
+                Layout.minimumHeight: minimumRectHeight
+
+                Button {
+                    text : qsTr("Previous")
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right : parent.right
+                    style: ButtonStyle{
+                        background: Rectangle {
+                            implicitWidth : 100
+                            implicitHeight : 30
+                            border.width: control.activeFocus ? 2 : 1
+                            border.color: "#888"
+                            radius: 4
+                        }
+                    }
+                }
+            } */
+
+            /*Rectangle {
+                id : nextRectId
+                color : "black"
+                Layout.fillWidth: true
+                Layout.minimumWidth: minimumRectWidth
+                Layout.preferredWidth: preferredRectWidth
+                Layout.maximumWidth: maximumRectWidth
+                Layout.minimumHeight: minimumRectHeight
+
+                Button {
+                    text : qsTr("Next")
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left : parent.left
+                    style: ButtonStyle{
+                        background: Rectangle {
+                            implicitWidth : 100
+                            implicitHeight : 30
+                            border.width: control.activeFocus ? 2 : 1
+                            border.color: "#888"
+                            radius: 4
+                        }
+                    }
+                }
+            } */
         }
     }
 
