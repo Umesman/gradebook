@@ -12,6 +12,7 @@ Component {
         width: parent.width
         height: 25
         RowLayout {
+            anchors.verticalCenter: parent.verticalCenter
             spacing : 20
             x: 10
             DelegateItem { textData : name }
@@ -20,7 +21,8 @@ Component {
             DelegateItem { textData : grade1.toFixed(2) }
             DelegateItem { textData : grade2.toFixed(2) }
             DelegateItem { textData : homework.toFixed(2) }
-            DelegateItem { textData : project }
+            DelegateItem { textData : project
+                           delimiterVisible: false}
         }
 
         states: State {
@@ -35,9 +37,9 @@ Component {
             anchors.fill: parent
             onClicked: {
                 wrapper.ListView.view.currentIndex = index
-                console.log(index)
+                console.log("Current index changed: " + index)
             }
-            onDoubleClicked:  informStudentDetails(context.model.index)
+            onDoubleClicked:  informStudentDetails(index)
         }
     }
 }

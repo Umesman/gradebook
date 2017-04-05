@@ -18,7 +18,7 @@ Component {
                 id : headerRepeater
                 model : ["Name", "Median", "Email", "Grade1", "Grade2", "Grade2",
                     "Homework", "Project"]
-                DelegateItem {
+                delegate: DelegateItem {
                     delegateFontSize  : 10
                     delegateFontColor : "black"
                     textData: modelData
@@ -37,8 +37,8 @@ Component {
                         }
 
                         onClicked: {
-                            sortBy(headerRepeater.model.index)
-                            console.log(headerRepeater.model.index)
+                            sortBy(index)
+                            console.log("Sort By" + index)
 
                         }
                     }

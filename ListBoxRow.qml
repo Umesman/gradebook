@@ -5,7 +5,10 @@ import QtQuick.Controls.Styles 1.2
 
 
 Rectangle{
+    // informStudentDetails should inform the dialog for the student info is to be displayed
     signal informStudentDetails(int index)
+
+    // should sort the listview by the different roles
     signal sortBy(int role)
 
 
@@ -26,7 +29,7 @@ Rectangle{
         }
 
         ListDelegate{
-            id: studentDelegate
+            id: studentDelegate            
         }
 
         ListHeader{
@@ -42,7 +45,6 @@ Rectangle{
                 y : stubListViewId.currentItem.y
             }
         }
-
 
 
         ListView{

@@ -1,5 +1,23 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>StubModel.qml</file>
+        <file>DelegateItem.qml</file>
+        <file>ListBoxRow.qml</file>
+        <file>ListFilterRow.qml</file>
+        <file>StatisticsRow.qml</file>
+        <file>ListNavigatorRow.qml</file>
+        <file>MenuBarControl.qml</file>
+        <file>ListDelegate.qml</file>
+        <file>ListHeader.qml</file>
+    </qresource>
+    <qresource prefix="/Images">
+        <file>Images/next.png</file>
+        <file>Images/prev.png</file>
+        <file>Images/dropdown.png</file>
+        <file>Images/date.png</file>
+        <file>Images/dropdown_checked.png</file>
+        <file>Images/next_checked.png</file>
+        <file>Images/prev_checked.png</file>
     </qresource>
 </RCC>
