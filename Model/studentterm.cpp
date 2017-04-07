@@ -1,5 +1,6 @@
 #include "studentterm.h"
 #include <iostream>
+#include <QDebug>
 
 void StudentTerm::setName(const QString &name)
 {
@@ -41,10 +42,35 @@ void StudentTerm::setGroup(const QString &group)
     m_group = group;
 }
 
+void StudentTerm::updateByValue(QVariant value, int attribute)
+{
+    switch (attribute)
+    {
+    case NAME : setName(value.toString());
+        break;
+    case GROUP : setGroup(value.toString());
+        break;
+    case EMAIL : setGroup(value.toString());
+        break;
+    case ASSESSMENTS : setAssesments(value.toInt());
+        break;
+    case HOMEWORK1 : setHomework1(value.toDouble());
+        break;
+    case HOMEWORK2 : setHomework2(value.toDouble());
+        break;
+    case LABGRADE : setLabGrade(value.toDouble());
+        break;
+    case TESTGRADE : setTestGrade(value.toDouble());
+        break;
+    default :
+        qDebug() << "No valid attribute specified: " << attribute ;
+    }
+}
+
 void StudentTerm::calculateFinal()
 {
-   m_finalGrade = m_assesments * 0.3 + (m_homework1 + m_homework2) * 0.15
-           + m_labGrade * 0.2 + m_testGrade * 0.2;
+    m_finalGrade = m_assesments * 0.3 + (m_homework1 + m_homework2) * 0.15
+            + m_labGrade * 0.2 + m_testGrade * 0.2;
 }
 
 double StudentTerm::limits(double grade)
@@ -59,6 +85,7 @@ double StudentTerm::limits(double grade)
 
 std::ostream& operator<<(std::ostream& os, StudentTerm& st)
 {
+    qDebug() << "operator<< StudentTerm";
     os << "Name: "  << st.name().toStdString() << std::endl;
     os << "Group: " << st.group().toStdString() << std::endl;
     os << "Email: " << st.email().toStdString() << std::endl;

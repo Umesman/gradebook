@@ -2,7 +2,9 @@
 #define STUDENTTERM_H
 
 #include <QString>
+#include <QVariant>
 
+#include "publicdefinitions.h"
 
 class StudentTerm
 {
@@ -21,6 +23,15 @@ private:
     double m_labGrade;
     double m_testGrade;
     double m_finalGrade;
+
+    void setName(const QString &name);
+    void setEmail(const QString &email);
+    void setAssesments(const int  assesments);
+    void setHomework1(const double homework);
+    void setHomework2(const double homework);
+    void setLabGrade(const double labGrade);
+    void setTestGrade(const double testGrade);
+    void setGroup(const QString &group);
 
 public:
 
@@ -46,31 +57,16 @@ public:
     {}
 
     unsigned int id() const { return m_id;}
-
     QString name() const { return m_name;}
-    void setName(const QString &name);
-
     QString email() const {return m_email;}
-    void setEmail(const QString &email);
-
     int assesments() const {return m_assesments;}
-    void setAssesments(const int  assesments);
-
     double homework1() const {return m_homework1;}
-    void setHomework1(const double homework);
-
     double homework2() const {return m_homework2;}
-    void setHomework2(const double homework);
-
     double labGrade() const {return m_labGrade;}
-    void setLabGrade(const double labGrade);
-
     double testGrade() const { return m_testGrade;}
-    void setTestGrade(const double testGrade);
-
     QString group() const { return m_group;}
-    void setGroup(const QString &group);
 
+    void updateByValue(QVariant value, int attribute);
     friend std::ostream& operator<<(std::ostream& os, StudentTerm& st);
 };
 

@@ -4,7 +4,8 @@ QT += qml quick
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    Model/studentterm.cpp
+    Model/studentterm.cpp \
+    Model/studentcollection.cpp
 
 RESOURCES += qml.qrc
 
@@ -15,4 +16,6 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 HEADERS += \
-    Model/studentterm.h
+    Model/studentterm.h \
+    Model/studentcollection.h \
+    publicdefinitions.h

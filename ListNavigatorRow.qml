@@ -30,7 +30,7 @@ RowLayout{
                 Image {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    anchors.leftMargin: 5
+                    anchors.leftMargin: 1
                     source : prevButton.pressed ? "qrc:/Images/Images/prev_checked.png"
                                                 : "qrc:/Images/Images/prev.png"
                 }
@@ -59,7 +59,7 @@ RowLayout{
                 Image {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
-                    anchors.rightMargin: 5
+                    anchors.rightMargin: 1
                     source: nextButton.pressed ? "qrc:/Images/Images/next_checked.png"
                                                :"qrc:/Images/Images/next.png"
                 }
