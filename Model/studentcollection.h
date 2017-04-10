@@ -30,6 +30,8 @@ public:
     int size() const;
     const QList<StudentTerm *> *getList() const ;
 
+    const StudentTerm *operator[](int index);
+
     friend std::ostream& operator<<(std::ostream &os,const StudentCollection &coll);
 
 private:

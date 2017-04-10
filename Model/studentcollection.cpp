@@ -8,9 +8,7 @@ StudentCollection::~StudentCollection()
     if (!m_studentList->empty())
     {
         for (auto it = m_studentList->begin(); it != m_studentList->end(); it ++)
-        {
             delete *it;
-        }
     }
     delete m_studentList;
 }
@@ -57,6 +55,11 @@ const QList<StudentTerm *>* StudentCollection::getList() const
 {
     qDebug() << "StudentCollection::getList";
     return m_studentList;
+}
+
+const StudentTerm *StudentCollection::operator[](int index)
+{
+    return (*m_studentList)[index];
 }
 
 std::ostream & operator<<(std::ostream &os,const StudentCollection &coll)

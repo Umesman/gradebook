@@ -2,10 +2,14 @@ TEMPLATE = app
 
 QT += qml quick
 CONFIG += c++11
+CONFIG += console
+
 
 SOURCES += main.cpp \
     Model/studentterm.cpp \
-    Model/studentcollection.cpp
+    Model/studentcollection.cpp \
+    ViewManager/mainviewmgr.cpp \
+    Model/datahandler.cpp
 
 RESOURCES += qml.qrc
 
@@ -18,4 +22,6 @@ include(deployment.pri)
 HEADERS += \
     Model/studentterm.h \
     Model/studentcollection.h \
-    publicdefinitions.h
+    publicdefinitions.h \
+    ViewManager/mainviewmgr.h \
+    Model/datahandler.h
