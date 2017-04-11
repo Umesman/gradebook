@@ -14,7 +14,7 @@ StudentCollection::~StudentCollection()
 }
 
 
-void StudentCollection::addEntry(StudentTerm *st)
+void StudentCollection::append(StudentTerm *st)
 {
     qDebug() << "StudentCollection::addEntry";
     m_studentList->append(st);
@@ -48,6 +48,12 @@ int StudentCollection::size() const
     qDebug() << "StudentCollection::size";
     qDebug() << "size = " << m_studentList->size();
     return m_studentList->size();
+}
+
+int StudentCollection::count() const
+{
+    qDebug() << "StudentCollection::count";
+    return m_studentList->count();
 }
 
 

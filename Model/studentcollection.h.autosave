@@ -28,6 +28,7 @@ public:
     void updateEntry(int index, QVariant value, int attribute);
     StudentTerm * getTermAt(int index);
     int size() const;
+    int count() const;
     const QList<StudentTerm *> *getList() const ;
 
     const StudentTerm *operator[](int index);

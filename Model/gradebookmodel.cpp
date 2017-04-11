@@ -4,23 +4,23 @@
 
 GradebookModel::GradebookModel(DataHandler *dataHandler, QObject *parent)
     : QObject(parent),
-      p_handler(dataHandler),
-      p_students_list(NULL)
+      m_phandler(dataHandler),
+      m_pcollection(NULL)
 {
     setModelSource();
 }
 
 int GradebookModel::rowCount(const QModelIndex &parent) const
 {
-    return p_students_list->count();
+    return m_pcollection->count();
 }
 
 QVariant GradebookModel::data(const QModelIndex &index, int role) const
 {
-    if (index.row() < 0 || index.row() >= p_students_list->count())
+    if (index.row() < 0 || index.row() >= m_pcollection->count())
         return QVariant();
 
-    const StudentTerm *st_term = p_students_list->at(index.row());
+    const StudentTerm *st_term = m_pcollection->getTermAt(index.row());
 
     switch(role) {
     case IdRole :
@@ -55,6 +55,19 @@ QVariant GradebookModel::data(const QModelIndex &index, int role) const
     }
 }
 
+Qt::ItemFlags GradebookModel::flags(const QModelIndex &index) const
+{
+   if (!index.isValid())
+       return Qt::ItemIsEnabled;
+
+   return QAbstractListModel::flags(index) | Qt::ItemIsEditable;
+}
+
+bool GradebookModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+
+}
+
 QHash<int, QByteArray> GradebookModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
@@ -73,6 +86,6 @@ QHash<int, QByteArray> GradebookModel::roleNames() const
 
 void GradebookModel::setModelSource()
 {
-    if (nullptr != p_handler)
-        p_students_list = p_handler->getCollectionList();
+    if (m_phandler)
+        m_pcollection = m_phandler->getCollection();
 }
