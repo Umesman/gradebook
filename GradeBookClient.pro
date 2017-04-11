@@ -9,7 +9,8 @@ SOURCES += main.cpp \
     Model/studentterm.cpp \
     Model/studentcollection.cpp \
     ViewManager/mainviewmgr.cpp \
-    Model/datahandler.cpp
+    Model/datahandler.cpp \
+    Model/gradebookmodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -24,4 +25,5 @@ HEADERS += \
     Model/studentcollection.h \
     publicdefinitions.h \
     ViewManager/mainviewmgr.h \
-    Model/datahandler.h
+    Model/datahandler.h \
+    Model/gradebookmodel.h

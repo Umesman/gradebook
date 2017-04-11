@@ -11,14 +11,12 @@ class DataHandler : public QObject
 
 signals:
 
-public slots:
+public:
+    explicit DataHandler(QObject *parent = 0);
+
     void addStudentField(StudentTerm *st);
     void removeStudentField(int index);
     void updateStudentField(int index, QVariant value, int attribute);
-
-
-public:
-    explicit DataHandler(QObject *parent = 0);
 
     ~DataHandler();
 
