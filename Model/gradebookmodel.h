@@ -37,13 +37,16 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value,
                  int role = Qt::EditRole);
 
+    bool addData(const StudentTerm &st);
+    bool removeRow(int row, const QModelIndex &parent = QModelIndex());
+
 protected:
     QHash<int, QByteArray> roleNames() const;
 
 private:
     void setModelSource();
-    DataHandler *p_handler;
-    QList<StudentTerm *> * p_students_list;
+    DataHandler *m_phandler;
+    StudentCollection *m_pcollection;
 };
 
 #endif // GRADEBOOKMODEL_H

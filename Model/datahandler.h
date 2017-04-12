@@ -20,12 +20,12 @@ public:
 
     ~DataHandler();
 
-    const QList<StudentTerm *> *getCollectionList() const;
+    const StudentCollection *getCollection() const;
 
 private:
     void initialize();
 
-    StudentCollection *m_collection;
+    StudentCollection *m_pcollection;
 };
 
 #endif // DATAHANDLER_H

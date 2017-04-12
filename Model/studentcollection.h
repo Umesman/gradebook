@@ -21,17 +21,20 @@ public:
     StudentCollection() :
         m_studentList(new QList<StudentTerm *>)
     {}
-     virtual ~StudentCollection();
+    virtual ~StudentCollection();
 
     void append(StudentTerm *st);
     void removeEntry(int index);
     void updateEntry(int index, QVariant value, int attribute);
-    StudentTerm * getTermAt(int index);
+    void clear();
     int size() const;
+    int count() const;
+    bool isIdPresent(const int id) const;
+
     const QList<StudentTerm *> *getList() const ;
+    StudentTerm * getTermAt(int index);
 
     const StudentTerm *operator[](int index);
-
     friend std::ostream& operator<<(std::ostream &os,const StudentCollection &coll);
 
 private:

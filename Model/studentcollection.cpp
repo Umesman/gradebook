@@ -56,6 +56,21 @@ int StudentCollection::count() const
     return m_studentList->count();
 }
 
+void StudentCollection::clear()
+{
+    qDebug() << "StudentCollection::clear";
+    m_studentList->clear();
+}
+
+bool StudentCollection::isIdPresent(const int id) const
+{
+    for (auto it = m_studentList->begin(); it != m_studentList->end(); it++)
+        if (id == (*it)->id())
+            return true;
+
+    return false;
+}
+
 
 const QList<StudentTerm *>* StudentCollection::getList() const
 {
