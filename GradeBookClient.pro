@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick
+QT += qml quick widgets
 CONFIG += c++11
 CONFIG += console
 
@@ -11,7 +11,8 @@ SOURCES += main.cpp \
     Model/studentcollection.cpp \
     ViewManager/mainviewmgr.cpp \
     Model/datahandler.cpp \
-    Model/gradebookmodel.cpp
+    Model/gradebookmodel.cpp \
+    startup.cpp
 
 RESOURCES += qml.qrc
 
@@ -27,4 +28,5 @@ HEADERS += \
     publicdefinitions.h \
     ViewManager/mainviewmgr.h \
     Model/datahandler.h \
-    Model/gradebookmodel.h
+    Model/gradebookmodel.h \
+    startup.h

@@ -51,8 +51,9 @@ Rectangle{
             id : stubListViewId
             anchors.bottomMargin: 0
             anchors.fill: parent
-            model : StubModel {}
-            delegate: studentDelegate
+            model : ListModel
+            delegate : Text { text: model.modelData.name}
+            //delegate: studentDelegate
             focus: true
 
             header: headerId

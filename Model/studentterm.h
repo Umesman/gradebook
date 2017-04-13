@@ -3,11 +3,15 @@
 
 #include <QString>
 #include <QVariant>
+#include <QObject>
 
 #include "publicdefinitions.h"
 
-class StudentTerm
+class StudentTerm : public QObject
 {
+    Q_OBJECT
+    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+
 
 private:
     void calculateFinal ();
@@ -24,7 +28,6 @@ private:
     double m_testGrade;
     double m_finalGrade;
 
-    void setName(const QString &name);
     void setEmail(const QString &email);
     void setAssesments(const int  assesments);
     void setHomework1(const double homework);
@@ -36,15 +39,17 @@ private:
 public:
 
     // default constructor
-    StudentTerm() :
+    StudentTerm(QObject* parent = 0) :
+        QObject(parent),
         m_id {001}, m_name {"Unknown"}, m_email {"default@sql.com"}, m_assesments{1},
         m_homework1{1}, m_homework2{1}, m_labGrade{1}, m_testGrade{1}
     {}
 
     // general use constructor
-    // no memory allocation in this class - I can use the default copy constr
     StudentTerm(unsigned int id, QString name, QString group, QString email, unsigned int assessments,
-                double homework1, double homework2, double labGrade, double testGrade) :
+                double homework1, double homework2, double labGrade, double testGrade,
+                QObject* parent = 0) :
+        QObject(parent),
         m_id {id},
         m_name{name},
         m_group{group},
@@ -55,6 +60,13 @@ public:
         m_labGrade{limits(labGrade)},
         m_testGrade{limits(testGrade)}
     {}
+
+    /*
+    StudentTerm(const StudentTerm &st) :
+        QObject(st)
+    {}*/
+
+    void setName(const QString &name);
 
     unsigned int id() const { return m_id;}
     QString name() const { return m_name;}
@@ -68,6 +80,9 @@ public:
 
     void updateByValue(QVariant value, int attribute);
     friend std::ostream& operator<<(std::ostream& os, StudentTerm& st);
+
+signals:
+    void nameChanged();
 };
 
 #endif // STUDENTTERM_H

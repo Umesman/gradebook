@@ -15,6 +15,9 @@ Component {
             anchors.verticalCenter: parent.verticalCenter
             spacing : 20
             x: 10
+            Text {text : name}
+
+            /*
             DelegateItem { textData : name }
             DelegateItem { textData : median.toFixed(2) }
             DelegateItem { textData : email }
@@ -23,6 +26,7 @@ Component {
             DelegateItem { textData : homework.toFixed(2) }
             DelegateItem { textData : project
                            delimiterVisible: false}
+                           */
         }
 
         states: State {

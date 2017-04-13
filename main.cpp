@@ -5,16 +5,14 @@
 #include "Model/studentterm.h"
 #include "Model/studentcollection.h"
 #include "Model/datahandler.h"
+#include "startup.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-    QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
-
-    DataHandler lojique;
+    Startup startup;
 
     //or (auto it = lojique.getCollectionList()->begin();
         // it != lojique.getCollectionList()->end(); it ++)

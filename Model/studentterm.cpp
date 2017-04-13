@@ -5,6 +5,7 @@
 void StudentTerm::setName(const QString &name)
 {
     m_name = name;
+    emit nameChanged();
 }
 
 void StudentTerm::setEmail(const QString &email)

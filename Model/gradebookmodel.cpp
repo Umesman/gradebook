@@ -56,6 +56,13 @@ QVariant GradebookModel::data(const QModelIndex &index, int role) const
 
 QVariant GradebookModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
+    if (role != Qt::DisplayRole)
+        return QVariant();
+
+    if (orientation == Qt::Horizontal)
+        return QString("Column %1").arg(section);
+    else
+        return QString("Row %1").arg(section);
 
 }
 
@@ -117,8 +124,11 @@ bool GradebookModel::addData(const StudentTerm &st)
     else
     {
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
-        m_pcollection->append(new StudentTerm(st));
+        m_pcollection->append(new StudentTerm(st.id(), st.name(), st.group(), st.email(),
+                                              st.assesments(),st.homework1(),st.homework2(),
+                                              st.labGrade(), st.testGrade()));
         endInsertRows();
+        return true;
     }
 }
 
@@ -127,11 +137,14 @@ bool GradebookModel::removeRow(int row, const QModelIndex &parent)
     beginRemoveRows(QModelIndex(), row, row);
     m_pcollection->removeEntry(row);
     endRemoveRows();
+    return true;
 }
 
 QHash<int, QByteArray> GradebookModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
+
+    roles[NameRole] = "name";
     roles[IdRole] = "id";
     roles[GroupRole] = "group";
     roles[EmailRole] = "email";

@@ -3,6 +3,9 @@
 
 #include <QObject>
 
+class GradebookModel;
+
+
 class MainViewMgr : public QObject
 {
     Q_OBJECT
@@ -12,7 +15,8 @@ public:
 
 signals:
 
-public slots:
+private:
+   GradebookModel* model;
 };
 
 #endif // MAINVIEWMGR_H

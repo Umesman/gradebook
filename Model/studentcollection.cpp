@@ -65,7 +65,7 @@ void StudentCollection::clear()
 bool StudentCollection::isIdPresent(const int id) const
 {
     for (auto it = m_studentList->begin(); it != m_studentList->end(); it++)
-        if (id == (*it)->id())
+        if ((unsigned int)id == (*it)->id())
             return true;
 
     return false;
