@@ -24,8 +24,7 @@ public:
         TestGradeRole
     };
 
-    GradebookModel(DataHandler *dataHandler,
-                   QObject *parent =0);
+    GradebookModel(DataHandler *dataHandler);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
 

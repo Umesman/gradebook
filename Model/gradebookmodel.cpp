@@ -2,9 +2,8 @@
 #include "studentterm.h"
 
 
-GradebookModel::GradebookModel(DataHandler *dataHandler, QObject *parent)
-    : QObject(parent),
-      m_phandler(dataHandler),
+GradebookModel::GradebookModel(DataHandler *dataHandler)
+    : m_phandler(dataHandler),
       m_pcollection(NULL)
 {
     setModelSource();
@@ -53,6 +52,11 @@ QVariant GradebookModel::data(const QModelIndex &index, int role) const
     default:
         return QVariant();
     }
+}
+
+QVariant GradebookModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+
 }
 
 Qt::ItemFlags GradebookModel::flags(const QModelIndex &index) const
@@ -144,5 +148,5 @@ QHash<int, QByteArray> GradebookModel::roleNames() const
 void GradebookModel::setModelSource()
 {
     if (m_phandler)
-        m_pcollection = m_phandler->getCollection();
+        m_pcollection = const_cast<StudentCollection*> (m_phandler->getCollection());
 }

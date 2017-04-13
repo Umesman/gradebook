@@ -4,6 +4,7 @@ QT += qml quick
 CONFIG += c++11
 CONFIG += console
 
+QMAKE_CXXFLAGS += -Wunused-parameter
 
 SOURCES += main.cpp \
     Model/studentterm.cpp \
