@@ -59,7 +59,7 @@ RowLayout {
             }
 
             onActivated:{
-                informGroupSelection(index)
+                proxyModel.setFilter(index)
                 console.log("InformGroupSelection" + index) }
         }
 
@@ -80,6 +80,7 @@ RowLayout {
             anchors.centerIn: parent
             onClicked: { checked ? informFilterChecked() : informFilterUnchecked()
                 console.log("Filter passed ? " + checked)
+                myProxyModel.passed = !myProxyModel.passed
             }
 
             style : CheckBoxStyle {

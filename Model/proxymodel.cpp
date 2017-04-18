@@ -5,14 +5,20 @@
 
 
 ProxyModel::ProxyModel(QObject *parent) :
-     QSortFilterProxyModel(parent)
-{}
+    QSortFilterProxyModel(parent),
+    m_filter(Proxy_Filter::GROUP_ALL),
+    m_passed(false)
+{
+
+}
 
 ProxyModel::ProxyModel(GradebookModel *model) :
-    QSortFilterProxyModel()
+    QSortFilterProxyModel(),
+    m_filter(Proxy_Filter::GROUP_ALL),
+    m_passed(true)
 {
-    //QSortFilterProxyModel::setSourceModel(model);
-    this->setSourceModel(model);
+    QSortFilterProxyModel::setSourceModel(model);
+    //this->setSourceModel(model);
 }
 
 ProxyModel::~ProxyModel()
@@ -23,23 +29,57 @@ ProxyModel::~ProxyModel()
 void ProxyModel::setFilter(int filter)
 {
     if (m_filter != filter)
+    {
         m_filter = ProxyModel::Proxy_Filter(filter);
-    emit filterChanged();
+        QSortFilterProxyModel::invalidateFilter();
+        emit filterChanged();
+    }
 }
 
-int ProxyModel::getFilter()
+int ProxyModel::filter()
 {
     return m_filter;
 }
 
+bool ProxyModel::passed()
+{
+    return m_passed;
+}
+
+void ProxyModel::setPassed(bool passed)
+{
+    qDebug() << "ProxyModel::setPassed " << passed;
+    if (m_passed != passed)
+    {
+        m_passed = passed;
+        QSortFilterProxyModel::invalidateFilter();
+        emit passedChanged();
+    }
+}
+
+/*
+QVariant ProxyModel::data(const QModelIndex &index, int role) const
+{
+    return sourceModel()->data(index, role);
+}*/
+
 bool ProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
 
+    qDebug() << "ProxyModel::filterAcceptsRow ";
     bool ret (false);
-    auto index = sourceModel()->index(source_row, 0, source_parent);
+    QModelIndex index;
+
+    if (sourceModel() != NULL)
+        index = sourceModel()->index(source_row, 0, source_parent);
+
+    if ((m_passed) && (!verifyPassedCondition(index)))
+        return false;
 
     //QAbstractItemModel *model = sourceModel();
     //auto index = model->index(source_row, 0, source_parent);
+
+
     if (index.isValid())
         switch (m_filter){
         case Proxy_Filter::GROUP_ALL :
@@ -66,6 +106,18 @@ bool ProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_pare
         }
     else
         ret = true;
+    qDebug() << "ProxyModel::filterAcceptsRow " <<  ret;
     return ret;
+
+}
+
+bool ProxyModel::verifyPassedCondition(const QModelIndex &index) const
+{
+    qDebug() << "ProxyModel::verifyPassedCondition ";
+
+    double final_grade = index.data(GradebookModel::StudentRoles::FinalRole).toDouble();
+    bool ret = final_grade >= 5.0 ? true : false;
+    return ret;
+    qDebug() << "ProxyModel::verifyPassedCondition " << ret;
 }
 

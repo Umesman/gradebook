@@ -67,8 +67,8 @@ Rectangle{
             id : stubListViewId
             anchors.bottomMargin: 0
             anchors.fill: parent
-            model : myModel
-            //model : myProxyModel
+            //model : myModel
+            model : myProxyModel
             delegate: studentDelegate
             focus: true
 

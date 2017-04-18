@@ -38,13 +38,19 @@
 **
 ****************************************************************************/
 import QtQuick 2.0
+import QtQuick.Controls 1.1
 
 //![0]
-ListView {
-    width: 200; height: 250
+ApplicationWindow {
+    id: rootId
+    visible: true
 
-    model: myModel
-    delegate: Text { text: "Animal: " + type + ", " + size }
+    ListView {
+        width: 200; height: 250
+
+        model: myProxyModel
+        delegate: Text { text: "Animal: " + name + ", " + id }
+    }
 }
 //![0]
 
