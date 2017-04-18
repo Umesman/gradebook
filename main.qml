@@ -2,6 +2,7 @@ import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.2
+//import proxymodel.test1 1.0
 
 ApplicationWindow {
     id: rootId

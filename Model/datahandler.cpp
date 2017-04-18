@@ -25,11 +25,11 @@ const StudentCollection *DataHandler::getCollection() const
 void DataHandler::initialize()
 {
     qDebug() << "DataHandler::initialize";
-    StudentTerm *st = new StudentTerm(891, "Bogdan", "2003A", "bogdan.francu6@gmail.com",
+    StudentTerm *st = new StudentTerm(891, "Bogdan", "A", "bfrancu@sql.com",
                    9, 8.2, 11, 6.3, 7.2);
 
     m_pcollection->append(st);
-    m_pcollection->append(new StudentTerm(991, "RRR", "2004B", "rrr@rrr.com",
+    m_pcollection->append(new StudentTerm(991, "Boris", "2004B", "rrr@rrr.com",
                                             6, 2.4, 5, 8, 9.10));
 
     //std::cout << *((*m_collection)[1]);//->email().toStdString();

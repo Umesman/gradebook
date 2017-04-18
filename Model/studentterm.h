@@ -43,7 +43,9 @@ public:
         QObject(parent),
         m_id {001}, m_name {"Unknown"}, m_email {"default@sql.com"}, m_assesments{1},
         m_homework1{1}, m_homework2{1}, m_labGrade{1}, m_testGrade{1}
-    {}
+    {
+        calculateFinal();
+    }
 
     // general use constructor
     StudentTerm(unsigned int id, QString name, QString group, QString email, unsigned int assessments,
@@ -59,7 +61,9 @@ public:
         m_homework2{limits(homework2)},
         m_labGrade{limits(labGrade)},
         m_testGrade{limits(testGrade)}
-    {}
+    {
+        calculateFinal();
+    }
 
     /*
     StudentTerm(const StudentTerm &st) :
@@ -71,6 +75,7 @@ public:
     unsigned int id() const { return m_id;}
     QString name() const { return m_name;}
     QString email() const {return m_email;}
+    double final() const { return m_finalGrade;}
     int assesments() const {return m_assesments;}
     double homework1() const {return m_homework1;}
     double homework2() const {return m_homework2;}

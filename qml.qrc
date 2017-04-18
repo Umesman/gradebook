@@ -10,6 +10,7 @@
         <file>MenuBarControl.qml</file>
         <file>ListDelegate.qml</file>
         <file>ListHeader.qml</file>
+        <file>view.qml</file>
     </qresource>
     <qresource prefix="/Images">
         <file>Images/next.png</file>

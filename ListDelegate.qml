@@ -15,18 +15,16 @@ Component {
             anchors.verticalCenter: parent.verticalCenter
             spacing : 20
             x: 10
-            Text {text : name}
-
-            /*
+            //Text {text : name}
             DelegateItem { textData : name }
-            DelegateItem { textData : median.toFixed(2) }
+            DelegateItem { textData : finalgrade.toFixed(2)}
             DelegateItem { textData : email }
-            DelegateItem { textData : grade1.toFixed(2) }
-            DelegateItem { textData : grade2.toFixed(2) }
-            DelegateItem { textData : homework.toFixed(2) }
-            DelegateItem { textData : project
+            DelegateItem { textData : homework1.toFixed(2) }
+            DelegateItem { textData : homework2.toFixed(2) }
+            DelegateItem { textData : labgrade.toFixed(2) }
+            DelegateItem { textData : testgrade.toFixed(2)
                            delimiterVisible: false}
-                           */
+
         }
 
         states: State {

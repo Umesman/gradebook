@@ -54,14 +54,19 @@ void StudentTerm::updateByValue(QVariant value, int attribute)
     case EMAIL : setGroup(value.toString());
         break;
     case ASSESSMENTS : setAssesments(value.toInt());
+        calculateFinal();
         break;
     case HOMEWORK1 : setHomework1(value.toDouble());
+        calculateFinal();
         break;
     case HOMEWORK2 : setHomework2(value.toDouble());
+        calculateFinal();
         break;
     case LABGRADE : setLabGrade(value.toDouble());
+        calculateFinal();
         break;
     case TESTGRADE : setTestGrade(value.toDouble());
+        calculateFinal();
         break;
     default :
         qDebug() << "No valid attribute specified: " << attribute ;

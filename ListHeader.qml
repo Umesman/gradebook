@@ -16,12 +16,11 @@ Component {
             x: 10
             Repeater {
                 id : headerRepeater
-                model : ["Name", "Median", "Email", "Grade1", "Grade2", "Grade2",
-                    "Homework", "Project"]
+                model : 7
                 delegate: DelegateItem {
                     delegateFontSize  : 10
                     delegateFontColor : "black"
-                    textData: modelData
+                    textData: myModel.headerData(index, 1, 0)
                     Button{
                         id: delegateButton
                         anchors.centerIn : parent

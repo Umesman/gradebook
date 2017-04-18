@@ -12,7 +12,8 @@ SOURCES += main.cpp \
     ViewManager/mainviewmgr.cpp \
     Model/datahandler.cpp \
     Model/gradebookmodel.cpp \
-    startup.cpp
+    startup.cpp \
+    Model/proxymodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -29,4 +30,5 @@ HEADERS += \
     ViewManager/mainviewmgr.h \
     Model/datahandler.h \
     Model/gradebookmodel.h \
-    startup.h
+    startup.h \
+    Model/proxymodel.h

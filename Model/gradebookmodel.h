@@ -10,7 +10,7 @@ class StudentTerm;
 class GradebookModel : public QAbstractListModel
 {
     Q_OBJECT
-
+    Q_ENUMS (HeaderSection)
 public:
     enum StudentRoles {
         IdRole = Qt::UserRole + 1,
@@ -18,10 +18,22 @@ public:
         GroupRole,
         EmailRole,
         AssessmentsRole,
+        FinalRole,
         Homework1Role,
         Homework2Role,
         LabGradeRole,
         TestGradeRole
+    };
+
+    enum HeaderSection {
+        Name,
+        Final,
+        Email,
+        Homework1,
+        Homework2,
+        Labgrade,
+        TestGrade,
+        LastSection
     };
 
     GradebookModel(DataHandler *dataHandler);
@@ -29,7 +41,7 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-    QVariant headerData(int section, Qt::Orientation orientation,
+    QVariant headerData(int section, Qt::Orientation orientation = Qt::Horizontal,
                            int role = Qt::DisplayRole) const;
 
     Qt::ItemFlags flags(const QModelIndex &index) const;
@@ -39,11 +51,14 @@ public:
     bool addData(const StudentTerm &st);
     bool removeRow(int row, const QModelIndex &parent = QModelIndex());
 
+    int sections() { return (int) HeaderSection::LastSection;}
+
 protected:
     QHash<int, QByteArray> roleNames() const;
 
 private:
     void setModelSource();
+    QString headerLabel(int section) const;
     DataHandler *m_phandler;
     StudentCollection *m_pcollection;
 };

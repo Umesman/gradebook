@@ -29,8 +29,24 @@ Rectangle{
         }
 
         ListDelegate{
-            id: studentDelegate            
+            id: studentDelegate
         }
+
+        Component{
+            //id : studentDelegate
+            Rectangle {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: 25
+                color: "gray"
+
+                Text {
+                    text : name
+                    anchors.centerIn: parent
+                }
+            }
+        }
+
 
         ListHeader{
             id : headerId
@@ -51,11 +67,12 @@ Rectangle{
             id : stubListViewId
             anchors.bottomMargin: 0
             anchors.fill: parent
-            model : ListModel
-            delegate : Text { text: model.modelData.name}
-            //delegate: studentDelegate
+            model : myModel
+            //model : myProxyModel
+            delegate: studentDelegate
             focus: true
 
+            //header : myModel.headerData(1, 1, 0)
             header: headerId
             highlight: highlightBar
             highlightFollowsCurrentItem: false

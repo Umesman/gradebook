@@ -7,6 +7,7 @@ enum Attributes{
     NAME,
     GROUP,
     EMAIL,
+    FINAL,
     ASSESSMENTS,
     HOMEWORK1,
     HOMEWORK2,

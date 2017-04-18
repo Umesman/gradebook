@@ -1,0 +1,23 @@
+#ifndef MAINVIEWMGR_H
+#define MAINVIEWMGR_H
+
+#include "Model/datahandler.h"
+#include "Model/gradebookmodel.h"
+#include <QObject>
+
+class MainViewMgr : public QObject
+{
+    Q_OBJECT
+
+public:
+    explicit MainViewMgr(QObject *parent = 0);
+
+signals:
+
+public slots:
+    
+private:
+   GradebookModel * m_pgradebooklistmodel; 
+};
+
+#endif // MAINVIEWMGR_H
