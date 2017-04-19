@@ -22,6 +22,11 @@ public:
 
     const StudentCollection *getCollection() const;
 
+public slots:
+    void sltRowAdded(const StudentTerm &st);
+    void sltRowRemoved(int row);
+    void sltStudentInfoChanged(const QModelIndex &index, const QVariant &value, int role);
+
 private:
     void initialize();
 

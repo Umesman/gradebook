@@ -25,7 +25,7 @@ public:
     };
 
      ProxyModel(QObject *parent = 0);
-     ProxyModel(GradebookModel *model);
+     ProxyModel(GradebookModel *model, QObject *parent=0);
 
     virtual ~ProxyModel();
 

@@ -22,6 +22,21 @@ const StudentCollection *DataHandler::getCollection() const
     return m_pcollection;
 }
 
+void DataHandler::sltRowAdded(const StudentTerm &st)
+{
+
+}
+
+void DataHandler::sltRowRemoved(int row)
+{
+
+}
+
+void DataHandler::sltStudentInfoChanged(const QModelIndex &index, const QVariant &value, int role)
+{
+
+}
+
 void DataHandler::initialize()
 {
     qDebug() << "DataHandler::initialize";

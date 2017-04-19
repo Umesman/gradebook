@@ -36,7 +36,7 @@ public:
         LastSection
     };
 
-    GradebookModel(DataHandler *dataHandler);
+    explicit GradebookModel(QObject *parent=0);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
@@ -53,13 +53,13 @@ public:
 
     int sections() { return (int) HeaderSection::LastSection;}
 
+    void setModelSource(StudentCollection *collection);
+
 protected:
     QHash<int, QByteArray> roleNames() const;
 
 private:
-    void setModelSource();
     QString headerLabel(int section) const;
-    DataHandler *m_phandler;
     StudentCollection *m_pcollection;
 };
 

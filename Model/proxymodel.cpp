@@ -12,8 +12,8 @@ ProxyModel::ProxyModel(QObject *parent) :
 
 }
 
-ProxyModel::ProxyModel(GradebookModel *model) :
-    QSortFilterProxyModel(),
+ProxyModel::ProxyModel(GradebookModel *model, QObject *parent) :
+    QSortFilterProxyModel(parent),
     m_filter(Proxy_Filter::GROUP_ALL),
     m_passed(true)
 {

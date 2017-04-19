@@ -2,11 +2,10 @@
 #include "studentterm.h"
 #include <QDebug>
 
-GradebookModel::GradebookModel(DataHandler *dataHandler)
-    : m_phandler(dataHandler),
-      m_pcollection(NULL)
+GradebookModel::GradebookModel(QObject *parent)
+    : QAbstractListModel(parent),
+      m_pcollection(Q_NULLPTR)
 {
-    setModelSource();
 }
 
 int GradebookModel::rowCount(const QModelIndex &parent) const
@@ -167,10 +166,10 @@ QHash<int, QByteArray> GradebookModel::roleNames() const
 }
 
 
-void GradebookModel::setModelSource()
+void GradebookModel::setModelSource(StudentCollection *collection)
 {
-    if (m_phandler)
-        m_pcollection = const_cast<StudentCollection*> (m_phandler->getCollection());
+    if (collection)
+        m_pcollection = collection;
 }
 
 QString GradebookModel::headerLabel(int section) const
