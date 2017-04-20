@@ -47,7 +47,7 @@ GradebookModel *ModelMgr::getModel()
 
 ProxyModel *ModelMgr::getProxy()
 {
-    return m_pproxy;
+    return m_pproxyModel;
 }
 
 MainViewMgr *ModelMgr::getViewMgr()

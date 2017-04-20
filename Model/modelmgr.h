@@ -123,9 +123,10 @@ private:
      */
     void connectSignals();
 
-   GradebookModel *m_pmodel;
-   ProxyModel *m_pproxyModel;
    DataHandler *m_phandler;
    MainViewMgr *m_pviewManager;
+   GradebookModel *m_pmodel;
+   ProxyModel *m_pproxyModel;
+
 };
 #endif // MODELMGR_H

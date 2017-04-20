@@ -2,9 +2,9 @@
 #define MAINVIEWMGR_H
 
 #include <QObject>
+//#include "Model/modelmgr.h"
 
-#include "Model/modelmgr.h"
-
+class ModelMgr;
 class StudentTerm;
 class QAbstractItemModel;
 
