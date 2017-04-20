@@ -82,5 +82,13 @@ void ModelMgr::sltFilterChanged(int filter)
 
 void ModelMgr::connectSignals()
 {
+    connect(m_pviewManager, &MainViewMgr::sgnAddRow, this, &ModelMgr::sltAddRow);
+    connect(m_pviewManager, &MainViewMgr::sgnRemoveRow, this, &ModelMgr::sltRemoveRow);
+    connect(m_pviewManager, &MainViewMgr::sgnChangeStudentInfo, this, &ModelMgr::sltChangeStudentInfo);
+    connect(m_pviewManager, &MainViewMgr::sgnPassedConditionChanged, this, &ModelMgr::sltPassedConditionChanged);
+    connect(m_pviewManager, &MainViewMgr::sgnFilterChanged, this, &ModelMgr::sltFilterChanged);
 
+    connect(this, &ModelMgr::sgnRowAdded, m_phandler, &DataHandler::sltRowAdded);
+    connect(this, &ModelMgr::sgnRowRemoved, m_phandler, &DataHandler::sltRowRemoved);
+    connect(this, &ModelMgr::sgnStudentInfoChanged, m_phandler, &DataHandler::sltStudentInfoChanged);
 }

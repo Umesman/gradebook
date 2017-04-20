@@ -11,6 +11,7 @@ class MainViewMgr;
 class GradebookModel;
 class DataHandler;
 class ProxyModel;
+class StudentTerm;
 
 class ModelMgr : public QObject
 {
