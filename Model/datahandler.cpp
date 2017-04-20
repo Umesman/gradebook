@@ -47,6 +47,10 @@ void DataHandler::initialize()
     m_pcollection->append(new StudentTerm(991, "Boris", "2004B", "rrr@rrr.com",
                                             6, 2.4, 5, 8, 9.10));
 
+    StudentTerm *stefan = new StudentTerm(892, "Stefan", "C", "stefan@sql.com", 3.80,
+                       6.03, 2.92, 3.21, 4.80);
+
+    m_pcollection->append(stefan);
     //std::cout << *((*m_collection)[1]);//->email().toStdString();
 }
 

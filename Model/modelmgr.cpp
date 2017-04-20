@@ -4,31 +4,40 @@
 #include "ViewManager/mainviewmgr.h"
 #include "proxymodel.h"
 
-ModelMgr::ModelMgr(DataHandler *handler, MainViewMgr *viewmgr, QObject *parent) :
+ModelMgr::ModelMgr(DataHandler *handler, QObject *parent) :
     QObject(parent),
     m_phandler(handler),
-    m_pviewManager(viewmgr),
+    m_pviewManager(new MainViewMgr(this)),
     m_pmodel(new GradebookModel()),
-    m_pproxymodel(new ProxyModel(m_pmodel, this))
+    m_pproxyModel(new ProxyModel(m_pmodel, this))
 {
     setModelSource();
+
 }
 
 ModelMgr::~ModelMgr()
 {
     delete m_pmodel;
-    delete m_pproxymodel;
+    m_pmodel = Q_NULLPTR;
+
+    delete m_pproxyModel;
+    m_pproxyModel = Q_NULLPTR;
+
+    delete m_pviewManager;
+    m_pviewManager = Q_NULLPTR;
 }
 
 void ModelMgr::setModelSource()
 {
     if (m_phandler)
         m_pmodel->setModelSource(const_cast<StudentCollection*> (m_phandler->getCollection()));
+
+    setProxySource();
 }
 
 void ModelMgr::setProxySource()
 {
-    m_pproxymodel->setSourceModel(m_pmodel);
+    m_pproxyModel->setSourceModel(m_pmodel);
 }
 
 GradebookModel *ModelMgr::getModel()
@@ -39,6 +48,11 @@ GradebookModel *ModelMgr::getModel()
 ProxyModel *ModelMgr::getProxy()
 {
     return m_pproxy;
+}
+
+MainViewMgr *ModelMgr::getViewMgr()
+{
+    return m_pviewManager;
 }
 
 void ModelMgr::sltAddRow(const StudentTerm &st)
@@ -67,16 +81,16 @@ void ModelMgr::sltChangeStudentInfo(const QModelIndex &index, const QVariant &va
 
 void ModelMgr::sltPassedConditionChanged(bool cond)
 {
-    if (Q_NULLPTR != m_pproxymodel) {
-        m_pproxymodel->setPassed(cond);
+    if (Q_NULLPTR != m_pproxyModel) {
+        m_pproxyModel->setPassed(cond);
     }
 }
 
 void ModelMgr::sltFilterChanged(int filter)
 {
-    if (Q_NULLPTR != m_pproxymodel) {
+    if (Q_NULLPTR != m_pproxyModel) {
         if (!(filter > ProxyModel::Proxy_Filter::GROUP_ALL || filter < ProxyModel::Proxy_Filter::GROUP_A))
-            m_pproxymodel->setFilter(filter);
+            m_pproxyModel->setFilter(filter);
     }
 }
 

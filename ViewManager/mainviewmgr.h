@@ -3,7 +3,8 @@
 
 #include <QObject>
 
-class GradebookModel;
+#include "Model/modelmgr.h"
+
 class StudentTerm;
 class QAbstractItemModel;
 
@@ -12,9 +13,9 @@ class MainViewMgr : public QObject
     Q_OBJECT
 
 public:
-    explicit MainViewMgr(QObject *parent = 0);
+    explicit MainViewMgr(ModelMgr *pmanager = 0);
 
-    void setModel(QAbstractItemModel *);
+    void setModel(QAbstractItemModel *model);
 signals:
     void sgnAddRow(const StudentTerm &st);
     void sgnRemoveRow(int row);
@@ -25,7 +26,7 @@ signals:
 public slots:
 
 private:
-   GradebookModel* m_pmodel;
+   ModelMgr* m_pmodelManager;
 };
 
 #endif // MAINVIEWMGR_H

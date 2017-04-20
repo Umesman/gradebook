@@ -1,24 +1,11 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <iostream>
-#include <qqmlengine.h>
-#include <qqmlcontext.h>
-#include <qqml.h>
 
-#include "Model/studentterm.h"
-#include "Model/studentcollection.h"
-#include "Model/datahandler.h"
 #include "startup.h"
-#include "Model/gradebookmodel.h"
-#include <QtQuick/qquickitem.h>
-#include <QtQuick/qquickview.h>
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-
-
-
     Startup startup;
     /*
     QQmlApplicationEngine engine;

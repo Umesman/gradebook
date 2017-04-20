@@ -1,6 +1,8 @@
 #include "mainviewmgr.h"
 
-MainViewMgr::MainViewMgr(QObject *parent) : QObject(parent)
+MainViewMgr::MainViewMgr(ModelMgr *pmanager) :
+    QObject((QObject*)pmanager),
+    m_pmodelManager(pmanager)
 {
 
 }

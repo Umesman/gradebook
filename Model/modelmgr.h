@@ -1,16 +1,14 @@
 #ifndef MODELMGR_H
 #include <QObject>
 
-//#include "gradebookmodel.h"
-//#include "proxymodel.h"
-//#include "datahandler.h"
+#include "gradebookmodel.h"
+#include "proxymodel.h"
+#include "datahandler.h"
+#include "ViewManager/mainviewmgr.h"
 
 #define MODELMGR_H
 
-class MainViewMgr;
-class GradebookModel;
-class DataHandler;
-class ProxyModel;
+class QModelIndex;
 class StudentTerm;
 
 class ModelMgr : public QObject
@@ -22,7 +20,7 @@ public:
      * @param handler takes a pointer to the datahandler
      * @param parent
      */
-    explicit ModelMgr(DataHandler *handler, MainViewMgr *viewmgr, QObject *parent=0);
+    explicit ModelMgr(DataHandler *handler, QObject *parent=0);
 
     /**
       *
@@ -52,6 +50,12 @@ public:
      * @return
      */
     ProxyModel *getProxy();
+
+    /**
+     * @brief getViewMgr
+     * @returns an instance of the MainViewMgr
+     */
+    MainViewMgr *getViewMgr();
 
 
 signals:
@@ -120,8 +124,8 @@ private:
     void connectSignals();
 
    GradebookModel *m_pmodel;
-   ProxyModel *m_pproxymodel;
+   ProxyModel *m_pproxyModel;
    DataHandler *m_phandler;
    MainViewMgr *m_pviewManager;
-
+};
 #endif // MODELMGR_H
