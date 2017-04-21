@@ -15,7 +15,7 @@ ProxyModel::ProxyModel(QObject *parent) :
 ProxyModel::ProxyModel(GradebookModel *model, QObject *parent) :
     QSortFilterProxyModel(parent),
     m_filter(Proxy_Filter::GROUP_ALL),
-    m_passed(true)
+    m_passed(false)
 {
     QSortFilterProxyModel::setSourceModel(model);
     //this->setSourceModel(model);
@@ -106,7 +106,7 @@ bool ProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_pare
         }
     else
         ret = true;
-    qDebug() << "ProxyModel::filterAcceptsRow " <<  ret;
+    qDebug() << "ProxyModel::filterAcceptsRow " <<  ret << " "<<source_row;
     return ret;
 
 }

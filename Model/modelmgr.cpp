@@ -11,12 +11,14 @@ ModelMgr::ModelMgr(DataHandler *handler, QObject *parent) :
     m_pmodel(new GradebookModel()),
     m_pproxyModel(new ProxyModel(m_pmodel, this))
 {
+    qDebug() << Q_FUNC_INFO;
     setModelSource();
 
 }
 
 ModelMgr::~ModelMgr()
 {
+    qDebug() << Q_FUNC_INFO;
     delete m_pmodel;
     m_pmodel = Q_NULLPTR;
 
@@ -29,6 +31,7 @@ ModelMgr::~ModelMgr()
 
 void ModelMgr::setModelSource()
 {
+    qDebug() << Q_FUNC_INFO;
     if (m_phandler)
         m_pmodel->setModelSource(const_cast<StudentCollection*> (m_phandler->getCollection()));
 
@@ -37,26 +40,31 @@ void ModelMgr::setModelSource()
 
 void ModelMgr::setProxySource()
 {
+    qDebug() << Q_FUNC_INFO;
     m_pproxyModel->setSourceModel(m_pmodel);
 }
 
 GradebookModel *ModelMgr::getModel()
 {
+    qDebug() << Q_FUNC_INFO;
     return m_pmodel;
 }
 
 ProxyModel *ModelMgr::getProxy()
 {
+    qDebug() << Q_FUNC_INFO;
     return m_pproxyModel;
 }
 
 MainViewMgr *ModelMgr::getViewMgr()
 {
+    qDebug() << Q_FUNC_INFO;
     return m_pviewManager;
 }
 
 void ModelMgr::sltAddRow(const StudentTerm &st)
 {
+    qDebug() << Q_FUNC_INFO;
     if (Q_NULLPTR != m_pmodel)
         if (m_pmodel->addData(st))
             emit sgnRowAdded(st);
@@ -64,6 +72,7 @@ void ModelMgr::sltAddRow(const StudentTerm &st)
 
 void ModelMgr::sltRemoveRow(int row)
 {
+    qDebug() << Q_FUNC_INFO;
     if (Q_NULLPTR != m_pmodel)
         if (m_pmodel->removeRow(row))
             emit sgnRowRemoved(row);
@@ -73,6 +82,7 @@ void ModelMgr::sltChangeStudentInfo(const QModelIndex &index, const QVariant &va
 {
     //New QModelIndex objects are created by the model
     //using the QAbstractItemModel::createIndex() function
+    qDebug() << Q_FUNC_INFO;
     if (Q_NULLPTR != m_pmodel)
         if (m_pmodel->setData(index, value, role))
             emit sgnStudentInfoChanged(index, value, role);
@@ -81,6 +91,7 @@ void ModelMgr::sltChangeStudentInfo(const QModelIndex &index, const QVariant &va
 
 void ModelMgr::sltPassedConditionChanged(bool cond)
 {
+    qDebug() << Q_FUNC_INFO;
     if (Q_NULLPTR != m_pproxyModel) {
         m_pproxyModel->setPassed(cond);
     }
@@ -88,6 +99,7 @@ void ModelMgr::sltPassedConditionChanged(bool cond)
 
 void ModelMgr::sltFilterChanged(int filter)
 {
+    qDebug() << Q_FUNC_INFO;
     if (Q_NULLPTR != m_pproxyModel) {
         if (!(filter > ProxyModel::Proxy_Filter::GROUP_ALL || filter < ProxyModel::Proxy_Filter::GROUP_A))
             m_pproxyModel->setFilter(filter);
@@ -96,6 +108,7 @@ void ModelMgr::sltFilterChanged(int filter)
 
 void ModelMgr::connectSignals()
 {
+    qDebug() << Q_FUNC_INFO;
     connect(m_pviewManager, &MainViewMgr::sgnAddRow, this, &ModelMgr::sltAddRow);
     connect(m_pviewManager, &MainViewMgr::sgnRemoveRow, this, &ModelMgr::sltRemoveRow);
     connect(m_pviewManager, &MainViewMgr::sgnChangeStudentInfo, this, &ModelMgr::sltChangeStudentInfo);

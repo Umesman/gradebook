@@ -37,11 +37,20 @@ ApplicationWindow {
                 id : listBoxId
             }
 
-            StatisticsRow{
-                id: statisticsBoxId
+            Rectangle{
+                height : 320
+                width: 300
+                Loader{
+                    source: firstRowId.editActive? "EditForm.qml" : "StatisticsRow.qml"
+                    active: true
+                }
             }
 
-        }
+            //StatisticsRow{
+            //    id: statisticsBoxId
+            //}
+
+        }//rowlayout
 
         ListNavigatorRow{
             id: thirdRowId

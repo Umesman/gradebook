@@ -11,6 +11,7 @@ RowLayout {
     signal informFilterChecked()
     signal informFilterUnchecked()
 
+    property bool editActive : editBoxId.checked
 
     //id : firstRowId
     anchors {
@@ -97,7 +98,7 @@ RowLayout {
                         visible: checkBoxId.checked
                         color: "#555"
                         border.color: "#333"
-                        radius: 2
+                        radius: 16
                         anchors.margins: 4
                         anchors.fill: parent
                     } // Rectangle
@@ -109,7 +110,7 @@ RowLayout {
                     implicitHeight : 30
                     border.width: control.activeFocus ? 2 : 1
                     border.color: "darkslateblue"
-                    radius: 4
+                    radius: 8
                     Text{ text: qsTr("Passed")
                         anchors.centerIn: parent}
 
@@ -118,6 +119,93 @@ RowLayout {
         } //CheckBox
 
     } // Rectangle
+
+    Rectangle {
+        color : "transparent"
+        Layout.fillWidth: true
+        Layout.minimumWidth: minimumRectWidth
+        Layout.preferredWidth: preferredRectWidth
+        Layout.maximumWidth: maximumRectWidth
+        Layout.minimumHeight: minimumRectHeight
+
+
+        CheckBox{
+            id: editBoxId
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.centerIn: parent
+
+            style : CheckBoxStyle {
+                background: Rectangle{
+                    color : editBoxId.hovered ? "lightsteelblue" : "lightslategrey"
+                    implicitWidth : 100
+                    implicitHeight : 30
+                    border.width: control.activeFocus ? 2 : 1
+                    border.color: "darkslateblue"
+                    radius: 8
+                }
+
+                indicator: Rectangle {
+                    id: indicatorRect
+                    color : "transparent"
+                    implicitHeight: 16
+                    implicitWidth: 16
+                    radius: 16
+                    Image{
+                        anchors.left: parent.right
+                        anchors.leftMargin: -9
+                        anchors.verticalCenter: parent.verticalCenter
+                        source: editBoxId.checked ? "qrc:/Images/Images/edit_checked.png"
+                            : "qrc:/Images/Images/edit.png"
+                    }
+
+                }
+
+                label: Rectangle{
+                    color : "transparent"
+                    anchors.centerIn: editBoxId
+                    implicitHeight: 16
+                    implicitWidth: 16
+                    Label{
+                        anchors.left: parent.right
+                        anchors.leftMargin: 8
+                        text: qsTr("Edit")
+                    }
+
+                }
+
+            }
+        }
+
+    }
+
+    Button {
+        id : deleteButton
+        text : qsTr("Delete")
+
+
+        style: ButtonStyle{
+            background: Rectangle {
+                color : deleteButton.hovered ? "lightsteelblue" : "lightslategrey"
+                implicitWidth : 100
+                implicitHeight : 30
+                border.width: control.activeFocus ? 2 : 1
+                border.color: "darkslateblue"
+                radius: 4
+                Image {
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 1
+                    source : deleteButton.pressed ? "qrc:/Images/Images/delete_checked.png"
+                                                : "qrc:/Images/Images/delete.png"
+                }
+            }
+        }
+
+        onClicked:{
+            informDeleteEntry()
+            console.log("deleteButton clicked")
+        }
+    }
 
     Rectangle {
         color : "transparent"

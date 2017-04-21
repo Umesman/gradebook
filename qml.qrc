@@ -11,6 +11,7 @@
         <file>ListDelegate.qml</file>
         <file>ListHeader.qml</file>
         <file>view.qml</file>
+        <file>EditForm.qml</file>
     </qresource>
     <qresource prefix="/Images">
         <file>Images/next.png</file>
@@ -20,5 +21,9 @@
         <file>Images/dropdown_checked.png</file>
         <file>Images/next_checked.png</file>
         <file>Images/prev_checked.png</file>
+        <file>Images/edit_checked.png</file>
+        <file>Images/edit.png</file>
+        <file>Images/delete_checked.png</file>
+        <file>Images/delete.png</file>
     </qresource>
 </RCC>
