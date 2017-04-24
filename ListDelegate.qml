@@ -24,7 +24,89 @@ Component {
             DelegateItem { textData : homework2.toFixed(2) }
             DelegateItem { textData : labgrade.toFixed(2) }
             DelegateItem { textData : testgrade.toFixed(2)
-                           delimiterVisible: false}
+                delimiterVisible: false}
+            Rectangle{
+                color : "transparent"
+                height: 25
+                width: 106
+            }//Rectangle
+
+            MouseArea{
+                objectName: "MouseArea"
+                anchors.fill: parent
+                onClicked: {
+                    wrapper.ListView.view.currentIndex = index
+                    console.log("Current index changed: " + index)
+                }
+                onDoubleClicked:  informStudentDetails(index)
+            }//MouseArea
+
+        }// RowLayout
+
+        CheckBox{
+            id: editCheckBox
+            objectName: "CheckBox"
+            property bool isChecked: false
+
+            anchors.left: parent.left
+            anchors.leftMargin: (parent.width - (editCheckBox.width*2 + 16))
+            height: 25
+            width: 40
+            style : CheckBoxStyle {
+                background: Rectangle{
+                    color : editCheckBox.hovered ? "lightsteelblue" : "lightslategrey"
+                    implicitWidth : 40
+                    implicitHeight : 25
+                    border.width: control.activeFocus ? 2 : 1
+                    border.color: "darkslateblue"
+                    radius: 4
+                }
+                indicator: Rectangle {
+                    id: indicatorRect
+                    color : "transparent"
+                    implicitHeight: 16
+                    implicitWidth: 16
+                    radius: 16
+                    Image{
+                        id : editImage
+                        anchors.left: parent.right
+                        anchors.leftMargin: -9
+                        anchors.verticalCenter: parent.verticalCenter
+                        source: editCheckBox.checked ? "qrc:/Images/Images/edit_checked.png"
+                                                     : "qrc:/Images/Images/edit.png"
+                    }
+                }
+            }
+
+            //http://stackoverflow.com/questions/38798450/qt-5-7-qml-why-are-my-checkbox-property-bindings-disappearing
+
+            onClicked: wrapper.ListView.view.currentIndex = index
+        }
+        Button{
+            id: deleteButton
+            anchors.left: editCheckBox.right
+            anchors.leftMargin: 2
+            style: ButtonStyle{
+                background: Rectangle {
+                    color : deleteButton.hovered ? "lightsteelblue" : "lightslategrey"
+                    implicitWidth : 40
+                    implicitHeight : 25
+                    border.width: control.activeFocus ? 2 : 1
+                    border.color: "darkslateblue"
+                    radius: 4
+                    Image {
+                        anchors.centerIn: parent
+                        source : deleteButton.pressed ? "qrc:/Images/Images/delete_checked.png"
+                                                    : "qrc:/Images/Images/delete.png"
+                    }
+                }
+            }
+
+            onClicked:{
+                informDeleteEntry()
+                console.log("deleteButton clicked")
+            }
+
 
         }
 
@@ -35,14 +117,6 @@ Component {
         }
         transitions: Transition {
             NumberAnimation { properties: "x"; duration: 200 }
-        }
-        MouseArea{
-            anchors.fill: parent
-            onClicked: {
-                wrapper.ListView.view.currentIndex = index
-                console.log("Current index changed: " + index)
-            }
-            onDoubleClicked:  informStudentDetails(index)
         }
     }
 }

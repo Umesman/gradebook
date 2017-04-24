@@ -13,7 +13,7 @@ Rectangle{
 
 
     color : "transparent"
-    width: 948
+    width: 948 + 116
     height: 320
 
     Rectangle {
@@ -22,6 +22,7 @@ Rectangle{
         border.color: "black"
         border.width: 2.4
 
+        //clip: true
         anchors {
             fill : parent
             left : parent.left
@@ -74,7 +75,13 @@ Rectangle{
             highlight: highlightBar
             highlightFollowsCurrentItem: false
 
-            ScrollBar.horizontal: ScrollBar {active: true }
+            //flickableDirection: Flickable.HorizontalFlick
+            //clip: true
+
+            ScrollBar.horizontal: ScrollBar{
+                active: true}
+
+
         }
     }
 }

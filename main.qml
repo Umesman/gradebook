@@ -7,7 +7,7 @@ import QtQuick.Controls.Styles 1.2
 ApplicationWindow {
     id: rootId
     visible: true
-    width: 1280
+    width: 1280 + 116
     height: 536
     title: qsTr("Gradebook demo")
 
@@ -50,6 +50,7 @@ ApplicationWindow {
             }
 
             Rectangle{
+                visible: false
                 height : 320
                 width: 300
                 Loader{
@@ -57,11 +58,6 @@ ApplicationWindow {
                     active: true
                 }
             }
-
-            //StatisticsRow{
-            //    id: statisticsBoxId
-            //}
-
         }//rowlayout
 
         ListNavigatorRow{

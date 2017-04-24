@@ -34,7 +34,8 @@ public:
         Homework1,
         Homework2,
         Labgrade,
-        TestGrade,
+        TestGrade,        
+        Actions,
         LastSection
     };
 

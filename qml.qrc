@@ -12,6 +12,7 @@
         <file>ListHeader.qml</file>
         <file>view.qml</file>
         <file>EditForm.qml</file>
+        <file>Scrollbar.qml</file>
     </qresource>
     <qresource prefix="/Images">
         <file>Images/next.png</file>

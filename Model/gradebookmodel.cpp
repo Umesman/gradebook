@@ -181,7 +181,7 @@ void GradebookModel::setModelSource(StudentCollection *collection)
 QString GradebookModel::headerLabel(int section) const
 {
     qDebug() << Q_FUNC_INFO;
-    if (section < 0 || section > 7)
+    if (section < 0 || section > 8)
         return QString();
 
     QString ret_value;
@@ -210,6 +210,9 @@ QString GradebookModel::headerLabel(int section) const
         break;
     case HeaderSection::TestGrade :
         ret_value = "Test grade";
+        break;
+    case HeaderSection::Actions :
+        ret_value = "Actions";
         break;
     default:
         ret_value = "default";

@@ -84,35 +84,46 @@ RowLayout {
                 myProxyModel.passed = !myProxyModel.passed
             }
 
-            style : CheckBoxStyle {
-                indicator : Rectangle{
-                    id : extern
-                    implicitHeight: 16
-                    implicitWidth: 16
-                    radius: 16
-                    border.color: checkBoxId.activeFocus ? "red" : "black"
-                    border.width: 1
+            //            Label {
+            //                anchors.left: parent.right
+            //                text : "Passed" }
 
-                    Rectangle {
-                        id : intern
-                        visible: checkBoxId.checked
-                        color: "#555"
-                        border.color: "#333"
-                        radius: 16
-                        anchors.margins: 4
-                        anchors.fill: parent
-                    } // Rectangle
-                } // Rectangle
+            style : CheckBoxStyle {
+                //                indicator : Rectangle{
+                //                    id : extern
+                //                    implicitHeight: 16
+                //                    implicitWidth: 16
+                //                    radius: 16
+                //                    border.color: checkBoxId.activeFocus ? "red" : "black"
+                //                    border.width: 1
+
+                //                    Rectangle {
+                //                        id : intern
+                //                        visible: checkBoxId.checked
+                //                        color: "#555"
+                //                        border.color: "#333"
+                //                        radius: 16
+                //                        anchors.margins: 4
+                //                        anchors.fill: parent
+                //                    } // Rectangle
+                //                } // Rectangle
 
                 background: Rectangle{
-                    color : checkBoxId.hovered ? "lightsteelblue" : "lightslategrey"
+                    color : "transparent" //checkBoxId.hovered ? "lightsteelblue" : "lightslategrey"
                     implicitWidth : 100
                     implicitHeight : 30
-                    border.width: control.activeFocus ? 2 : 1
-                    border.color: "darkslateblue"
+                    //border.width: control.activeFocus ? 2 : 1
+                    // border.color: "darkslateblue"
                     radius: 8
                     Text{ text: qsTr("Passed")
-                        anchors.centerIn: parent}
+                        anchors.centerIn: parent
+                        //color: checkBoxId.checked ?  "midnightblue" : BoxId.hovered ? "cadetblue" : "black"
+                        //http://stackoverflow.com/questions/38798450/qt-5-7-qml-why-are-my-checkbox-property-bindings-disappearing
+                        Binding on color {
+                            when: checkBoxId.checked
+                            value: "midnightblue"
+                        }
+                    }
 
                 } // Rectangle
             } //CheckBoxStyle
@@ -120,93 +131,77 @@ RowLayout {
 
     } // Rectangle
 
-    Rectangle {
-        color : "transparent"
-        Layout.fillWidth: true
-        Layout.minimumWidth: minimumRectWidth
-        Layout.preferredWidth: preferredRectWidth
-        Layout.maximumWidth: maximumRectWidth
-        Layout.minimumHeight: minimumRectHeight
+    //    Rectangle {
+    //        color : "transparent"
+    //        Layout.fillWidth: true
+    //        Layout.minimumWidth: minimumRectWidth
+    //        Layout.preferredWidth: preferredRectWidth
+    //        Layout.maximumWidth: maximumRectWidth
+    //        Layout.minimumHeight: minimumRectHeight
 
 
-        CheckBox{
-            id: editBoxId
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.centerIn: parent
-            text: qsTr("Edit   ")
+    //        CheckBox{
+    //            id: editBoxId
+    //            anchors.verticalCenter: parent.verticalCenter
+    //            anchors.centerIn: parent
+    //            text: qsTr("Edit   ")
 
-            style : CheckBoxStyle {
-                background: Rectangle{
-                    color : editBoxId.hovered ? "lightsteelblue" : "lightslategrey"
-                    implicitWidth : 100
-                    implicitHeight : 30
-                    border.width: control.activeFocus ? 2 : 1
-                    border.color: "darkslateblue"
-                    radius: 8
-                }
+    //            style : CheckBoxStyle {
+    //                background: Rectangle{
+    //                    color : editBoxId.hovered ? "lightsteelblue" : "lightslategrey"
+    //                    implicitWidth : 100
+    //                    implicitHeight : 30
+    //                    border.width: control.activeFocus ? 2 : 1
+    //                    border.color: "darkslateblue"
+    //                    radius: 8
+    //                }
 
-                indicator: Rectangle {
-                    id: indicatorRect
-                    color : "transparent"
-                    implicitHeight: 16
-                    implicitWidth: 16
-                    radius: 16
-                    Image{
-                        anchors.left: parent.right
-                        anchors.leftMargin: -9
-                        anchors.verticalCenter: parent.verticalCenter
-                        source: editBoxId.checked ? "qrc:/Images/Images/edit_checked.png"
-                            : "qrc:/Images/Images/edit.png"
-                    }
+    //                indicator: Rectangle {
+    //                    id: indicatorRect
+    //                    color : "transparent"
+    //                    implicitHeight: 16
+    //                    implicitWidth: 16
+    //                    radius: 16
+    //                    Image{
+    //                        anchors.left: parent.right
+    //                        anchors.leftMargin: -9
+    //                        anchors.verticalCenter: parent.verticalCenter
+    //                        source: editBoxId.checked ? "qrc:/Images/Images/edit_checked.png"
+    //                            : "qrc:/Images/Images/edit.png"
+    //                    }
 
-                }
+    //                }
+    //            }
+    //        }
 
-                /*label: Rectangle{
-                    color : "transparent"
-                    anchors.centerIn: editBoxId
-                    implicitHeight: 16
-                    implicitWidth: 16
-                    Label{
-                        anchors.left: parent.right
-                        anchors.leftMargin: 8
-                        text: qsTr("Edit")
-                    }
+    //    }
 
-                }*/
+    //    Button {
+    //        id : deleteButton
+    //        text : qsTr("Delete")
+    //        style: ButtonStyle{
+    //            background: Rectangle {
+    //                color : deleteButton.hovered ? "lightsteelblue" : "lightslategrey"
+    //                implicitWidth : 100
+    //                implicitHeight : 30
+    //                border.width: control.activeFocus ? 2 : 1
+    //                border.color: "darkslateblue"
+    //                radius: 4
+    //                Image {
+    //                    anchors.verticalCenter: parent.verticalCenter
+    //                    anchors.left: parent.left
+    //                    anchors.leftMargin: 1
+    //                    source : deleteButton.pressed ? "qrc:/Images/Images/delete_checked.png"
+    //                                                : "qrc:/Images/Images/delete.png"
+    //                }
+    //            }
+    //        }
 
-            }
-        }
-
-    }
-
-    Button {
-        id : deleteButton
-        text : qsTr("Delete")
-
-
-        style: ButtonStyle{
-            background: Rectangle {
-                color : deleteButton.hovered ? "lightsteelblue" : "lightslategrey"
-                implicitWidth : 100
-                implicitHeight : 30
-                border.width: control.activeFocus ? 2 : 1
-                border.color: "darkslateblue"
-                radius: 4
-                Image {
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
-                    anchors.leftMargin: 1
-                    source : deleteButton.pressed ? "qrc:/Images/Images/delete_checked.png"
-                                                : "qrc:/Images/Images/delete.png"
-                }
-            }
-        }
-
-        onClicked:{
-            informDeleteEntry()
-            console.log("deleteButton clicked")
-        }
-    }
+    //        onClicked:{
+    //            informDeleteEntry()
+    //            console.log("deleteButton clicked")
+    //        }
+    //    }
 
     Rectangle {
         color : "transparent"
