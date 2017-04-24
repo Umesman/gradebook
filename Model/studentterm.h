@@ -10,7 +10,7 @@
 class StudentTerm : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+    //Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
 
 
 private:
@@ -18,7 +18,8 @@ private:
     double limits(double grade);
 
     unsigned int m_id;
-    QString m_name;
+    QString m_firstName;
+    QString m_lastName;
     QString m_group;
     QString m_email;
     unsigned int m_assesments;
@@ -28,6 +29,8 @@ private:
     double m_testGrade;
     double m_finalGrade;
 
+    void setFirstName(const QString &name);
+    void setLastName (const QString &name);
     void setEmail(const QString &email);
     void setAssesments(const int  assesments);
     void setHomework1(const double homework);
@@ -41,19 +44,20 @@ public:
     // default constructor
     StudentTerm(QObject* parent = 0) :
         QObject(parent),
-        m_id {001}, m_name {"Unknown"}, m_email {"default@sql.com"}, m_assesments{1},
+        m_id {001}, m_firstName {"Unknown"}, m_lastName{"Niet"}, m_email {"default@sql.com"}, m_assesments{1},
         m_homework1{1}, m_homework2{1}, m_labGrade{1}, m_testGrade{1}
     {
         calculateFinal();
     }
 
     // general use constructor
-    StudentTerm(unsigned int id, QString name, QString group, QString email, unsigned int assessments,
+    StudentTerm(unsigned int id, QString firstName, QString lastName, QString group, QString email, unsigned int assessments,
                 double homework1, double homework2, double labGrade, double testGrade,
                 QObject* parent = 0) :
         QObject(parent),
         m_id {id},
-        m_name{name},
+        m_firstName{firstName},
+        m_lastName{lastName},
         m_group{group},
         m_email{email},
         m_assesments{assessments},
@@ -68,12 +72,11 @@ public:
     /*
     StudentTerm(const StudentTerm &st) :
         QObject(st)
-    {}*/
-
-    void setName(const QString &name);
+    {}*/    
 
     unsigned int id() const { return m_id;}
-    QString name() const { return m_name;}
+    QString firstName() const { return m_firstName;}
+    QString lastName() const {return m_lastName;}
     QString email() const {return m_email;}
     double final() const { return m_finalGrade;}
     int assesments() const {return m_assesments;}

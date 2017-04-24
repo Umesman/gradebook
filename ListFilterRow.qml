@@ -133,6 +133,7 @@ RowLayout {
             id: editBoxId
             anchors.verticalCenter: parent.verticalCenter
             anchors.centerIn: parent
+            text: qsTr("Edit   ")
 
             style : CheckBoxStyle {
                 background: Rectangle{
@@ -160,7 +161,7 @@ RowLayout {
 
                 }
 
-                label: Rectangle{
+                /*label: Rectangle{
                     color : "transparent"
                     anchors.centerIn: editBoxId
                     implicitHeight: 16
@@ -171,7 +172,7 @@ RowLayout {
                         text: qsTr("Edit")
                     }
 
-                }
+                }*/
 
             }
         }
@@ -217,15 +218,15 @@ RowLayout {
 
         Image {
             anchors.verticalCenter: parent.verticalCenter
-            anchors.left: parent.left
-            anchors.leftMargin: 75
+            anchors.right: dateLabelId.left
+            //anchors.leftMargin: 75
             source : "qrc:/Images/Images/date.png"
         }
 
         Text {
             //color : "white"
             anchors.left: parent.left
-            anchors.leftMargin: 100
+            anchors.leftMargin: 75
             anchors.verticalCenter: parent.verticalCenter
             id : dateLabelId
             text: dateString

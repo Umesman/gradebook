@@ -31,7 +31,7 @@ RowLayout{
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 1
-                    source : prevButton.pressed ? "qrc:/Images/Images/prev.png"
+                    source : prevButton.pressed ? "qrc:/Images/Images/prev_checked.png"
                                                 : "qrc:/Images/Images/prev.png"
                 }
             }

@@ -40,14 +40,14 @@ void DataHandler::sltStudentInfoChanged(const QModelIndex &index, const QVariant
 void DataHandler::initialize()
 {
     qDebug() << "DataHandler::initialize";
-    StudentTerm *st = new StudentTerm(891, "Bogdan", "A", "bfrancu@sql.com",
+    StudentTerm *st = new StudentTerm(891, "Bogdan", "Francu", "A", "bfrancu@sql.com",
                    9, 8.2, 11, 6.3, 7.2);
 
     m_pcollection->append(st);
-    m_pcollection->append(new StudentTerm(991, "Boris", "2004B", "rrr@rrr.com",
+    m_pcollection->append(new StudentTerm(991, "Boris", "Yeltsin", "B", "rrr@rrr.com",
                                             6, 2.4, 5, 8, 9.10));
 
-    StudentTerm *stefan = new StudentTerm(892, "Stefan", "C", "stefan@sql.com", 3.80,
+    StudentTerm *stefan = new StudentTerm(892, "Stefan", "celMare", "C", "stefan@sql.com", 3.80,
                        6.03, 2.92, 3.21, 4.80);
 
     m_pcollection->append(stefan);

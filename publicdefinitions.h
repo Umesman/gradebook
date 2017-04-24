@@ -4,7 +4,8 @@
 
 enum Attributes{
     ID,
-    NAME,
+    FIRST_NAME,
+    LAST_NAME,
     GROUP,
     EMAIL,
     FINAL,

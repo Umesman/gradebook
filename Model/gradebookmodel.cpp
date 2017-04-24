@@ -25,8 +25,11 @@ QVariant GradebookModel::data(const QModelIndex &index, int role) const
     case IdRole :
         return st_term->id();
         break;
-    case NameRole :
-        return st_term->name();
+    case FirstNameRole :
+        return st_term->firstName();
+        break;
+    case LastNameRole :
+        return st_term->lastName();
         break;
     case GroupRole :
         return st_term->group();
@@ -87,9 +90,11 @@ bool GradebookModel::setData(const QModelIndex &index, const QVariant &value, in
         return false;
 
     switch (role) {
-    case NameRole:
-        m_pcollection->updateEntry(index.row(), value, Attributes::NAME);
+    case FirstNameRole:
+        m_pcollection->updateEntry(index.row(), value, Attributes::FIRST_NAME);
         break;
+    case LastNameRole:
+        m_pcollection->updateEntry(index.row(), value, Attributes::LAST_NAME);
     case GroupRole:
         m_pcollection->updateEntry(index.row(), value, Attributes::GROUP);
         break;
@@ -131,7 +136,7 @@ bool GradebookModel::addData(const StudentTerm &st)
     else
     {
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
-        m_pcollection->append(new StudentTerm(st.id(), st.name(), st.group(), st.email(),
+        m_pcollection->append(new StudentTerm(st.id(), st.firstName(), st.lastName(), st.group(), st.email(),
                                               st.assesments(),st.homework1(),st.homework2(),
                                               st.labGrade(), st.testGrade()));
         endInsertRows();
@@ -151,7 +156,8 @@ QHash<int, QByteArray> GradebookModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
 
-    roles[NameRole] = "name";
+    roles[FirstNameRole] = "firstName";
+    roles[LastNameRole] = "lastName";
     roles[IdRole] = "id";
     roles[GroupRole] = "group";
     roles[FinalRole] = "finalgrade";
@@ -174,15 +180,18 @@ void GradebookModel::setModelSource(StudentCollection *collection)
 
 QString GradebookModel::headerLabel(int section) const
 {
-    qDebug() << "GradebookModel::headerLabel";
-    if (section < 0 || section > 6)
+    qDebug() << Q_FUNC_INFO;
+    if (section < 0 || section > 7)
         return QString();
 
     QString ret_value;
 
     switch (section){
-    case HeaderSection::Name :
+    case HeaderSection::FirstName :
         ret_value = "Name";
+        break;
+    case HeaderSection::LastName :
+        ret_value = "Last Name";
         break;
     case HeaderSection::Final :
         ret_value = "Final grade";
@@ -203,8 +212,9 @@ QString GradebookModel::headerLabel(int section) const
         ret_value = "Test grade";
         break;
     default:
-        ret_value = "";
+        ret_value = "default";
     }
 
+    qDebug() << Q_FUNC_INFO <<ret_value;
     return ret_value;
 }

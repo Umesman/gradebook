@@ -20,6 +20,18 @@ ApplicationWindow {
 
     menuBar: MenuBarControl{}
 
+    toolBar: ToolBar{
+        TextField{
+            id: searchBox
+
+            placeholderText: "Search..."
+
+            width: rootId.width / 10 * 2
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+        }
+    }
+
     ColumnLayout{
         id: columnId
         spacing: 40

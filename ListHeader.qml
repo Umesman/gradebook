@@ -16,7 +16,7 @@ Component {
             x: 10
             Repeater {
                 id : headerRepeater
-                model : 7
+                model : 8
                 delegate: DelegateItem {
                     delegateFontSize  : 10
                     delegateFontColor : "black"

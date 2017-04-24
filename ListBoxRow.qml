@@ -1,5 +1,5 @@
 import QtQuick 2.2
-import QtQuick.Controls 1.1
+import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.2
 
@@ -69,13 +69,12 @@ Rectangle{
             anchors.fill: parent
             //model : myModel
             model : myProxyModel
-            delegate: studentDelegate
-            focus: true
-
-            //header : myModel.headerData(1, 1, 0)
+            delegate: studentDelegate                    
             header: headerId
             highlight: highlightBar
             highlightFollowsCurrentItem: false
+
+            ScrollBar.horizontal: ScrollBar {active: true }
         }
     }
 }

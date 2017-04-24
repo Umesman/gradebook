@@ -16,7 +16,8 @@ Component {
             spacing : 20
             x: 10
             //Text {text : name}
-            DelegateItem { textData : name }
+            DelegateItem { textData : firstName }
+            DelegateItem { textData : lastName }
             DelegateItem { textData : finalgrade.toFixed(2)}
             DelegateItem { textData : email }
             DelegateItem { textData : homework1.toFixed(2) }

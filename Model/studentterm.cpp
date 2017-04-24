@@ -2,10 +2,20 @@
 #include <iostream>
 #include <QDebug>
 
-void StudentTerm::setName(const QString &name)
+//void StudentTerm::set(const QString &name)
+//{
+//    m_name = name;
+//    emit nameChanged();
+//}
+
+void StudentTerm::setFirstName(const QString &name)
 {
-    m_name = name;
-    emit nameChanged();
+    m_firstName = name;
+}
+
+void StudentTerm::setLastName(const QString &name)
+{
+    m_lastName = name;
 }
 
 void StudentTerm::setEmail(const QString &email)
@@ -47,7 +57,9 @@ void StudentTerm::updateByValue(QVariant value, int attribute)
 {
     switch (attribute)
     {
-    case NAME : setName(value.toString());
+    case FIRST_NAME : setFirstName(value.toString());
+        break;
+    case LAST_NAME : setLastName(value.toString());
         break;
     case GROUP : setGroup(value.toString());
         break;
@@ -89,10 +101,11 @@ double StudentTerm::limits(double grade)
     return grade;
 }
 
+
 std::ostream& operator<<(std::ostream& os, StudentTerm& st)
 {
     qDebug() << "operator<< StudentTerm";
-    os << "Name: "  << st.name().toStdString() << std::endl;
+    os << "Name: "  << st.firstName().toStdString() << std::endl;
     os << "Group: " << st.group().toStdString() << std::endl;
     os << "Email: " << st.email().toStdString() << std::endl;
     os << "Assessments: " << st.assesments() << std::endl;

@@ -18,6 +18,7 @@ void StudentCollection::append(StudentTerm *st)
 {
     qDebug() << "StudentCollection::addEntry";
     m_studentList->append(st);
+    //emit NotifyEntryAdded(count()-1);
 }
 
 
@@ -25,7 +26,7 @@ void StudentCollection::removeEntry(int index)
 {
     qDebug() << "StudentCollection::removeEntry";
     m_studentList->removeAt(index);
-    emit NotifyEntryRemoved(index);
+    //emit NotifyEntryRemoved(index);
 }
 
 void StudentCollection::updateEntry(int index, QVariant value, int attribute)

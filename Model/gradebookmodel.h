@@ -14,7 +14,8 @@ class GradebookModel : public QAbstractListModel
 public:
     enum StudentRoles {
         IdRole = Qt::UserRole + 1,
-        NameRole,
+        FirstNameRole,
+        LastNameRole,
         GroupRole,
         EmailRole,
         AssessmentsRole,
@@ -26,7 +27,8 @@ public:
     };
 
     enum HeaderSection {
-        Name,
+        FirstName,
+        LastName,
         Final,
         Email,
         Homework1,

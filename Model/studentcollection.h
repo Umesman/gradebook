@@ -13,8 +13,8 @@ class StudentCollection : public QObject
     Q_OBJECT
 
 signals:
-    void NotifyEntryRemoved(int index);
-    void NotifyEntryAdded(int index);
+    //void NotifyEntryRemoved(int index);
+    //void NotifyEntryAdded(int index);
 
 public:
 

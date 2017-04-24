@@ -23,7 +23,7 @@
         <file>Images/prev_checked.png</file>
         <file>Images/edit_checked.png</file>
         <file>Images/edit.png</file>
-        <file>Images/delete_checked.png</file>
         <file>Images/delete.png</file>
+        <file>Images/delete_checked.png</file>
     </qresource>
 </RCC>
