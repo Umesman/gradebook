@@ -20,7 +20,7 @@ Component {
                 delegate: DelegateItem {
                     delegateFontSize  : 10
                     delegateFontColor : "black"
-                    textData: myModel.headerData(index, 1, 0)
+                    textData: viewMgr.model.headerData(index, 1, 0)
                     Button{
                         id: delegateButton
                         anchors.centerIn : parent

@@ -6,6 +6,7 @@ GradebookModel::GradebookModel(QObject *parent)
     : QAbstractListModel(parent),
       m_pcollection(Q_NULLPTR)
 {
+    qDebug() << Q_FUNC_INFO;
 }
 
 int GradebookModel::rowCount(const QModelIndex &parent) const

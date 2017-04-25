@@ -11,7 +11,7 @@ RowLayout {
     signal informFilterChecked()
     signal informFilterUnchecked()
 
-    property bool editActive : editBoxId.checked
+    //property bool editActive : editBoxId.checked
 
     //id : firstRowId
     anchors {
@@ -60,7 +60,7 @@ RowLayout {
             }
 
             onActivated:{
-                proxyModel.setFilter(index)
+                viewMgr.groupFilter = index;
                 console.log("InformGroupSelection" + index) }
         }
 
@@ -81,7 +81,7 @@ RowLayout {
             anchors.centerIn: parent
             onClicked: { checked ? informFilterChecked() : informFilterUnchecked()
                 console.log("Filter passed ? " + checked)
-                myProxyModel.passed = !myProxyModel.passed
+                viewMgr.passed = ! viewMgr.passed
             }
 
             //            Label {

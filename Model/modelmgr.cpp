@@ -7,13 +7,13 @@
 ModelMgr::ModelMgr(DataHandler *handler, QObject *parent) :
     QObject(parent),
     m_phandler(handler),
-    m_pviewManager(new MainViewMgr(this)),
     m_pmodel(new GradebookModel()),
-    m_pproxyModel(new ProxyModel(m_pmodel, this))
+    m_pproxyModel(new ProxyModel(m_pmodel, this)),
+    m_pviewManager(Q_NULLPTR)
 {
     qDebug() << Q_FUNC_INFO;
     setModelSource();
-
+    m_pviewManager = new MainViewMgr(this);
 }
 
 ModelMgr::~ModelMgr()
@@ -42,6 +42,17 @@ void ModelMgr::setProxySource()
 {
     qDebug() << Q_FUNC_INFO;
     m_pproxyModel->setSourceModel(m_pmodel);
+}
+
+void ModelMgr::setPassedFilter(bool passed)
+{
+    m_pproxyModel->setPassed(passed);
+}
+
+void ModelMgr::setGroupFilter(int groupFilter)
+{
+    qDebug() << Q_FUNC_INFO << " Group: " << groupFilter;
+    m_pproxyModel->setFilter(groupFilter);
 }
 
 GradebookModel *ModelMgr::getModel()

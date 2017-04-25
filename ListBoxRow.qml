@@ -68,8 +68,7 @@ Rectangle{
             id : stubListViewId
             anchors.bottomMargin: 0
             anchors.fill: parent
-            //model : myModel
-            model : myProxyModel
+            model : viewMgr.modelProxy
             delegate: studentDelegate                    
             header: headerId
             highlight: highlightBar

@@ -9,7 +9,7 @@ ProxyModel::ProxyModel(QObject *parent) :
     m_filter(Proxy_Filter::GROUP_ALL),
     m_passed(false)
 {
-
+    qDebug() << Q_FUNC_INFO;
 }
 
 ProxyModel::ProxyModel(GradebookModel *model, QObject *parent) :
@@ -17,6 +17,7 @@ ProxyModel::ProxyModel(GradebookModel *model, QObject *parent) :
     m_filter(Proxy_Filter::GROUP_ALL),
     m_passed(false)
 {
+    qDebug() << Q_FUNC_INFO;
     QSortFilterProxyModel::setSourceModel(model);
     //this->setSourceModel(model);
 }
@@ -28,6 +29,7 @@ ProxyModel::~ProxyModel()
 
 void ProxyModel::setFilter(int filter)
 {
+    qDebug() << Q_FUNC_INFO << " group: " << filter;
     if (m_filter != filter)
     {
         m_filter = ProxyModel::Proxy_Filter(filter);
@@ -38,11 +40,13 @@ void ProxyModel::setFilter(int filter)
 
 int ProxyModel::filter()
 {
+    qDebug() << Q_FUNC_INFO;
     return m_filter;
 }
 
 bool ProxyModel::passed()
 {
+    qDebug() << Q_FUNC_INFO;
     return m_passed;
 }
 

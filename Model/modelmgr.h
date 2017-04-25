@@ -40,6 +40,18 @@ public:
     void setProxySource();
 
     /**
+     * @brief setPassedFilter
+     * @param passed
+     */
+    void setPassedFilter(bool passed);
+
+    /**
+     * @brief setGroupFilter
+     * @param groupFilter
+     */
+    void setGroupFilter(int groupFilter);
+
+    /**
      * @brief getModel
      * @return
      */
@@ -124,9 +136,10 @@ private:
     void connectSignals();
 
    DataHandler *m_phandler;
-   MainViewMgr *m_pviewManager;
    GradebookModel *m_pmodel;
    ProxyModel *m_pproxyModel;
+   MainViewMgr *m_pviewManager;
+
 
 };
 #endif // MODELMGR_H

@@ -17,11 +17,11 @@ class ProxyModel : public QSortFilterProxyModel
 public:
 
     enum Proxy_Filter{
+        GROUP_ALL,
         GROUP_A,
         GROUP_B,
         GROUP_C,
-        GROUP_D,
-        GROUP_ALL
+        GROUP_D
     };
 
      ProxyModel(QObject *parent = 0);
