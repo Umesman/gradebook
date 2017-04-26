@@ -10,6 +10,8 @@ Component {
         border.color: "grey"
         width : stubListViewId.width
         height : 30
+        clip: true
+        z: 2
         RowLayout{
             anchors.verticalCenter: parent.verticalCenter
             spacing : 20

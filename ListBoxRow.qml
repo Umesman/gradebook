@@ -1,4 +1,4 @@
-import QtQuick 2.2
+import QtQuick 2.5
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.2
@@ -71,11 +71,12 @@ Rectangle{
             model : viewMgr.modelProxy
             delegate: studentDelegate                    
             header: headerId
+            headerPositioning: ListView.OverlayHeader
             highlight: highlightBar
             highlightFollowsCurrentItem: false
 
             //flickableDirection: Flickable.HorizontalFlick
-            //clip: true
+            clip: true
 
             ScrollBar.horizontal: ScrollBar{
                 active: true}

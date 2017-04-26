@@ -12,6 +12,7 @@ Component {
         width: parent.width
         height: 25
         RowLayout {
+            id : delegateRowLayout
             anchors.verticalCenter: parent.verticalCenter
             spacing : 20
             x: 10
@@ -110,11 +111,19 @@ Component {
 
         }
 
-        states: State {
-            name: "Current"
-            when: wrapper.ListView.isCurrentItem
-            //PropertyChanges { target: wrapper; x: 10 }
+        Rectangle{
+            anchors.top: delegateRowLayout.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width - 40
+            height : 1
+            color: "teal"
         }
+
+//        states: State {
+//            name: "Current"
+//            when: wrapper.ListView.isCurrentItem
+//            //PropertyChanges { target: wrapper; x: 10 }
+//        }
         transitions: Transition {
             NumberAnimation { properties: "x"; duration: 200 }
         }
