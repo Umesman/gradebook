@@ -23,7 +23,7 @@ void StudentTerm::setEmail(const QString &email)
     m_email = email;
 }
 
-void StudentTerm::setAssesments(const int assesments)
+void StudentTerm::setAssesments(const unsigned int assesments)
 {
     m_assesments = assesments;
 }
@@ -83,6 +83,20 @@ void StudentTerm::updateByValue(QVariant value, int attribute)
     default :
         qDebug() << "No valid attribute specified: " << attribute ;
     }
+}
+
+void StudentTerm::resetInternalData()
+{
+    m_firstName = QString();
+    m_lastName = QString();
+    m_group = QString();
+    m_email = QString();
+    m_assesments = 0;
+    m_homework1 = 1;
+    m_homework2 = 1;
+    m_labGrade = 1;
+    m_testGrade = 1;
+    calculateFinal();
 }
 
 void StudentTerm::calculateFinal()

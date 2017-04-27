@@ -2,12 +2,14 @@
 #include "../Model/proxymodel.h"
 #include "../Model/modelmgr.h"
 #include "../Model/gradebookmodel.h"
+#include "editform.h"
 
 MainViewMgr::MainViewMgr(ModelMgr *pmanager) :
     QObject(pmanager),
     m_pmodelManager(pmanager),
     m_pmodel(Q_NULLPTR),
     m_pmodelProxy(Q_NULLPTR),
+    m_pStudentForm(Q_NULLPTR),
     m_groupFilter(ProxyModel::Proxy_Filter::GROUP_ALL),
     m_passed(false),
     m_editModeActive(false)
@@ -19,6 +21,13 @@ MainViewMgr::MainViewMgr(ModelMgr *pmanager) :
         //m_pmodelProxy = m_pmodelManager->getProxy();
         setModelProxy(m_pmodelManager->getProxy());
     }
+}
+
+MainViewMgr::~MainViewMgr()
+{
+    qDebug() << Q_FUNC_INFO;
+    if (Q_NULLPTR != m_pStudentForm)
+        delete m_pStudentForm;
 }
 
 void MainViewMgr::setModel(QAbstractItemModel *model)
@@ -73,6 +82,11 @@ void MainViewMgr::setEditMode(bool activeVal)
         m_editModeActive = activeVal;
         emit editModeChanged();
     }
+}
+
+void MainViewMgr::editStudentInfo(int id)
+{
+    qDebug() << Q_FUNC_INFO << "Id: " << id;
 }
 
 QAbstractItemModel *MainViewMgr::model() const

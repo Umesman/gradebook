@@ -38,6 +38,7 @@ Component {
                 onClicked: {
                     wrapper.ListView.view.currentIndex = index
                     console.log("Current index changed: " + index)
+                    console.log("Current id " + model.id)
                 }
                 onDoubleClicked:  informStudentDetails(index)
             }//MouseArea
@@ -55,12 +56,25 @@ Component {
             width: 40
             style : CheckBoxStyle {
                 background: Rectangle{
-                    color : editCheckBox.hovered ? "lightsteelblue" : "lightslategrey"
+                    color : "transparent"
                     implicitWidth : 40
                     implicitHeight : 25
-                    border.width: control.activeFocus ? 2 : 1
-                    border.color: "darkslateblue"
-                    radius: 4
+                    //border.width: control.activeFocus ? 2 : 1
+                    //border.color: "darkslateblue"
+                    //radius: 4
+                    Rectangle{
+                        anchors.left: parent.left
+                        implicitHeight: parent.implicitHeight / 3
+                        implicitWidth: 1
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+                    Rectangle{
+                        anchors.right: parent.right
+                        anchors.rightMargin: 1
+                        implicitHeight: parent.implicitHeight / 3
+                        implicitWidth: 1
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
                 }
                 indicator: Rectangle {
                     id: indicatorRect
@@ -73,15 +87,19 @@ Component {
                         anchors.left: parent.right
                         anchors.leftMargin: -9
                         anchors.verticalCenter: parent.verticalCenter
-                        source: editCheckBox.checked ? "qrc:/Images/Images/edit_checked.png"
-                                                     : "qrc:/Images/Images/edit.png"
+                        source: editCheckBox.checked ? "qrc:/Images/Images/edit.png"
+                                                     : "qrc:/Images/Images/edit_checked.png"
                     }
                 }
             }
 
             //http://stackoverflow.com/questions/38798450/qt-5-7-qml-why-are-my-checkbox-property-bindings-disappearing
 
-            onClicked: wrapper.ListView.view.currentIndex = index
+            onClicked: {
+                wrapper.ListView.view.currentIndex = index
+                viewMgr.editMode = !viewMgr.editMode
+                viewMgr.editStudentInfo(model.id);
+            }
         }
         Button{
             id: deleteButton
@@ -89,16 +107,29 @@ Component {
             anchors.leftMargin: 2
             style: ButtonStyle{
                 background: Rectangle {
-                    color : deleteButton.hovered ? "lightsteelblue" : "lightslategrey"
+                    color : "transparent"//deleteButton.hovered ? "lightsteelblue" : "lightslategrey"
                     implicitWidth : 40
                     implicitHeight : 25
-                    border.width: control.activeFocus ? 2 : 1
-                    border.color: "darkslateblue"
-                    radius: 4
+                    //border.width: control.activeFocus ? 2 : 1
+                    //border.color: "darkslateblue"
+                    //radius: 4
+//                    Rectangle{
+//                        anchors.left: parent.left
+//                        implicitHeight: parent.implicitHeight / 3
+//                        implicitWidth: 1
+//                        anchors.verticalCenter: parent.verticalCenter
+//                    }
+                    Rectangle{
+                        anchors.right: parent.right
+                        implicitHeight: parent.implicitHeight / 3
+                        implicitWidth: 1
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+
                     Image {
                         anchors.centerIn: parent
-                        source : deleteButton.pressed ? "qrc:/Images/Images/delete_checked.png"
-                                                    : "qrc:/Images/Images/delete.png"
+                        source : deleteButton.pressed ? "qrc:/Images/Images/delete.png"
+                                                      : "qrc:/Images/Images/delete_checked.png"
                     }
                 }
             }
@@ -119,11 +150,11 @@ Component {
             color: "teal"
         }
 
-//        states: State {
-//            name: "Current"
-//            when: wrapper.ListView.isCurrentItem
-//            //PropertyChanges { target: wrapper; x: 10 }
-//        }
+        //        states: State {
+        //            name: "Current"
+        //            when: wrapper.ListView.isCurrentItem
+        //            //PropertyChanges { target: wrapper; x: 10 }
+        //        }
         transitions: Transition {
             NumberAnimation { properties: "x"; duration: 200 }
         }

@@ -14,7 +14,8 @@ SOURCES += main.cpp \
     Model/gradebookmodel.cpp \
     startup.cpp \
     Model/proxymodel.cpp \
-    Model/modelmgr.cpp
+    Model/modelmgr.cpp \
+    ViewManager/editform.cpp
 
 RESOURCES += qml.qrc
 
@@ -33,4 +34,5 @@ HEADERS += \
     Model/gradebookmodel.h \
     startup.h \
     Model/proxymodel.h \
-    Model/modelmgr.h
+    Model/modelmgr.h \
+    ViewManager/editform.h

@@ -7,9 +7,9 @@
 
 #include "publicdefinitions.h"
 
-class StudentTerm : public QObject
+class StudentTerm //: public QObject
 {
-    Q_OBJECT
+    //Q_OBJECT
     //Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
 
 
@@ -32,7 +32,7 @@ private:
     void setFirstName(const QString &name);
     void setLastName (const QString &name);
     void setEmail(const QString &email);
-    void setAssesments(const int  assesments);
+    void setAssesments(const unsigned int assesments);
     void setHomework1(const double homework);
     void setHomework2(const double homework);
     void setLabGrade(const double labGrade);
@@ -42,8 +42,8 @@ private:
 public:
 
     // default constructor
-    StudentTerm(QObject* parent = 0) :
-        QObject(parent),
+    StudentTerm() :
+        //QObject(parent),
         m_id {001}, m_firstName {"Unknown"}, m_lastName{"Niet"}, m_email {"default@sql.com"}, m_assesments{1},
         m_homework1{1}, m_homework2{1}, m_labGrade{1}, m_testGrade{1}
     {
@@ -52,9 +52,8 @@ public:
 
     // general use constructor
     StudentTerm(unsigned int id, QString firstName, QString lastName, QString group, QString email, unsigned int assessments,
-                double homework1, double homework2, double labGrade, double testGrade,
-                QObject* parent = 0) :
-        QObject(parent),
+                double homework1, double homework2, double labGrade, double testGrade) :
+        //QObject(parent),
         m_id {id},
         m_firstName{firstName},
         m_lastName{lastName},
@@ -79,7 +78,7 @@ public:
     QString lastName() const {return m_lastName;}
     QString email() const {return m_email;}
     double final() const { return m_finalGrade;}
-    int assesments() const {return m_assesments;}
+    unsigned int assesments() const {return m_assesments;}
     double homework1() const {return m_homework1;}
     double homework2() const {return m_homework2;}
     double labGrade() const {return m_labGrade;}
@@ -87,6 +86,7 @@ public:
     QString group() const { return m_group;}
 
     void updateByValue(QVariant value, int attribute);
+    void resetInternalData();
     friend std::ostream& operator<<(std::ostream& os, StudentTerm& st);
 
 signals:

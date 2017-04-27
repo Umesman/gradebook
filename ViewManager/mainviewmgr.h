@@ -8,6 +8,7 @@ class ModelMgr;
 class StudentTerm;
 class QAbstractItemModel;
 class QSortFilterProxyModel;
+class EditForm;
 
 class MainViewMgr : public QObject
 {
@@ -39,12 +40,14 @@ class MainViewMgr : public QObject
 
 public:
     explicit MainViewMgr(ModelMgr *pmanager = 0);
+    virtual ~MainViewMgr();
 
     void setModel(QAbstractItemModel *model);
     void setModelProxy(QSortFilterProxyModel *proxyModel);
     void setPassed(bool passed);
     void setGroupFilter(int currentGroup);
     void setEditMode(bool active);
+    Q_INVOKABLE void editStudentInfo(int id);
 
 
     QAbstractItemModel *model() const;
@@ -74,6 +77,7 @@ private:
    ModelMgr *m_pmodelManager;
    QAbstractItemModel *m_pmodel;
    QSortFilterProxyModel *m_pmodelProxy;
+   EditForm *m_pStudentForm;
    int m_groupFilter;
    bool m_passed;
    bool m_editModeActive;
