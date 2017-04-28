@@ -1,3 +1,4 @@
+
 #include "mainviewmgr.h"
 #include "../Model/proxymodel.h"
 #include "../Model/modelmgr.h"
@@ -10,6 +11,7 @@ MainViewMgr::MainViewMgr(ModelMgr *pmanager) :
     m_pmodel(Q_NULLPTR),
     m_pmodelProxy(Q_NULLPTR),
     m_pStudentForm(Q_NULLPTR),
+    m_currentIndex(QPersistentModelIndex()),
     m_groupFilter(ProxyModel::Proxy_Filter::GROUP_ALL),
     m_passed(false),
     m_editModeActive(false)
@@ -86,7 +88,10 @@ void MainViewMgr::setEditMode(bool activeVal)
 
 void MainViewMgr::editStudentInfo(int id)
 {
+
     qDebug() << Q_FUNC_INFO << "Id: " << id;
+
+
 }
 
 QAbstractItemModel *MainViewMgr::model() const

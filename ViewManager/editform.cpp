@@ -20,7 +20,16 @@ void EditForm::resetStudentInfo()
 
 bool EditForm::hasStudentInfoChanged()
 {
+    bool ret(false);
+    for (int attribute = Attributes::ID; attribute < Attributes::FINAL; attribute++)
+    {
+        if (m_localStudentInfo.checkByAttribute(m_pStudentInfo, attribute))
+        {
 
+            ret = true;
+        }
+    }
+    return ret;
 }
 
 QString EditForm::firstName() const

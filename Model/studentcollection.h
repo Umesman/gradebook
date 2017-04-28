@@ -29,8 +29,8 @@ public:
     void clear();
     int size() const;
     int count() const;
-    bool isIdPresent(const int id) const;
 
+    std::pair<bool, int> isIdPresent(const int id) const;
     const QList<StudentTerm *> *getList() const ;
     StudentTerm * getTermAt(int index);
 

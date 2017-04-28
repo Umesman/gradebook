@@ -85,6 +85,11 @@ void StudentTerm::updateByValue(QVariant value, int attribute)
     }
 }
 
+bool StudentTerm::checkByAttribute(StudentTerm *st, int attribute)
+{
+
+}
+
 void StudentTerm::resetInternalData()
 {
     m_firstName = QString();

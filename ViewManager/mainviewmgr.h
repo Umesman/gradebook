@@ -3,12 +3,15 @@
 
 #include <QObject>
 //#include "Model/modelmgr.h"
+#include <QPersistentModelIndex>
 
 class ModelMgr;
 class StudentTerm;
+class EditForm;
 class QAbstractItemModel;
 class QSortFilterProxyModel;
-class EditForm;
+//class QPersistentModelIndex;
+
 
 class MainViewMgr : public QObject
 {
@@ -78,6 +81,7 @@ private:
    QAbstractItemModel *m_pmodel;
    QSortFilterProxyModel *m_pmodelProxy;
    EditForm *m_pStudentForm;
+   QPersistentModelIndex m_currentIndex;
    int m_groupFilter;
    bool m_passed;
    bool m_editModeActive;

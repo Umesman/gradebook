@@ -7,13 +7,13 @@ enum Attributes{
     FIRST_NAME,
     LAST_NAME,
     GROUP,
-    EMAIL,
-    FINAL,
+    EMAIL,    
     ASSESSMENTS,
     HOMEWORK1,
     HOMEWORK2,
     LABGRADE,
-    TESTGRADE
+    TESTGRADE,
+    FINAL
 };
 
 

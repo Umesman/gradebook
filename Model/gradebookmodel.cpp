@@ -129,7 +129,7 @@ bool GradebookModel::setData(const QModelIndex &index, const QVariant &value, in
 
 bool GradebookModel::addData(const StudentTerm &st)
 {
-    if (m_pcollection->isIdPresent(st.id()))
+    if (m_pcollection->isIdPresent(st.id()).first)
     {
         qDebug() << "Id already present.";
         return false;
@@ -177,6 +177,15 @@ void GradebookModel::setModelSource(StudentCollection *collection)
 {
     if (collection)
         m_pcollection = collection;
+}
+
+int GradebookModel::IndexOfId(const int id) const
+{
+    std::pair<bool, int> pair = m_pcollection->isIdPresent(id);
+    if (!pair.first)
+        qDebug() << Q_FUNC_INFO << " id " << id << " not found.";
+
+    return pair.second;
 }
 
 QString GradebookModel::headerLabel(int section) const
