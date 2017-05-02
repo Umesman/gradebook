@@ -47,17 +47,18 @@ public:
     Q_INVOKABLE QVariant headerData(int section, Qt::Orientation orientation = Qt::Horizontal,
                            int role = Qt::DisplayRole) const;
 
-
     Qt::ItemFlags flags(const QModelIndex &index) const;
     bool setData(const QModelIndex &index, const QVariant &value,
                  int role = Qt::EditRole);
-
     bool addData(const StudentTerm &st);
     bool removeRow(int row, const QModelIndex &parent = QModelIndex());
-
     int sections() { return (int) HeaderSection::LastSection;}
-
     void setModelSource(StudentCollection *collection);
+
+    int indexOfId(const int id) const;
+    const StudentTerm *listValueAt(int index);
+
+
 
 protected:
     QHash<int, QByteArray> roleNames() const;

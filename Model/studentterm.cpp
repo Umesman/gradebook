@@ -1,6 +1,8 @@
 #include "studentterm.h"
 #include <iostream>
 #include <QDebug>
+#include <cmath>
+#include <limits>
 
 //void StudentTerm::set(const QString &name)
 //{
@@ -85,9 +87,59 @@ void StudentTerm::updateByValue(QVariant value, int attribute)
     }
 }
 
-bool StudentTerm::checkByAttribute(StudentTerm *st, int attribute)
+bool StudentTerm::checkIfAttributeChanged(const StudentTerm *st, int attribute)
 {
+    if (Q_NULLPTR == st)
+        return false;
 
+    bool ret(false);
+
+    switch (attribute) {
+    case Attributes::ID:
+        if (st->id() != this->id())
+            ret = true;
+        break;
+    case Attributes::FIRST_NAME:
+        if (st->firstName() != this->firstName())
+            ret = true;
+        break;
+    case Attributes::LAST_NAME:
+        if (st->lastName() != this->lastName())
+            ret = true;
+        break;
+    case Attributes::GROUP:
+        if (st->group() != this->group())
+            ret = true;
+        break;
+    case Attributes::EMAIL:
+        if (st->email() != this->email())
+            ret = true;
+        break;
+    case Attributes::ASSESSMENTS:
+        if (st->assesments() != this->assesments())
+            ret = true;
+        break;
+    case Attributes::HOMEWORK1:
+        if (!areSame(st->homework1(), this->homework1()))
+            ret = true;
+        break;
+    case Attributes::HOMEWORK2:
+        if (!areSame(st->homework2(), this->homework2()))
+            ret = true;
+        break;
+    case Attributes::LABGRADE:
+        if (!areSame(st->labGrade(), this->labGrade()))
+            ret = true;
+        break;
+    case Attributes::TESTGRADE:
+        if (!areSame(st->testGrade(), this->testGrade()))
+            ret = true;
+        break;
+    default:
+        break;
+    }
+
+    return ret;
 }
 
 void StudentTerm::resetInternalData()
@@ -96,6 +148,7 @@ void StudentTerm::resetInternalData()
     m_lastName = QString();
     m_group = QString();
     m_email = QString();
+    m_id = 0;
     m_assesments = 0;
     m_homework1 = 1;
     m_homework2 = 1;
@@ -118,6 +171,11 @@ double StudentTerm::limits(double grade)
         return 1;
 
     return grade;
+}
+
+bool StudentTerm::areSame(double a, double b)
+{
+    return std::fabs(a - b) < std::numeric_limits<double>::epsilon();
 }
 
 

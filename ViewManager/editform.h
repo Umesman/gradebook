@@ -35,7 +35,7 @@ signals:
 public:
     EditForm(QObject *parent=0);
     // set the pointer to the current studentterm which should be edited
-    void setStudentInfo(StudentTerm *st);
+    void setStudentInfo(const StudentTerm *st);
     void resetStudentInfo();
     bool hasStudentInfoChanged();
 

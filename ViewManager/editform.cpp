@@ -1,4 +1,5 @@
 #include "editform.h"
+#include <QDebug>
 
 EditForm::EditForm(QObject *parent) :
     QObject(parent),
@@ -8,25 +9,31 @@ EditForm::EditForm(QObject *parent) :
 
 }
 
-void EditForm::setStudentInfo(StudentTerm *st)
+void EditForm::setStudentInfo(const StudentTerm *st)
 {
-
+    qDebug() << Q_FUNC_INFO << st;
+    if (Q_NULLPTR != st)
+    {
+        resetStudentInfo();
+        m_localStudentInfo = *st;
+    }
 }
 
 void EditForm::resetStudentInfo()
 {
-
+    m_localStudentInfo.resetInternalData();
 }
+
 
 bool EditForm::hasStudentInfoChanged()
 {
     bool ret(false);
     for (int attribute = Attributes::ID; attribute < Attributes::FINAL; attribute++)
     {
-        if (m_localStudentInfo.checkByAttribute(m_pStudentInfo, attribute))
+        if (m_localStudentInfo.checkIfAttributeChanged(m_pStudentInfo, attribute))
         {
-
             ret = true;
+            // emit signal for viewmgr sgnChangeStudentInfo
         }
     }
     return ret;

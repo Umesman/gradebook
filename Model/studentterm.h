@@ -16,6 +16,7 @@ class StudentTerm //: public QObject
 private:
     void calculateFinal ();
     double limits(double grade);
+    bool areSame(double a, double b);
 
     unsigned int m_id;
     QString m_firstName;
@@ -86,7 +87,7 @@ public:
     QString group() const { return m_group;}
 
     void updateByValue(QVariant value, int attribute);
-    bool checkByAttribute(StudentTerm * st, int attribute);
+    bool checkIfAttributeChanged(const StudentTerm * st, int attribute);
     void resetInternalData();
     friend std::ostream& operator<<(std::ostream& os, StudentTerm& st);
 

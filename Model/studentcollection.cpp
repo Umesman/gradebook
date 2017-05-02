@@ -67,7 +67,7 @@ void StudentCollection::clear()
 std::pair<bool, int> StudentCollection::isIdPresent(const int id) const
 {
     for (auto it = m_studentList->begin(); it != m_studentList->end(); it++)
-        if (id == (*it)->id())
+        if (id == static_cast<int>((*it)->id()))
         {
 
             return std::make_pair (true, m_studentList->indexOf(*it) );

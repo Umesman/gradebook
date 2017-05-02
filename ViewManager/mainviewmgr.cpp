@@ -90,8 +90,11 @@ void MainViewMgr::editStudentInfo(int id)
 {
 
     qDebug() << Q_FUNC_INFO << "Id: " << id;
-
-
+    int row = static_cast<GradebookModel *>(m_pmodel)->indexOfId(id);
+    //QModelIndex index = m_pmodel->index(row, 0, QModelIndex());
+    const StudentTerm *editableStudent = static_cast<GradebookModel *>(m_pmodel)->listValueAt(row);
+    if (Q_NULLPTR != editableStudent)
+        m_pStudentForm->setStudentInfo(editableStudent);
 }
 
 QAbstractItemModel *MainViewMgr::model() const

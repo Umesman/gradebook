@@ -25,37 +25,26 @@ QVariant GradebookModel::data(const QModelIndex &index, int role) const
     switch(role) {
     case IdRole :
         return st_term->id();
-        break;
     case FirstNameRole :
         return st_term->firstName();
-        break;
     case LastNameRole :
         return st_term->lastName();
-        break;
     case GroupRole :
         return st_term->group();
-        break;
     case EmailRole :
         return st_term->email();
-        break;
     case FinalRole:
         return st_term->final();
-        break;
     case AssessmentsRole :
         return st_term->assesments();
-        break;
     case Homework1Role :
         return st_term->homework1();
-        break;
     case Homework2Role :
         return st_term->homework2();
-        break;
     case LabGradeRole :
         return st_term->labGrade();
-        break;
     case TestGradeRole :
         return st_term->testGrade();
-        break;
     default:
         return QVariant();
     }
@@ -96,6 +85,7 @@ bool GradebookModel::setData(const QModelIndex &index, const QVariant &value, in
         break;
     case LastNameRole:
         m_pcollection->updateEntry(index.row(), value, Attributes::LAST_NAME);
+        break;
     case GroupRole:
         m_pcollection->updateEntry(index.row(), value, Attributes::GROUP);
         break;
@@ -137,9 +127,10 @@ bool GradebookModel::addData(const StudentTerm &st)
     else
     {
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
-        m_pcollection->append(new StudentTerm(st.id(), st.firstName(), st.lastName(), st.group(), st.email(),
-                                              st.assesments(),st.homework1(),st.homework2(),
-                                              st.labGrade(), st.testGrade()));
+        //        m_pcollection->append(new StudentTerm(st.id(), st.firstName(), st.lastName(), st.group(), st.email(),
+        //                                              st.assesments(),st.homework1(),st.homework2(),
+        //                                              st.labGrade(), st.testGrade()));
+        m_pcollection->append(new StudentTerm(st));
         endInsertRows();
         return true;
     }
@@ -179,13 +170,23 @@ void GradebookModel::setModelSource(StudentCollection *collection)
         m_pcollection = collection;
 }
 
-int GradebookModel::IndexOfId(const int id) const
+int GradebookModel::indexOfId(const int id) const
 {
+    qDebug() << Q_FUNC_INFO << "id " << id;
     std::pair<bool, int> pair = m_pcollection->isIdPresent(id);
     if (!pair.first)
         qDebug() << Q_FUNC_INFO << " id " << id << " not found.";
 
     return pair.second;
+}
+
+const StudentTerm *GradebookModel::listValueAt(int index)
+{
+    qDebug() << Q_FUNC_INFO << " row " << index;
+    if (Q_NULLPTR != m_pcollection)
+        return m_pcollection->getTermAt(index);
+
+    return Q_NULLPTR;
 }
 
 QString GradebookModel::headerLabel(int section) const
