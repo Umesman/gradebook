@@ -97,7 +97,7 @@ Component {
 
             onClicked: {
                 wrapper.ListView.view.currentIndex = index
-                viewMgr.editMode = !viewMgr.editMode
+                //viewMgr.editMode = !viewMgr.editMode
                 viewMgr.editStudentInfo(model.id);
             }
         }

@@ -14,6 +14,22 @@ Rectangle{
     border.color: "#333"
     border.width: 2
 
+    function updateFieldData()
+    {
+
+    }
+
+    function updateFormData()
+    {
+        editForm.firstName = firstNameField.text;
+        editForm.lastName = lastNameField.text;
+        editForm.email = emailField.text;
+        editForm.homework1 = hmk1TextField.text;
+        editForm.homework2 = hmk2TextField.text;
+        editForm.labGrade = labTextField.text;
+        editForm.testGrade = testTextField.text;
+    }
+
     Component{
         id: upperTextFieldStyle
         TextFieldStyle {
@@ -27,7 +43,6 @@ Rectangle{
             }
             placeholderTextColor: "grey"
         }
-
     }
 
     Component{
@@ -42,9 +57,7 @@ Rectangle{
                 border.width: 1
             }
             placeholderTextColor: "grey"
-
         }
-
     }
 
     id: root
@@ -144,13 +157,13 @@ Rectangle{
                     anchors.top: hmk1Label.bottom
                     anchors.horizontalCenter: parent.horizontalCenter
                     style: lowerTextFieldStyle
-  //                  validator : RegExpValidator{regExp: /[\d\d\.\d\d]/}
-                    validator: DoubleValidator{
-                        top : 10.00
-                        bottom : 1.0
-                        decimals : 2
-                    }
-                    inputMask: "D9.DD"
+                    //                  validator : RegExpValidator{regExp: /[\d\d\.\d\d]/}
+//                    validator: DoubleValidator{
+//                        top : 10.00
+//                        bottom : 1.0
+//                        decimals : 2
+//                    }
+                    //inputMask: "D9.DD"
                     text: editForm.homework1.toFixed(2)
 
                 }
@@ -256,7 +269,10 @@ Rectangle{
                     anchors.centerIn: parent
                     text: "Confirm"
                 }
-                onClicked: editForm.confirmStudentInfo()
+                onClicked:{
+                    updateFormData()
+                    editForm.confirmStudentInfo()
+                }
             }
 
             Button{

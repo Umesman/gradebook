@@ -4,7 +4,9 @@
 #include <QObject>
 #include "../Model/studentterm.h"
 
+
 //class StudentTerm;
+class MainViewMgr;
 
 class EditForm : public QObject
 {
@@ -62,8 +64,10 @@ public:
     void setTestGrade(const double testGrade);
 
 private:
+    MainViewMgr *m_pViewMgr;
     StudentTerm m_localStudentInfo;
     StudentTerm *m_pStudentInfo;
+
 };
 
 #endif // EDITFORM_H

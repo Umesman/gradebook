@@ -54,6 +54,7 @@ ApplicationWindow {
                 height : 320
                 width: 300
                 Loader{
+                    id : loader
                     source: viewMgr.editMode? "EditForm.qml" : "StatisticsRow.qml"
                     active: true
                 }

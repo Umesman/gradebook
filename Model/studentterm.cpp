@@ -104,11 +104,13 @@ bool StudentTerm::checkIfAttributeChanged(const StudentTerm *st, Attributes attr
         break;
     case Attributes::FIRST_NAME:
         qDebug() << Q_FUNC_INFO << "FIRST";
+        qDebug() << st->firstName() << " : " << firstName();
         if (st->firstName() != this->firstName())
             ret = true;
         break;
     case Attributes::LAST_NAME:
         qDebug() << Q_FUNC_INFO << "LAST";
+        qDebug() << st->lastName() << " : " << lastName();
         if (st->lastName() != this->lastName())
             ret = true;
         break;
@@ -119,11 +121,13 @@ bool StudentTerm::checkIfAttributeChanged(const StudentTerm *st, Attributes attr
         break;
     case Attributes::EMAIL:
         qDebug() << Q_FUNC_INFO << "EMAIL";
+        qDebug() << st->email() << " : " << email();
         if (st->email() != this->email())
             ret = true;
         break;
     case Attributes::ASSESSMENTS:
         qDebug() << Q_FUNC_INFO << "ASSESSMENTS";
+        qDebug() << st->assesments() << " : " << assesments();
         if (st->assesments() != this->assesments())
             ret = true;
         break;

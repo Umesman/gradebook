@@ -1,9 +1,12 @@
-#include "editform.h"
 #include <QDebug>
 #include <iostream>
 
+#include "editform.h"
+#include "mainviewmgr.h"
+
 EditForm::EditForm(QObject *parent) :
     QObject(parent),
+    m_pViewMgr(static_cast<MainViewMgr*>(parent)),
     m_localStudentInfo(),
     m_pStudentInfo(Q_NULLPTR)
 {
@@ -18,6 +21,7 @@ void EditForm::setStudentInfo(const StudentTerm *st)
     {
         resetStudentInfo();
         m_localStudentInfo = (*m_pStudentInfo);
+        m_pViewMgr->setEditMode(true);
     }
 }
 
@@ -25,6 +29,8 @@ void EditForm::confirmStudentInfo()
 {
    qDebug() << Q_FUNC_INFO;
    this->hasStudentInfoChanged();
+   m_pViewMgr->setEditMode(false);
+   //m_pStudentInfo = Q_NULLPTR;
 }
 
 void EditForm::resetStudentInfo()
@@ -45,7 +51,6 @@ bool EditForm::hasStudentInfoChanged()
             ret = true;
             // emit signal for viewmgr sgnChangeStudentInfo
         }
-        std::cout << ret;
     }
     qDebug() << Q_FUNC_INFO << " :" << ret;
     return ret;
