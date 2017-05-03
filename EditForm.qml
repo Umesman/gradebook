@@ -74,7 +74,7 @@ Rectangle{
             TextField{
                 id: firstNameField
                 style: upperTextFieldStyle
-                placeholderText: "First Name"
+                text: editForm.firstName
             }
         }
         RowLayout{
@@ -94,7 +94,7 @@ Rectangle{
             TextField{
                 id : lastNameField
                 style: upperTextFieldStyle
-                placeholderText: "LastName"
+                text: editForm.lastName
             }
         }
         RowLayout{
@@ -114,7 +114,7 @@ Rectangle{
             TextField{
                 id : emailField
                 style: upperTextFieldStyle
-                placeholderText: "Email"
+                text: editForm.email
 
             }
         }
@@ -151,6 +151,7 @@ Rectangle{
                         decimals : 2
                     }
                     inputMask: "D9.DD"
+                    text: editForm.homework1.toFixed(2)
 
                 }
             }
@@ -169,6 +170,7 @@ Rectangle{
                     anchors.top: hmk2Label.bottom
                     anchors.horizontalCenter: parent.horizontalCenter
                     style : lowerTextFieldStyle
+                    text: editForm.homework2.toFixed(2)
                 }
             }
             Rectangle{
@@ -186,6 +188,7 @@ Rectangle{
                     anchors.top: labGradeLabel.bottom
                     anchors.horizontalCenter: parent.horizontalCenter
                     style : lowerTextFieldStyle
+                    text: editForm.labGrade.toFixed(2)
                 }
             }
             Rectangle{
@@ -203,6 +206,7 @@ Rectangle{
                     anchors.top: testGradeLabel.bottom
                     anchors.horizontalCenter: parent.horizontalCenter
                     style : lowerTextFieldStyle
+                    text : editForm.testGrade.toFixed(2)
                 }
             }
         }
@@ -252,6 +256,7 @@ Rectangle{
                     anchors.centerIn: parent
                     text: "Confirm"
                 }
+                onClicked: editForm.confirmStudentInfo()
             }
 
             Button{

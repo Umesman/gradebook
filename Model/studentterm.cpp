@@ -87,10 +87,13 @@ void StudentTerm::updateByValue(QVariant value, int attribute)
     }
 }
 
-bool StudentTerm::checkIfAttributeChanged(const StudentTerm *st, int attribute)
+bool StudentTerm::checkIfAttributeChanged(const StudentTerm *st, Attributes attribute)
 {
-    if (Q_NULLPTR == st)
+    qDebug() << Q_FUNC_INFO << attribute;
+    if (Q_NULLPTR == st){
+        qDebug() << Q_FUNC_INFO << "Address of st: " << st;
         return false;
+    }
 
     bool ret(false);
 
@@ -100,38 +103,47 @@ bool StudentTerm::checkIfAttributeChanged(const StudentTerm *st, int attribute)
             ret = true;
         break;
     case Attributes::FIRST_NAME:
+        qDebug() << Q_FUNC_INFO << "FIRST";
         if (st->firstName() != this->firstName())
             ret = true;
         break;
     case Attributes::LAST_NAME:
+        qDebug() << Q_FUNC_INFO << "LAST";
         if (st->lastName() != this->lastName())
             ret = true;
         break;
     case Attributes::GROUP:
+        qDebug() << Q_FUNC_INFO << "GROUP";
         if (st->group() != this->group())
             ret = true;
         break;
     case Attributes::EMAIL:
+        qDebug() << Q_FUNC_INFO << "EMAIL";
         if (st->email() != this->email())
             ret = true;
         break;
     case Attributes::ASSESSMENTS:
+        qDebug() << Q_FUNC_INFO << "ASSESSMENTS";
         if (st->assesments() != this->assesments())
             ret = true;
         break;
     case Attributes::HOMEWORK1:
+        qDebug() << Q_FUNC_INFO << "HMK1";
         if (!areSame(st->homework1(), this->homework1()))
             ret = true;
         break;
     case Attributes::HOMEWORK2:
+        qDebug() << Q_FUNC_INFO << "HMK2";
         if (!areSame(st->homework2(), this->homework2()))
             ret = true;
         break;
     case Attributes::LABGRADE:
+        qDebug() << Q_FUNC_INFO << "LAB";
         if (!areSame(st->labGrade(), this->labGrade()))
             ret = true;
         break;
     case Attributes::TESTGRADE:
+        qDebug() << Q_FUNC_INFO << "TEST";
         if (!areSame(st->testGrade(), this->testGrade()))
             ret = true;
         break;
@@ -144,8 +156,8 @@ bool StudentTerm::checkIfAttributeChanged(const StudentTerm *st, int attribute)
 
 void StudentTerm::resetInternalData()
 {
-    m_firstName = QString();
-    m_lastName = QString();
+    m_firstName = QString("");
+    m_lastName = QString("");
     m_group = QString();
     m_email = QString();
     m_id = 0;
@@ -175,11 +187,13 @@ double StudentTerm::limits(double grade)
 
 bool StudentTerm::areSame(double a, double b)
 {
+    qDebug() << Q_FUNC_INFO << a << " : " << b;
+    std::cout << "StudentTerm::areSame";
     return std::fabs(a - b) < std::numeric_limits<double>::epsilon();
 }
 
 
-std::ostream& operator<<(std::ostream& os, StudentTerm& st)
+std::ostream& operator<<(std::ostream& os, const StudentTerm& st)
 {
     qDebug() << "operator<< StudentTerm";
     os << "Name: "  << st.firstName().toStdString() << std::endl;

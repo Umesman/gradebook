@@ -50,11 +50,11 @@ ApplicationWindow {
             }
 
             Rectangle{
-                visible: false
+                visible: true
                 height : 320
                 width: 300
                 Loader{
-                    source: firstRowId.editActive? "EditForm.qml" : "StatisticsRow.qml"
+                    source: viewMgr.editMode? "EditForm.qml" : "StatisticsRow.qml"
                     active: true
                 }
             }

@@ -23,6 +23,7 @@ MainViewMgr::MainViewMgr(ModelMgr *pmanager) :
         //m_pmodelProxy = m_pmodelManager->getProxy();
         setModelProxy(m_pmodelManager->getProxy());
     }
+    m_pStudentForm = new EditForm(this);
 }
 
 MainViewMgr::~MainViewMgr()
@@ -109,6 +110,11 @@ QSortFilterProxyModel *MainViewMgr::modelProxy() const
     qDebug() << Q_FUNC_INFO;
     return m_pmodelProxy;
 
+}
+
+EditForm *MainViewMgr::studentForm()
+{
+   return m_pStudentForm;
 }
 
 bool MainViewMgr::passed() const

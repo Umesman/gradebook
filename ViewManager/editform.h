@@ -36,6 +36,7 @@ public:
     EditForm(QObject *parent=0);
     // set the pointer to the current studentterm which should be edited
     void setStudentInfo(const StudentTerm *st);
+    Q_INVOKABLE void confirmStudentInfo();
     void resetStudentInfo();
     bool hasStudentInfoChanged();
 

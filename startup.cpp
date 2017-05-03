@@ -7,6 +7,7 @@
 #include "Model/gradebookmodel.h"
 #include "Model/studentterm.h"
 #include "startup.h"
+#include "ViewManager/editform.h"
 
 
 Startup::Startup(QObject *parent) :
@@ -36,6 +37,7 @@ Startup::Startup(QObject *parent) :
     //root_context->setContextProperty("myModel", model);
     //root_context->setContextProperty("myProxyModel", proxyModel);
     root_context->setContextProperty("viewMgr", m_pviewMgr);
+    root_context->setContextProperty("editForm", m_pviewMgr->studentForm());
 
     qmlRegisterType<QSortFilterProxyModel>();
 

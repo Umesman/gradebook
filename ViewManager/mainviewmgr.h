@@ -55,6 +55,7 @@ public:
 
     QAbstractItemModel *model() const;
     QSortFilterProxyModel *modelProxy() const;
+    EditForm *studentForm();
     int groupFilter() const;
     bool passed() const;
     bool editMode() const;
