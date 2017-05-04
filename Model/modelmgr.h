@@ -70,6 +70,7 @@ public:
     MainViewMgr *getViewMgr();
 
 
+    GradebookModel::StudentRoles mapAttributeToRole(Attributes attribute);
 signals:
 
     /**
@@ -135,10 +136,10 @@ private:
      */
     void connectSignals();
 
-   DataHandler *m_phandler;
-   GradebookModel *m_pmodel;
-   ProxyModel *m_pproxyModel;
-   MainViewMgr *m_pviewManager;
+    DataHandler *m_phandler;
+    GradebookModel *m_pmodel;
+    ProxyModel *m_pproxyModel;
+    MainViewMgr *m_pviewManager;
 
 
 };

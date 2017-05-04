@@ -60,6 +60,7 @@ public:
 
 
 
+
 protected:
     QHash<int, QByteArray> roleNames() const;
 

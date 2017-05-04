@@ -87,6 +87,34 @@ void StudentTerm::updateByValue(QVariant value, int attribute)
     }
 }
 
+QVariant StudentTerm::returnValueByAttribute(int attribute)
+{
+    switch (attribute)
+    {
+    case FIRST_NAME :
+        return QVariant(firstName());
+    case LAST_NAME :
+        return QVariant(lastName());
+    case GROUP :
+        return QVariant(group());
+    case EMAIL :
+        return QVariant(email());
+    case ASSESSMENTS :
+        return QVariant(assesments());
+    case HOMEWORK1 :
+        return QVariant(homework1());
+    case HOMEWORK2 :
+        return QVariant(homework2());
+    case LABGRADE :
+        return QVariant(labGrade());
+    case TESTGRADE :
+        return QVariant(testGrade());
+    default :
+        qDebug() << "No valid attribute specified: " << attribute ;
+        return QVariant();
+    }
+}
+
 bool StudentTerm::checkIfAttributeChanged(const StudentTerm *st, Attributes attribute)
 {
     qDebug() << Q_FUNC_INFO << attribute;

@@ -34,9 +34,11 @@ Component {
                 objectName: "MouseArea"
                 anchors.fill: parent
                 onClicked: {
+                    if (!viewMgr.editMode) {
                     wrapper.ListView.view.currentIndex = index
                     console.log("Current index changed: " + index)
                     console.log("Current id " + model.id)
+                    }
                 }
                 onDoubleClicked:  informStudentDetails(index)
             }//MouseArea
@@ -81,8 +83,15 @@ Component {
                         anchors.left: parent.right
                         anchors.leftMargin: -9
                         anchors.verticalCenter: parent.verticalCenter
-                        source: editCheckBox.checked ? "qrc:/Images/Images/edit.png"
-                                                     : "qrc:/Images/Images/edit_checked.png"
+                        source: (viewMgr.editMode && wrapper.ListView.view.currentIndex === index) ?
+                                    "qrc:/Images/Images/edit.png" : "qrc:/Images/Images/edit_checked.png"
+//                        source: "qrc:/Images/Images/edit.png"
+//                        Binding{
+//                            target: editImage
+//                            property: "source"
+//                            value : "qrc:/Images/Images/edit_checked.png"
+//                             when : editCheckBox.checked
+//                        }
                     }
                 }
             }

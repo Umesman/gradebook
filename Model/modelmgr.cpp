@@ -73,6 +73,51 @@ MainViewMgr *ModelMgr::getViewMgr()
     return m_pviewManager;
 }
 
+GradebookModel::StudentRoles ModelMgr::mapAttributeToRole(Attributes attribute)
+{
+    //using GradebookModel::StudentRoles;
+
+    GradebookModel::StudentRoles ret;
+
+    switch (attribute) {
+    case Attributes::ID :
+        ret = GradebookModel::StudentRoles::IdRole;
+        break;
+    case Attributes::FIRST_NAME :
+        ret = GradebookModel::StudentRoles::FirstNameRole;
+        break;
+    case Attributes::LAST_NAME :
+        ret = GradebookModel::StudentRoles::LastNameRole;
+        break;
+    case Attributes::GROUP :
+        ret = GradebookModel::StudentRoles::GroupRole;
+        break;
+    case Attributes::EMAIL :
+        ret = GradebookModel::StudentRoles::EmailRole;
+        break;
+    case Attributes::ASSESSMENTS :
+        ret = GradebookModel::StudentRoles::AssessmentsRole;
+        break;
+    case Attributes::HOMEWORK1 :
+        ret = GradebookModel::StudentRoles::Homework1Role;
+        break;
+    case Attributes::HOMEWORK2 :
+        ret = GradebookModel::StudentRoles::Homework2Role;
+        break;
+    case Attributes::LABGRADE :
+        ret = GradebookModel::StudentRoles::LabGradeRole;
+        break;
+    case Attributes::TESTGRADE :
+        ret = GradebookModel::StudentRoles::TestGradeRole;
+    case Attributes::FINAL:
+        ret = GradebookModel::StudentRoles::FinalRole;
+    default:
+        break;
+    }
+
+    return ret;
+}
+
 void ModelMgr::sltAddRow(const StudentTerm &st)
 {
     qDebug() << Q_FUNC_INFO;

@@ -10,7 +10,7 @@ EditForm::EditForm(QObject *parent) :
     m_localStudentInfo(),
     m_pStudentInfo(Q_NULLPTR)
 {
-
+   connectSignals();
 }
 
 void EditForm::setStudentInfo(const StudentTerm *st)
@@ -57,8 +57,9 @@ bool EditForm::hasStudentInfoChanged()
     {
         if (m_localStudentInfo.checkIfAttributeChanged(m_pStudentInfo, static_cast<Attributes>(attribute)))
         {
-            ret = true;
-            // emit signal for viewmgr sgnChangeStudentInfo
+           ret = true;
+           QVariant value = m_localStudentInfo.returnValueByAttribute(attribute);
+           emit notifyStudentInfoChange(value, static_cast<Attributes> (attribute), m_pStudentInfo->id());
         }
     }
     qDebug() << Q_FUNC_INFO << " :" << ret;
@@ -158,4 +159,9 @@ void EditForm::setLabGrade(const double labGrade)
 void EditForm::setTestGrade(const double testGrade)
 {
     m_localStudentInfo.updateByValue(testGrade, Attributes::TESTGRADE);
+}
+
+void EditForm::connectSignals()
+{
+
 }

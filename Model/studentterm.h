@@ -87,6 +87,7 @@ public:
     QString group() const { return m_group;}
 
     void updateByValue(QVariant value, int attribute);
+    QVariant returnValueByAttribute(int attribute);
     bool checkIfAttributeChanged(const StudentTerm * st, Attributes attribute);
     void resetInternalData();
     friend std::ostream& operator<<(std::ostream& os, const StudentTerm& st);

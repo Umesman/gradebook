@@ -4,6 +4,7 @@
 #include <QObject>
 //#include "Model/modelmgr.h"
 #include <QPersistentModelIndex>
+#include "../publicdefinitions.h"
 
 class ModelMgr;
 class StudentTerm;
@@ -71,10 +72,12 @@ signals:
     void sgnAddRow(const StudentTerm &st);
     void sgnRemoveRow(int row);
     void sgnChangeStudentInfo(const QModelIndex &index, const QVariant &value, int role);
+
     void sgnPassedConditionChanged(bool cond);
     void sgnFilterChanged(int filter);
 
 public slots:
+    void sltNotifyStudentInfoChange(QVariant value, Attributes attribute, int studentId);
 
 
 private:

@@ -34,6 +34,8 @@ signals:
     void labGradeChanged();
     void testGradeChanged();
 
+    void notifyStudentInfoChange(QVariant value, Attributes attribute, int studentId);
+
 public:
     EditForm(QObject *parent=0);
     // set the pointer to the current studentterm which should be edited
@@ -68,6 +70,8 @@ private:
     MainViewMgr *m_pViewMgr;
     StudentTerm m_localStudentInfo;
     StudentTerm *m_pStudentInfo;
+
+    void connectSignals();
 
 };
 

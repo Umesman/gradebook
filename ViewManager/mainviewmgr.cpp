@@ -89,7 +89,6 @@ void MainViewMgr::setEditMode(bool activeVal)
 
 void MainViewMgr::editStudentInfo(int id)
 {
-
     qDebug() << Q_FUNC_INFO << "Id: " << id;
     int row = static_cast<GradebookModel *>(m_pmodel)->indexOfId(id);
     //QModelIndex index = m_pmodel->index(row, 0, QModelIndex());
@@ -135,4 +134,12 @@ bool MainViewMgr::editMode() const
 {
     qDebug() << Q_FUNC_INFO << " is current active: " << m_editModeActive ;
     return m_editModeActive;
+}
+
+void MainViewMgr::sltNotifyStudentInfoChange(QVariant value, Attributes attribute, int studentId)
+{
+    GradebookModel::StudentRoles role = m_pmodelManager->mapAttributeToRole(attribute);
+    int row = static_cast<GradebookModel *>(m_pmodel)->indexOfId(studentId);
+    QModelIndex index = m_pmodel->index(row, 0, QModelIndex());
+    emit sgnChangeStudentInfo(index, value, role);
 }
