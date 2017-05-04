@@ -16,6 +16,8 @@ EditForm::EditForm(QObject *parent) :
 void EditForm::setStudentInfo(const StudentTerm *st)
 {
     qDebug() << Q_FUNC_INFO << st;
+    if (m_pViewMgr->editMode())
+        return;
     m_pStudentInfo = const_cast<StudentTerm*>(st);
     if (Q_NULLPTR != st)
     {
@@ -23,6 +25,13 @@ void EditForm::setStudentInfo(const StudentTerm *st)
         m_localStudentInfo = (*m_pStudentInfo);
         m_pViewMgr->setEditMode(true);
     }
+}
+
+void EditForm::cancelStudentInfo()
+{
+    m_pViewMgr->setEditMode(false);
+    resetStudentInfo();
+    m_pStudentInfo = Q_NULLPTR;
 }
 
 void EditForm::confirmStudentInfo()
