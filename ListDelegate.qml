@@ -1,11 +1,9 @@
 import QtQuick 2.2
-import QtQuick.Controls 1.1
+import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.2
 
 Component {
-
-    //objectName: "listDelegate"
 
     Item {
         id: wrapper
@@ -48,7 +46,6 @@ Component {
         CheckBox{
             id: editCheckBox
             objectName: "CheckBox"
-            property bool isChecked: false
 
             anchors.left: parent.left
             anchors.leftMargin: (parent.width - (editCheckBox.width*2 + 16))
@@ -59,9 +56,6 @@ Component {
                     color : "transparent"
                     implicitWidth : 40
                     implicitHeight : 25
-                    //border.width: control.activeFocus ? 2 : 1
-                    //border.color: "darkslateblue"
-                    //radius: 4
                     Rectangle{
                         anchors.left: parent.left
                         implicitHeight: parent.implicitHeight / 3
@@ -100,6 +94,7 @@ Component {
                 //viewMgr.editMode = !viewMgr.editMode
                 viewMgr.editStudentInfo(model.id);
             }
+            enabled: viewMgr.editMode ? false : true
         }
         Button{
             id: deleteButton
@@ -110,15 +105,6 @@ Component {
                     color : "transparent"//deleteButton.hovered ? "lightsteelblue" : "lightslategrey"
                     implicitWidth : 40
                     implicitHeight : 25
-                    //border.width: control.activeFocus ? 2 : 1
-                    //border.color: "darkslateblue"
-                    //radius: 4
-//                    Rectangle{
-//                        anchors.left: parent.left
-//                        implicitHeight: parent.implicitHeight / 3
-//                        implicitWidth: 1
-//                        anchors.verticalCenter: parent.verticalCenter
-//                    }
                     Rectangle{
                         anchors.right: parent.right
                         implicitHeight: parent.implicitHeight / 3
@@ -139,22 +125,21 @@ Component {
                 console.log("deleteButton clicked")
             }
 
+            action: Action{
+                enabled: viewMgr.editMode ? false : true
+            }
+
 
         }
 
         Rectangle{
+            id : delimiter
             anchors.top: delegateRowLayout.bottom
             anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width - 40
             height : 1
             color: "teal"
         }
-
-        //        states: State {
-        //            name: "Current"
-        //            when: wrapper.ListView.isCurrentItem
-        //            //PropertyChanges { target: wrapper; x: 10 }
-        //        }
         transitions: Transition {
             NumberAnimation { properties: "x"; duration: 200 }
         }

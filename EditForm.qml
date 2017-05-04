@@ -14,22 +14,6 @@ Rectangle{
     border.color: "#333"
     border.width: 2
 
-    function updateFieldData()
-    {
-
-    }
-
-    function updateFormData()
-    {
-        editForm.firstName = firstNameField.text;
-        editForm.lastName = lastNameField.text;
-        editForm.email = emailField.text;
-        editForm.homework1 = hmk1TextField.text;
-        editForm.homework2 = hmk2TextField.text;
-        editForm.labGrade = labTextField.text;
-        editForm.testGrade = testTextField.text;
-    }
-
     Component{
         id: upperTextFieldStyle
         TextFieldStyle {
@@ -88,6 +72,12 @@ Rectangle{
                 id: firstNameField
                 style: upperTextFieldStyle
                 text: editForm.firstName
+
+                Binding{
+                    target: editForm
+                    property: "firstName"
+                    value : firstNameField.text
+                }
             }
         }
         RowLayout{
@@ -108,6 +98,12 @@ Rectangle{
                 id : lastNameField
                 style: upperTextFieldStyle
                 text: editForm.lastName
+
+                Binding{
+                    target: editForm
+                    property: "lastName"
+                    value : lastNameField.text
+                }
             }
         }
         RowLayout{
@@ -122,13 +118,19 @@ Rectangle{
                     id : emailLabel
                     anchors.verticalCenter: parent.verticalCenter
                     text: "Email"
-                }}
+                }
+            }
 
             TextField{
                 id : emailField
                 style: upperTextFieldStyle
                 text: editForm.email
 
+                Binding{
+                    target: editForm
+                    property: "email"
+                    value : emailField.text
+                }
             }
         }
         Rectangle{
@@ -157,15 +159,13 @@ Rectangle{
                     anchors.top: hmk1Label.bottom
                     anchors.horizontalCenter: parent.horizontalCenter
                     style: lowerTextFieldStyle
-                    //                  validator : RegExpValidator{regExp: /[\d\d\.\d\d]/}
-//                    validator: DoubleValidator{
-//                        top : 10.00
-//                        bottom : 1.0
-//                        decimals : 2
-//                    }
-                    //inputMask: "D9.DD"
                     text: editForm.homework1.toFixed(2)
 
+                    Binding{
+                        target: editForm
+                        property: "homework1"
+                        value : hmk1TextField.text
+                    }
                 }
             }
             Rectangle{
@@ -184,6 +184,12 @@ Rectangle{
                     anchors.horizontalCenter: parent.horizontalCenter
                     style : lowerTextFieldStyle
                     text: editForm.homework2.toFixed(2)
+
+                    Binding{
+                        target: editForm
+                        property: "homework2"
+                        value : hmk2TextField.text
+                    }
                 }
             }
             Rectangle{
@@ -202,6 +208,13 @@ Rectangle{
                     anchors.horizontalCenter: parent.horizontalCenter
                     style : lowerTextFieldStyle
                     text: editForm.labGrade.toFixed(2)
+
+                    Binding{
+                        target: editForm
+                        property: "labGrade"
+                        value : labTextField.text
+                    }
+
                 }
             }
             Rectangle{
@@ -221,6 +234,13 @@ Rectangle{
                     style : lowerTextFieldStyle
                     text : editForm.testGrade.toFixed(2)
                 }
+
+                Binding{
+                    target: editForm
+                    property: "testGrade"
+                    value : testTextField.text
+                }
+
             }
         }
 
@@ -270,7 +290,7 @@ Rectangle{
                     text: "Confirm"
                 }
                 onClicked:{
-                    updateFormData()
+                    //updateFormData()
                     editForm.confirmStudentInfo()
                 }
             }
@@ -283,6 +303,7 @@ Rectangle{
                     anchors.centerIn: parent
                     text: "Cancel"
                 }
+                onClicked: editForm.cancelStudentInfo()
             }
 
         }
