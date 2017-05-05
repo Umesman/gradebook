@@ -14,6 +14,8 @@ ModelMgr::ModelMgr(DataHandler *handler, QObject *parent) :
     qDebug() << Q_FUNC_INFO;
     setModelSource();
     m_pviewManager = new MainViewMgr(this);
+
+    connectSignals();
 }
 
 ModelMgr::~ModelMgr()
@@ -114,7 +116,7 @@ GradebookModel::StudentRoles ModelMgr::mapAttributeToRole(Attributes attribute)
     default:
         break;
     }
-
+    qDebug() << Q_FUNC_INFO << attribute;
     return ret;
 }
 
@@ -139,6 +141,7 @@ void ModelMgr::sltChangeStudentInfo(const QModelIndex &index, const QVariant &va
     //New QModelIndex objects are created by the model
     //using the QAbstractItemModel::createIndex() function
     qDebug() << Q_FUNC_INFO;
+
     if (Q_NULLPTR != m_pmodel)
         if (m_pmodel->setData(index, value, role))
             emit sgnStudentInfoChanged(index, value, role);

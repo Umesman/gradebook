@@ -65,7 +65,7 @@ void StudentTerm::updateByValue(QVariant value, int attribute)
         break;
     case GROUP : setGroup(value.toString());
         break;
-    case EMAIL : setGroup(value.toString());
+    case EMAIL : setEmail(value.toString());
         break;
     case ASSESSMENTS : setAssesments(value.toInt());
         calculateFinal();
@@ -144,6 +144,7 @@ bool StudentTerm::checkIfAttributeChanged(const StudentTerm *st, Attributes attr
         break;
     case Attributes::GROUP:
         qDebug() << Q_FUNC_INFO << "GROUP";
+        qDebug() << st->group() << " : " << this->group();
         if (st->group() != this->group())
             ret = true;
         break;

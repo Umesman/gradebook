@@ -132,14 +132,18 @@ int MainViewMgr::groupFilter() const
 
 bool MainViewMgr::editMode() const
 {
-    qDebug() << Q_FUNC_INFO << " is current active: " << m_editModeActive ;
+    //qDebug() << Q_FUNC_INFO << " is current active: " << m_editModeActive ;
     return m_editModeActive;
 }
 
 void MainViewMgr::sltNotifyStudentInfoChange(QVariant value, Attributes attribute, int studentId)
 {
+    qDebug() << Q_FUNC_INFO;
     GradebookModel::StudentRoles role = m_pmodelManager->mapAttributeToRole(attribute);
     int row = static_cast<GradebookModel *>(m_pmodel)->indexOfId(studentId);
+    qDebug() << "Row returned : " << row;
     QModelIndex index = m_pmodel->index(row, 0, QModelIndex());
+    qDebug() << "Row returned : " << index.row();
     emit sgnChangeStudentInfo(index, value, role);
+    qDebug() << Q_FUNC_INFO << "sgnChangeStudentInfo emitted";
 }

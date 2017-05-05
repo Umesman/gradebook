@@ -59,6 +59,7 @@ bool EditForm::hasStudentInfoChanged()
         {
            ret = true;
            QVariant value = m_localStudentInfo.returnValueByAttribute(attribute);
+           qDebug() << Q_FUNC_INFO << "value changed for " << attribute;
            emit notifyStudentInfoChange(value, static_cast<Attributes> (attribute), m_pStudentInfo->id());
         }
     }
@@ -133,6 +134,7 @@ void EditForm::setEmail(QString email)
 
 void EditForm::setGroup(QString group)
 {
+    qDebug() << Q_FUNC_INFO << group;
     m_localStudentInfo.updateByValue(group, Attributes::GROUP);
 }
 
@@ -143,7 +145,7 @@ void EditForm::setAssesments(int assesments)
 
 void EditForm::setHomework1(const double homework)
 {
-    m_localStudentInfo.updateByValue(homework, Attributes::HOMEWORK2);
+    m_localStudentInfo.updateByValue(homework, Attributes::HOMEWORK1);
 }
 
 void EditForm::setHomework2(const double homework)
@@ -163,5 +165,7 @@ void EditForm::setTestGrade(const double testGrade)
 
 void EditForm::connectSignals()
 {
-
+   qDebug() << Q_FUNC_INFO;
+   connect(this, &EditForm::notifyStudentInfoChange,
+           m_pViewMgr, &MainViewMgr::sltNotifyStudentInfoChange);
 }

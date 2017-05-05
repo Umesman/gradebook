@@ -76,6 +76,7 @@ Qt::ItemFlags GradebookModel::flags(const QModelIndex &index) const
 
 bool GradebookModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
+    qDebug() << Q_FUNC_INFO << index.row();
     if (!index.isValid())
         return false;
 
@@ -112,6 +113,7 @@ bool GradebookModel::setData(const QModelIndex &index, const QVariant &value, in
     }
 
     emit dataChanged(index, index);
+    qDebug() << Q_FUNC_INFO << "dataChanged emitted";
     return true;
 
 
@@ -177,6 +179,7 @@ int GradebookModel::indexOfId(const int id) const
     if (!pair.first)
         qDebug() << Q_FUNC_INFO << " id " << id << " not found.";
 
+    qDebug() << Q_FUNC_INFO << pair.second;
     return pair.second;
 }
 

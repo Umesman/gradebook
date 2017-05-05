@@ -75,8 +75,8 @@ Rectangle{
             highlight: highlightBar
             highlightFollowsCurrentItem: false
 
-            //flickableDirection: Flickable.HorizontalFlick
             clip: true
+            interactive: viewMgr.editMode ? false : true
 
             ScrollBar.horizontal: ScrollBar{
                 active: true}
