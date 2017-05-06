@@ -14,6 +14,17 @@ Rectangle{
     border.color: "#333"
     border.width: 2
 
+    function updateFormData()
+    {
+        editForm.firstName = firstNameField.text;
+        editForm.lastName = lastNameField.text;
+        editForm.email = emailField.text;
+        editForm.homework1 = hmk1TextField.text;
+        editForm.homework2 = hmk2TextField.text;
+        editForm.labGrade = labTextField.text;
+        editForm.testGrade = testTextField.text;
+    }
+
     Component{
         id: upperTextFieldStyle
         TextFieldStyle {
@@ -73,11 +84,11 @@ Rectangle{
                 style: upperTextFieldStyle
                 text: editForm.firstName
 
-                Binding{
-                    target: editForm
-                    property: "firstName"
-                    value : firstNameField.text
-                }
+//                Binding{
+//                    target: editForm
+//                    property: "firstName"
+//                    value : firstNameField.text
+//                }
             }
         }
         RowLayout{
@@ -99,11 +110,11 @@ Rectangle{
                 style: upperTextFieldStyle
                 text: editForm.lastName
 
-                Binding{
-                    target: editForm
-                    property: "lastName"
-                    value : lastNameField.text
-                }
+//                Binding{
+//                    target: editForm
+//                    property: "lastName"
+//                    value : lastNameField.text
+//                }
             }
         }
         RowLayout{
@@ -126,11 +137,11 @@ Rectangle{
                 style: upperTextFieldStyle
                 text: editForm.email
 
-                Binding{
-                    target: editForm
-                    property: "email"
-                    value : emailField.text
-                }
+//                Binding{
+//                    target: editForm
+//                    property: "email"
+//                    value : emailField.text
+//                }
             }
         }
         Rectangle{
@@ -161,11 +172,11 @@ Rectangle{
                     style: lowerTextFieldStyle
                     text: editForm.homework1.toFixed(2)
 
-                    Binding{
-                        target: editForm
-                        property: "homework1"
-                        value : hmk1TextField.text
-                    }
+//                    Binding{
+//                        target: editForm
+//                        property: "homework1"
+//                        value : hmk1TextField.text
+//                    }
                 }
             }
             Rectangle{
@@ -185,11 +196,11 @@ Rectangle{
                     style : lowerTextFieldStyle
                     text: editForm.homework2.toFixed(2)
 
-                    Binding{
-                        target: editForm
-                        property: "homework2"
-                        value : hmk2TextField.text
-                    }
+//                    Binding{
+//                        target: editForm
+//                        property: "homework2"
+//                        value : hmk2TextField.text
+//                    }
                 }
             }
             Rectangle{
@@ -209,11 +220,11 @@ Rectangle{
                     style : lowerTextFieldStyle
                     text: editForm.labGrade.toFixed(2)
 
-                    Binding{
-                        target: editForm
-                        property: "labGrade"
-                        value : labTextField.text
-                    }
+//                    Binding{
+//                        target: editForm
+//                        property: "labGrade"
+//                        value : labTextField.text
+//                    }
 
                 }
             }
@@ -235,11 +246,11 @@ Rectangle{
                     text : editForm.testGrade.toFixed(2)
                 }
 
-                Binding{
-                    target: editForm
-                    property: "testGrade"
-                    value : testTextField.text
-                }
+//                Binding{
+//                    target: editForm
+//                    property: "testGrade"
+//                    value : testTextField.text
+//                }
 
             }
         }
@@ -265,6 +276,8 @@ Rectangle{
                     text: "Reset"
                     anchors.centerIn: parent
                 }
+
+                onClicked: editForm.resetStudentInfo()
             }
         }
 
@@ -290,7 +303,7 @@ Rectangle{
                     text: "Confirm"
                 }
                 onClicked:{
-                    //updateFormData()
+                    updateFormData()
                     editForm.confirmStudentInfo()
                 }
             }

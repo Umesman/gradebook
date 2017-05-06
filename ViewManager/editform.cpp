@@ -10,7 +10,7 @@ EditForm::EditForm(QObject *parent) :
     m_localStudentInfo(),
     m_pStudentInfo(Q_NULLPTR)
 {
-   connectSignals();
+    connectSignals();
 }
 
 void EditForm::setStudentInfo(const StudentTerm *st)
@@ -18,11 +18,12 @@ void EditForm::setStudentInfo(const StudentTerm *st)
     qDebug() << Q_FUNC_INFO << st;
     if (m_pViewMgr->editMode())
         return;
-    m_pStudentInfo = const_cast<StudentTerm*>(st);
+
+    m_pStudentInfo = st;
+
     if (Q_NULLPTR != st)
     {
         resetStudentInfo();
-        m_localStudentInfo = (*m_pStudentInfo);
         m_pViewMgr->setEditMode(true);
     }
 }
@@ -30,22 +31,36 @@ void EditForm::setStudentInfo(const StudentTerm *st)
 void EditForm::cancelStudentInfo()
 {
     m_pViewMgr->setEditMode(false);
-    resetStudentInfo();
+    m_localStudentInfo.resetInternalData();
     m_pStudentInfo = Q_NULLPTR;
 }
 
 void EditForm::confirmStudentInfo()
 {
-   qDebug() << Q_FUNC_INFO;
-   this->hasStudentInfoChanged();
-   m_pViewMgr->setEditMode(false);
-   //m_pStudentInfo = Q_NULLPTR;
+    qDebug() << Q_FUNC_INFO;
+    this->hasStudentInfoChanged();
+    m_pViewMgr->setEditMode(false);
+    m_localStudentInfo.resetInternalData();
+    m_pStudentInfo = Q_NULLPTR;
+
 }
 
 void EditForm::resetStudentInfo()
 {
     qDebug() << Q_FUNC_INFO;
-    m_localStudentInfo.resetInternalData();
+    if (m_pStudentInfo != Q_NULLPTR)
+    {
+        setFirstName(m_pStudentInfo->firstName());
+        setLastName(m_pStudentInfo->lastName());
+        setEmail(m_pStudentInfo->email());
+        setGroup(m_pStudentInfo->group());
+        setId(m_pStudentInfo->id());
+        setAssesments(m_pStudentInfo->assesments());
+        setHomework1(m_pStudentInfo->homework1());
+        setHomework2(m_pStudentInfo->homework2());
+        setLabGrade(m_pStudentInfo->labGrade());
+        setTestGrade(m_pStudentInfo->testGrade());
+    }
 }
 
 
@@ -57,10 +72,10 @@ bool EditForm::hasStudentInfoChanged()
     {
         if (m_localStudentInfo.checkIfAttributeChanged(m_pStudentInfo, static_cast<Attributes>(attribute)))
         {
-           ret = true;
-           QVariant value = m_localStudentInfo.returnValueByAttribute(attribute);
-           qDebug() << Q_FUNC_INFO << "value changed for " << attribute;
-           emit notifyStudentInfoChange(value, static_cast<Attributes> (attribute), m_pStudentInfo->id());
+            ret = true;
+            QVariant value = m_localStudentInfo.returnValueByAttribute(attribute);
+            qDebug() << Q_FUNC_INFO << "value changed for " << attribute;
+            emit notifyStudentInfoChange(value, static_cast<Attributes> (attribute), m_pStudentInfo->id());
         }
     }
     qDebug() << Q_FUNC_INFO << " :" << ret;
@@ -120,52 +135,66 @@ double EditForm::testGrade() const
 void EditForm::setFirstName(QString firstName)
 {
     m_localStudentInfo.updateByValue(firstName, Attributes::FIRST_NAME);
+    emit firstNameChanged();
 }
 
 void EditForm::setLastName(QString lastName)
 {
     m_localStudentInfo.updateByValue(lastName, Attributes::LAST_NAME);
+    emit lastNameChanged();
 }
 
 void EditForm::setEmail(QString email)
 {
     m_localStudentInfo.updateByValue(email, Attributes::EMAIL);
+    emit emailChanged();
 }
 
 void EditForm::setGroup(QString group)
 {
     qDebug() << Q_FUNC_INFO << group;
     m_localStudentInfo.updateByValue(group, Attributes::GROUP);
+    emit groupChanged();
+}
+
+void EditForm::setId(unsigned int id)
+{
+    m_localStudentInfo.updateByValue(id, Attributes::ID);
 }
 
 void EditForm::setAssesments(int assesments)
 {
     m_localStudentInfo.updateByValue(assesments, Attributes::ASSESSMENTS);
+    emit assesmentsChanged();
 }
 
 void EditForm::setHomework1(const double homework)
 {
     m_localStudentInfo.updateByValue(homework, Attributes::HOMEWORK1);
+    emit homework1Changed();
 }
 
 void EditForm::setHomework2(const double homework)
 {
     m_localStudentInfo.updateByValue(homework, Attributes::HOMEWORK2);
+    emit homework2Changed();
 }
 
 void EditForm::setLabGrade(const double labGrade)
 {
     m_localStudentInfo.updateByValue(labGrade, Attributes::LABGRADE);
+    emit labGradeChanged();
 }
 
 void EditForm::setTestGrade(const double testGrade)
 {
     m_localStudentInfo.updateByValue(testGrade, Attributes::TESTGRADE);
+    emit testGradeChanged();
 }
 
 void EditForm::connectSignals()
 {
-   qDebug() << Q_FUNC_INFO;
-   connect(this, &EditForm::notifyStudentInfoChange,
-           m_pViewMgr, &MainViewMgr::sltNotifyStudentInfoChange);
+    qDebug() << Q_FUNC_INFO;
+    connect(this, &EditForm::notifyStudentInfoChange,
+            m_pViewMgr, &MainViewMgr::sltNotifyStudentInfoChange);
 }

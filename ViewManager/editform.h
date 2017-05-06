@@ -40,9 +40,9 @@ public:
     EditForm(QObject *parent=0);
     // set the pointer to the current studentterm which should be edited
     void setStudentInfo(const StudentTerm *st);
+    Q_INVOKABLE void resetStudentInfo();
     Q_INVOKABLE void cancelStudentInfo();
     Q_INVOKABLE void confirmStudentInfo();
-    void resetStudentInfo();
     bool hasStudentInfoChanged();
 
     QString firstName() const;
@@ -60,6 +60,7 @@ public:
     void setLastName (QString lastName);
     void setEmail (QString email);
     void setGroup (QString group);
+    void setId(unsigned int id);
     void setAssesments(int assesments);
     void setHomework1(const double homework);
     void setHomework2(const double homework);
@@ -69,7 +70,7 @@ public:
 private:
     MainViewMgr *m_pViewMgr;
     StudentTerm m_localStudentInfo;
-    StudentTerm *m_pStudentInfo;
+    const StudentTerm *m_pStudentInfo;
 
     void connectSignals();
 
