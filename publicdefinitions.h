@@ -2,18 +2,18 @@
 #define PUBLICDEFINITIONS_H
 
 
-enum Attributes{
-    ID,
+enum Attributes{    
     FIRST_NAME,
     LAST_NAME,
-    GROUP,
-    EMAIL,    
-    ASSESSMENTS,
+    FINAL,
+    EMAIL,
     HOMEWORK1,
     HOMEWORK2,
     LABGRADE,
     TESTGRADE,
-    FINAL
+    GROUP,
+    ASSESSMENTS,
+    ID
 };
 
 

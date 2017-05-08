@@ -57,6 +57,7 @@ void StudentTerm::setGroup(const QString &group)
 
 void StudentTerm::updateByValue(QVariant value, int attribute)
 {
+    qDebug() << Q_FUNC_INFO << attribute;
     switch (attribute)
     {
     case FIRST_NAME : setFirstName(value.toString());
@@ -184,6 +185,8 @@ bool StudentTerm::checkIfAttributeChanged(const StudentTerm *st, Attributes attr
         break;
     }
 
+    if (false == ret)
+        qDebug() << Q_FUNC_INFO << "NO GAME";
     return ret;
 }
 

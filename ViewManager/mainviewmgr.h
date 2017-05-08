@@ -11,7 +11,6 @@ class StudentTerm;
 class EditForm;
 class QAbstractItemModel;
 class QSortFilterProxyModel;
-//class QPersistentModelIndex;
 
 
 class MainViewMgr : public QObject
@@ -23,13 +22,9 @@ class MainViewMgr : public QObject
                WRITE setPassed
                NOTIFY passedChanged)
 
-    Q_PROPERTY(QAbstractItemModel* model
+    Q_PROPERTY(QSortFilterProxyModel* model
                READ model
                NOTIFY modelChanged)
-
-    Q_PROPERTY(QSortFilterProxyModel* modelProxy
-               READ modelProxy
-               NOTIFY modelProxyChanged)
 
     Q_PROPERTY(bool editMode
                READ editMode
@@ -41,33 +36,34 @@ class MainViewMgr : public QObject
                WRITE setGroupFilter
                NOTIFY groupFilterChanged)
 
+    Q_PROPERTY(int sortRole
+               READ sortRole
+               WRITE setSortRole
+               NOTIFY sortRoleChanged)
 
 public:
     explicit MainViewMgr(ModelMgr *pmanager = 0);
     virtual ~MainViewMgr();
 
-    void setModel(QAbstractItemModel *model);
-    void setModelProxy(QSortFilterProxyModel *proxyModel);
     void setPassed(bool passed);
     void setGroupFilter(int currentGroup);
+    void setSortRole (int attr);
     void setEditMode(bool active);
     Q_INVOKABLE void editStudentInfo(int id);
 
-
-    QAbstractItemModel *model() const;
-    QSortFilterProxyModel *modelProxy() const;
+    QSortFilterProxyModel *model();
     EditForm *studentForm();
     int groupFilter() const;
+    int sortRole() const;
     bool passed() const;
     bool editMode() const;
-
 
 signals:
     void passedChanged();
     void modelChanged();
-    void modelProxyChanged();
     void editModeChanged();
     void groupFilterChanged();
+    void sortRoleChanged();
 
     void sgnAddRow(const StudentTerm &st);
     void sgnRemoveRow(int row);
@@ -75,20 +71,19 @@ signals:
 
     void sgnPassedConditionChanged(bool cond);
     void sgnFilterChanged(int filter);
+    void sgnSortRoleChanged(int role);
 
 public slots:
     void sltNotifyStudentInfoChange(QVariant value, Attributes attribute, int studentId);
 
 
 private:
-   ModelMgr *m_pmodelManager;
-   QAbstractItemModel *m_pmodel;
-   QSortFilterProxyModel *m_pmodelProxy;
-   EditForm *m_pStudentForm;
-   QPersistentModelIndex m_currentIndex;
-   int m_groupFilter;
-   bool m_passed;
-   bool m_editModeActive;
+    ModelMgr *m_pmodelManager;
+    EditForm *m_pStudentForm;
+    int m_groupFilter;
+    int m_sortRole;
+    bool m_passed;
+    bool m_editModeActive;
 };
 
 #endif // MAINVIEWMGR_H

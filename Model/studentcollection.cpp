@@ -31,7 +31,7 @@ void StudentCollection::removeEntry(int index)
 
 void StudentCollection::updateEntry(int index, QVariant value, int attribute)
 {
-    qDebug() << "StudentCollection::updateEntry";
+    qDebug() << Q_FUNC_INFO << attribute;
     StudentTerm *student = m_studentList->at(index);
     student->updateByValue(value, attribute);
 }
@@ -39,7 +39,7 @@ void StudentCollection::updateEntry(int index, QVariant value, int attribute)
 
 StudentTerm* StudentCollection::getTermAt(int index)
 {
-    qDebug() << "StudentCollection::getTermAt";
+    //qDebug() << "StudentCollection::getTermAt";
     return m_studentList->at(index);
 }
 
@@ -53,7 +53,7 @@ int StudentCollection::size() const
 
 int StudentCollection::count() const
 {
-    qDebug() << "StudentCollection::count";
+    //qDebug() << "StudentCollection::count";
     return m_studentList->count();
 }
 

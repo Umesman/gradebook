@@ -56,7 +56,7 @@ Rectangle{
         Component {
             id: highlightBar
             Rectangle {
-                width: parent.width
+                width: 948 + 116//parent.width
                 height: 25
                 color : "#FF3333"
                 y : stubListViewId.currentItem.y
@@ -68,7 +68,8 @@ Rectangle{
             id : stubListViewId
             anchors.bottomMargin: 0
             anchors.fill: parent
-            model : viewMgr.modelProxy
+            //model : viewMgr.modelProxy
+            model : viewMgr.model
             delegate: studentDelegate                    
             header: headerId
             headerPositioning: ListView.OverlayHeader

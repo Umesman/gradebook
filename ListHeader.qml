@@ -37,11 +37,11 @@ Component {
                             }
                         }
 
-                        onClicked: {
-                            sortBy(index)
+                        onClicked: if (index != 8){
+                            viewMgr.sortRole = index
                             console.log("Sort By" + index)
+                            }
 
-                        }
                     }
                 }
             }

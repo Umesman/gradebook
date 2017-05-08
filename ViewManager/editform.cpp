@@ -68,7 +68,7 @@ bool EditForm::hasStudentInfoChanged()
 {
     qDebug() << Q_FUNC_INFO;
     bool ret(false);
-    for (int attribute = Attributes::ID; attribute < Attributes::FINAL; attribute++)
+    for (int attribute = Attributes::FIRST_NAME; attribute < Attributes::ID; attribute++)
     {
         if (m_localStudentInfo.checkIfAttributeChanged(m_pStudentInfo, static_cast<Attributes>(attribute)))
         {

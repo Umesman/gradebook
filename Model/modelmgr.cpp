@@ -8,13 +8,13 @@ ModelMgr::ModelMgr(DataHandler *handler, QObject *parent) :
     QObject(parent),
     m_phandler(handler),
     m_pmodel(new GradebookModel()),
-    m_pproxyModel(new ProxyModel(m_pmodel, this)),
+    m_pproxyModel(Q_NULLPTR),
     m_pviewManager(Q_NULLPTR)
 {
     qDebug() << Q_FUNC_INFO;
     setModelSource();
+    m_pproxyModel = new ProxyModel(m_pmodel);
     m_pviewManager = new MainViewMgr(this);
-
     connectSignals();
 }
 
@@ -37,7 +37,7 @@ void ModelMgr::setModelSource()
     if (m_phandler)
         m_pmodel->setModelSource(const_cast<StudentCollection*> (m_phandler->getCollection()));
 
-    setProxySource();
+    //setProxySource();
 }
 
 void ModelMgr::setProxySource()
@@ -57,13 +57,29 @@ void ModelMgr::setGroupFilter(int groupFilter)
     m_pproxyModel->setFilter(groupFilter);
 }
 
-GradebookModel *ModelMgr::getModel()
+int ModelMgr::getGroupFilter()
+{
+    return m_pproxyModel->filter();
+}
+
+int ModelMgr::getSortRole()
+{
+    return m_pproxyModel->sortRole();
+}
+
+void ModelMgr::setSortRole(int role)
+{
+    qDebug() << Q_FUNC_INFO << " sort role: " << role;
+    m_pproxyModel->setSortRole(role);
+}
+
+ GradebookModel *ModelMgr::getModel()
 {
     qDebug() << Q_FUNC_INFO;
     return m_pmodel;
 }
 
-ProxyModel *ModelMgr::getProxy()
+ ProxyModel *ModelMgr::getProxy()
 {
     qDebug() << Q_FUNC_INFO;
     return m_pproxyModel;
@@ -111,13 +127,30 @@ GradebookModel::StudentRoles ModelMgr::mapAttributeToRole(Attributes attribute)
         break;
     case Attributes::TESTGRADE :
         ret = GradebookModel::StudentRoles::TestGradeRole;
+        break;
     case Attributes::FINAL:
         ret = GradebookModel::StudentRoles::FinalRole;
+        break;
     default:
         break;
     }
     qDebug() << Q_FUNC_INFO << attribute;
     return ret;
+}
+
+int ModelMgr::indexOfId(int id)
+{
+    return m_pmodel->indexOfId(id);
+}
+
+QModelIndex ModelMgr::modelIndex(int row, int column, QModelIndex parent)
+{
+    return m_pmodel->index(row, column, parent);
+}
+
+const StudentTerm *ModelMgr::modelListValueAt(int row)
+{
+    return m_pmodel->listValueAt(row);
 }
 
 void ModelMgr::sltAddRow(const StudentTerm &st)
@@ -138,8 +171,6 @@ void ModelMgr::sltRemoveRow(int row)
 
 void ModelMgr::sltChangeStudentInfo(const QModelIndex &index, const QVariant &value, int role)
 {
-    //New QModelIndex objects are created by the model
-    //using the QAbstractItemModel::createIndex() function
     qDebug() << Q_FUNC_INFO;
 
     if (Q_NULLPTR != m_pmodel)
@@ -148,22 +179,28 @@ void ModelMgr::sltChangeStudentInfo(const QModelIndex &index, const QVariant &va
 
 }
 
-void ModelMgr::sltPassedConditionChanged(bool cond)
-{
-    qDebug() << Q_FUNC_INFO;
-    if (Q_NULLPTR != m_pproxyModel) {
-        m_pproxyModel->setPassed(cond);
-    }
-}
+//void ModelMgr::sltPassedConditionChanged(bool cond)
+//{
+//    qDebug() << Q_FUNC_INFO;
+//    if (Q_NULLPTR != m_pproxyModel) {
+//        m_pproxyModel->setPassed(cond);
+//    }
+//}
 
-void ModelMgr::sltFilterChanged(int filter)
-{
-    qDebug() << Q_FUNC_INFO;
-    if (Q_NULLPTR != m_pproxyModel) {
-        if (!(filter > ProxyModel::Proxy_Filter::GROUP_ALL || filter < ProxyModel::Proxy_Filter::GROUP_A))
-            m_pproxyModel->setFilter(filter);
-    }
-}
+//void ModelMgr::sltFilterChanged(int filter)
+//{
+//    qDebug() << Q_FUNC_INFO;
+//    if (Q_NULLPTR != m_pproxyModel) {
+//        if (!(filter > ProxyModel::Proxy_Filter::GROUP_ALL || filter < ProxyModel::Proxy_Filter::GROUP_A))
+//            m_pproxyModel->setFilter(filter);
+//    }
+//}
+
+//void ModelMgr::sltSortRoleChanged(int role){
+//    qDebug() << Q_FUNC_INFO;
+//    if (Q_NULLPTR != m_pproxyModel)
+//        m_pproxyModel->setSortRole(role);
+//}
 
 void ModelMgr::connectSignals()
 {
@@ -171,8 +208,8 @@ void ModelMgr::connectSignals()
     connect(m_pviewManager, &MainViewMgr::sgnAddRow, this, &ModelMgr::sltAddRow);
     connect(m_pviewManager, &MainViewMgr::sgnRemoveRow, this, &ModelMgr::sltRemoveRow);
     connect(m_pviewManager, &MainViewMgr::sgnChangeStudentInfo, this, &ModelMgr::sltChangeStudentInfo);
-    connect(m_pviewManager, &MainViewMgr::sgnPassedConditionChanged, this, &ModelMgr::sltPassedConditionChanged);
-    connect(m_pviewManager, &MainViewMgr::sgnFilterChanged, this, &ModelMgr::sltFilterChanged);
+    //connect(m_pviewManager, &MainViewMgr::sgnPassedConditionChanged, this, &ModelMgr::sltPassedConditionChanged);
+    //connect(m_pviewManager, &MainViewMgr::sgnFilterChanged, this, &ModelMgr::sltFilterChanged);
 
     connect(this, &ModelMgr::sgnRowAdded, m_phandler, &DataHandler::sltRowAdded);
     connect(this, &ModelMgr::sgnRowRemoved, m_phandler, &DataHandler::sltRowRemoved);

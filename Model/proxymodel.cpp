@@ -7,18 +7,26 @@
 ProxyModel::ProxyModel(QObject *parent) :
     QSortFilterProxyModel(parent),
     m_filter(Proxy_Filter::GROUP_ALL),
+    m_sortRole(GradebookModel::FirstNameRole),
+    m_sortOrder(Qt::AscendingOrder),
     m_passed(false)
 {
+
+    //setDynamicSortFilter(true);
     qDebug() << Q_FUNC_INFO;
 }
 
 ProxyModel::ProxyModel(GradebookModel *model, QObject *parent) :
     QSortFilterProxyModel(parent),
     m_filter(Proxy_Filter::GROUP_ALL),
+    m_sortRole(GradebookModel::FirstNameRole),
     m_passed(false)
 {
     qDebug() << Q_FUNC_INFO;
     QSortFilterProxyModel::setSourceModel(model);
+    QSortFilterProxyModel::setSortRole(m_sortRole);
+    QSortFilterProxyModel::sort(0, m_sortOrder);
+
     //this->setSourceModel(model);
 }
 
@@ -38,6 +46,28 @@ void ProxyModel::setFilter(int filter)
     }
 }
 
+void ProxyModel::setSortRole(int role)
+{
+    qDebug() << Q_FUNC_INFO << " sort role: " << role
+             << " current role: " << m_sortRole;
+
+    if (m_sortRole != role)
+    {
+        m_sortRole = role;
+        m_sortOrder = Qt::AscendingOrder;
+    }
+    else {
+        if (Qt::AscendingOrder == m_sortOrder)
+            m_sortOrder = Qt::DescendingOrder;
+        else
+            m_sortOrder = Qt::AscendingOrder;
+    }
+
+    qDebug() << Q_FUNC_INFO << " sort order: " << m_sortOrder;
+    QSortFilterProxyModel::setSortRole(m_sortRole);
+    QSortFilterProxyModel::sort(0, m_sortOrder);
+}
+
 int ProxyModel::filter()
 {
     qDebug() << Q_FUNC_INFO;
@@ -49,6 +79,18 @@ bool ProxyModel::passed()
     qDebug() << Q_FUNC_INFO;
     return m_passed;
 }
+
+int ProxyModel::sortRole()
+{
+    return m_sortRole;
+}
+
+QVariant ProxyModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+    GradebookModel *model = static_cast<GradebookModel *> (this->sourceModel());
+    return model->headerData(section, orientation, role);
+}
+
 
 void ProxyModel::setPassed(bool passed)
 {
@@ -114,6 +156,21 @@ bool ProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_pare
     return ret;
 
 }
+
+//bool ProxyModel::lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const
+//{
+//    qDebug() << Q_FUNC_INFO;
+//    QVariant leftData = sourceModel()->data(source_left);
+//    QVariant rightData = sourceModel()->data(source_right);
+
+//    if (rightData.type() == QVariant::String)
+//    {
+//        qDebug() << Q_FUNC_INFO << leftData.toString() << " : " << rightData.toString();
+//        return leftData.toString() < rightData.toString();
+//    }
+
+//    return false;
+//}
 
 bool ProxyModel::verifyPassedCondition(const QModelIndex &index) const
 {

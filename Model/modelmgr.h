@@ -51,11 +51,18 @@ public:
      */
     void setGroupFilter(int groupFilter);
 
+
+    void setSortRole(int role);
+
+    int getGroupFilter();
+    int getSortRole();
+
+
     /**
      * @brief getModel
      * @return
      */
-    GradebookModel *getModel();
+     GradebookModel *getModel();
 
     /**
      * @brief getProxy
@@ -69,8 +76,11 @@ public:
      */
     MainViewMgr *getViewMgr();
 
-
     GradebookModel::StudentRoles mapAttributeToRole(Attributes attribute);
+    int indexOfId(int id);
+    QModelIndex modelIndex(int row, int column = 0, QModelIndex parent = QModelIndex());
+    const StudentTerm * modelListValueAt(int row);
+
 signals:
 
     /**
@@ -120,13 +130,16 @@ public slots:
      * passed condition
      * @param cond ProxyModel passed contidion
      */
-    void sltPassedConditionChanged(bool cond);
+    //void sltPassedConditionChanged(bool cond);
 
     /**
      * @brief sltFilterChanged received from the viewmanager in order to update the active filter
      * @param filter should be corellated to ProxyModel::Proxy_Filter
      */
-    void sltFilterChanged(int filter);
+    //void sltFilterChanged(int filter);
+
+    //void sltSortRoleChanged(int role);
+
 
 private:
 

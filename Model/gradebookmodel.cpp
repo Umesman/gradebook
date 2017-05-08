@@ -16,7 +16,7 @@ int GradebookModel::rowCount(const QModelIndex &parent) const
 
 QVariant GradebookModel::data(const QModelIndex &index, int role) const
 {
-    qDebug() << "GradebookModel::data for row" << index.row();
+    //qDebug() << "GradebookModel::data for row" << index.row();
     if (index.row() < 0 || index.row() >= m_pcollection->count())
         return QVariant();
 
@@ -109,6 +109,7 @@ bool GradebookModel::setData(const QModelIndex &index, const QVariant &value, in
         m_pcollection->updateEntry(index.row(), value, Attributes::TESTGRADE);
         break;
     default:
+        qDebug() << Q_FUNC_INFO << " default: returning false.";
         return false;
     }
 

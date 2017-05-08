@@ -41,6 +41,11 @@ public:
      */
     bool passed();
 
+    int sortRole();
+
+    Q_INVOKABLE QVariant headerData(int section, Qt::Orientation orientation = Qt::Horizontal,
+                           int role = Qt::DisplayRole) const;
+
 
 public slots:
     /**
@@ -55,6 +60,7 @@ public slots:
      */
     void setFilter(int filter);
 
+    void setSortRole(int role);
 
 signals:
     /**
@@ -83,6 +89,7 @@ protected:
 
     virtual bool filterAcceptsRow( int source_row, const QModelIndex& source_parent ) const;
 
+    //virtual bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const;
 
 private:
     /**
@@ -98,6 +105,10 @@ private:
      * @brief m_filter is used to filter by group the current data set
      */
     Proxy_Filter m_filter;
+
+    int m_sortRole;
+
+    Qt::SortOrder m_sortOrder;
 
     /**
      * @brief m_passed is used to filter the students who have the final grade above 5

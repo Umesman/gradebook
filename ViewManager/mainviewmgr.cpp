@@ -8,21 +8,15 @@
 MainViewMgr::MainViewMgr(ModelMgr *pmanager) :
     QObject(pmanager),
     m_pmodelManager(pmanager),
-    m_pmodel(Q_NULLPTR),
-    m_pmodelProxy(Q_NULLPTR),
     m_pStudentForm(Q_NULLPTR),
-    m_currentIndex(QPersistentModelIndex()),
-    m_groupFilter(ProxyModel::Proxy_Filter::GROUP_ALL),
+    m_groupFilter(0),
+    m_sortRole(0),
     m_passed(false),
     m_editModeActive(false)
 {
     qDebug() << Q_FUNC_INFO;
-    if (m_pmodelManager != Q_NULLPTR)
-    {
-        m_pmodel = m_pmodelManager->getModel();
-        //m_pmodelProxy = m_pmodelManager->getProxy();
-        setModelProxy(m_pmodelManager->getProxy());
-    }
+    m_groupFilter = m_pmodelManager->getGroupFilter();
+    m_sortRole = m_pmodelManager->getSortRole();
     m_pStudentForm = new EditForm(this);
 }
 
@@ -33,25 +27,6 @@ MainViewMgr::~MainViewMgr()
         delete m_pStudentForm;
 }
 
-void MainViewMgr::setModel(QAbstractItemModel *model)
-{
-    qDebug() << Q_FUNC_INFO;
-    if (m_pmodel != model)
-    {
-        m_pmodel = model;
-        emit modelChanged();
-    }
-}
-
-void MainViewMgr::setModelProxy(QSortFilterProxyModel *proxyModel)
-{
-    qDebug() << Q_FUNC_INFO;
-    if (m_pmodelProxy != proxyModel)
-    {
-        m_pmodelProxy = proxyModel;
-        emit modelProxyChanged();
-    }
-}
 
 void MainViewMgr::setPassed(bool passed)
 {
@@ -77,6 +52,21 @@ void MainViewMgr::setGroupFilter(int currentGroup)
     }
 }
 
+void MainViewMgr::setSortRole(int attr)
+{
+    qDebug() << Q_FUNC_INFO << "  attr: " << attr;
+    Attributes attribute = static_cast<Attributes> (attr);
+    int role = static_cast<int> (m_pmodelManager->mapAttributeToRole(attribute));
+    qDebug() << Q_FUNC_INFO << "  role: " << role << " : m_sortRole: " << m_sortRole;
+    if (m_sortRole != role)
+    {
+        m_sortRole = role;        
+        emit sortRoleChanged();
+    }
+    m_pmodelManager->setSortRole(m_sortRole);
+
+}
+
 void MainViewMgr::setEditMode(bool activeVal)
 {
     qDebug() << Q_FUNC_INFO << " active: " << activeVal;
@@ -90,37 +80,29 @@ void MainViewMgr::setEditMode(bool activeVal)
 void MainViewMgr::editStudentInfo(int id)
 {
     qDebug() << Q_FUNC_INFO << "Id: " << id;
-    int row = static_cast<GradebookModel *>(m_pmodel)->indexOfId(id);
-    //QModelIndex index = m_pmodel->index(row, 0, QModelIndex());
-    const StudentTerm *editableStudent = static_cast<GradebookModel *>(m_pmodel)->listValueAt(row);
+    int row = m_pmodelManager->indexOfId(id);
+    const StudentTerm *editableStudent = m_pmodelManager->modelListValueAt(row);
+
     if (Q_NULLPTR != editableStudent)
         m_pStudentForm->setStudentInfo(editableStudent);
 }
 
-QAbstractItemModel *MainViewMgr::model() const
+
+QSortFilterProxyModel *MainViewMgr::model()
 {
     qDebug() << Q_FUNC_INFO;
-    return m_pmodel;
-
-}
-
-QSortFilterProxyModel *MainViewMgr::modelProxy() const
-{
-    qDebug() << Q_FUNC_INFO;
-    return m_pmodelProxy;
-
+    return m_pmodelManager->getProxy();
 }
 
 EditForm *MainViewMgr::studentForm()
 {
-   return m_pStudentForm;
+    return m_pStudentForm;
 }
 
 bool MainViewMgr::passed() const
 {
     qDebug() << Q_FUNC_INFO << " is passed filtering active: " << m_passed;
     return m_passed;
-
 }
 
 int MainViewMgr::groupFilter() const
@@ -128,6 +110,11 @@ int MainViewMgr::groupFilter() const
     qDebug() << Q_FUNC_INFO << " is current filter: " << m_groupFilter;
     return m_groupFilter;
 
+}
+
+int MainViewMgr::sortRole() const
+{
+    return m_sortRole;
 }
 
 bool MainViewMgr::editMode() const
@@ -140,10 +127,12 @@ void MainViewMgr::sltNotifyStudentInfoChange(QVariant value, Attributes attribut
 {
     qDebug() << Q_FUNC_INFO;
     GradebookModel::StudentRoles role = m_pmodelManager->mapAttributeToRole(attribute);
-    int row = static_cast<GradebookModel *>(m_pmodel)->indexOfId(studentId);
+
+    int row = m_pmodelManager->indexOfId(studentId);
     qDebug() << "Row returned : " << row;
-    QModelIndex index = m_pmodel->index(row, 0, QModelIndex());
+    QModelIndex index = m_pmodelManager->modelIndex(row);
     qDebug() << "Row returned : " << index.row();
+     qDebug() << Q_FUNC_INFO << "sgnChangeStudentInfo emitted";
     emit sgnChangeStudentInfo(index, value, role);
-    qDebug() << Q_FUNC_INFO << "sgnChangeStudentInfo emitted";
+
 }
